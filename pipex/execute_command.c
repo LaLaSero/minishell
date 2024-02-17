@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2023/11/16 17:39:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/15 01:19:12 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,43 @@ static char	*find_accessible_path(char *path_list, char *command)
 // char *cmd2_args[] = {"wc", "-l", NULL};
 // execve("/usr/bin/wc", cmd2_args, envp);みたいな引数指定になる
 // execve()は、成功したらfree,closeは不要
-void	execute_command(char **command, char **envp)
+// void	execute_command(char **command, char **envp)
+// {
+// 	char	*path_list;
+// 	char	*accessible_path;
+// 	char	**command_splitted;
+
+// 	path_list = find_path_list(envp);
+// 	command_splitted = ft_split(*command, ' ');
+// 	if (is_fullpath(command_splitted[0]) == 1)
+// 		accessible_path = ft_strdup(command_splitted[0]);
+// 	else if (is_fullpath(command_splitted[0]) == 2)
+// 	{
+// 		free_str(command_splitted);
+// 		free(path_list);
+// 		write(2, "No such file or directory\n", 26);
+// 		exit(-1);
+// 	}
+// 	else
+// 		accessible_path = find_accessible_path(path_list, command_splitted[0]);
+// 	free(path_list);
+// 	if (execve(accessible_path, command_splitted, envp) == -1)
+// 	{
+// 		free_str(command_splitted);
+// 		free(accessible_path);
+// 		perror("execve");
+// 		exit(-1);
+// 	}
+// }
+
+
+
+void	execute_command(char **command_splitted, char **envp)
 {
 	char	*path_list;
 	char	*accessible_path;
-	char	**command_splitted;
 
 	path_list = find_path_list(envp);
-	command_splitted = ft_split(*command, ' ');
 	if (is_fullpath(command_splitted[0]) == 1)
 		accessible_path = ft_strdup(command_splitted[0]);
 	else if (is_fullpath(command_splitted[0]) == 2)

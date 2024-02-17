@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:21:26 by yutakagi          #+#    #+#             */
-/*   Updated: 2023/12/05 15:32:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/15 01:17:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 # include <errno.h>
 # include <stdio.h>
 
-void	execute_command(char **envp, char **command);
+void	execute_command(char **command_splitted, char **envp);
 
 #endif
