@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../includes/minishell.h"
+#include "../libft/libft.h"
 #include <assert.h>
 #include <stdbool.h>
 
@@ -36,89 +37,68 @@ t_token	*new_token(char *word, t_token_kind kind)
 	return (tok);
 }
 
-bool	is_blank(char c)
+bool	is_space(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n');
-}
-
-bool	consume_blank(char **rest, char *line)
-{
-	if (is_blank(*line))
-	{
-		while (*line && is_blank(*line))
-			line++;
-		*rest = line;
+	if (c == ' ' || c == '\t' || c == '\n')
 		return (true);
-	}
-	*rest = line;
 	return (false);
 }
 
-bool	startswith(const char *s, const char *keyword)
-{
-	return (memcmp(s, keyword, strlen(keyword)) == 0);
-}
-
-/*
-metacharacter
-	  A character that, when unquoted, separates words.  One of the following:
-	  |  & ; ( ) < > space tab
-control operator
-	  A token that performs a control function.  It is one of the following symbols:
-	  || & && ; ;; ( ) | <newline>
-*/
 bool	is_operator(const char *s)
 {
 	static char	*const operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;				
+	size_t				i = 0;
 
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (startswith(s, operators[i]))
+		if (strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
 			return (true);
 		i++;
 	}
 	return (false);
 }
 
-/*
-DEFINITIONS
-       The following definitions are used throughout the rest of this document.
-       blank  A space or tab.
-       word   A sequence of characters considered as a single unit by the shell.  Also known as a token.
-       name   A word consisting only of alphanumeric characters and underscores, and beginning with an alphabetic
-              character or an underscore.  Also referred to as an identifier.
-       metacharacter
-              A character that, when unquoted, separates words.  One of the following:
-              |  & ; ( ) < > space tab
-       control operator
-              A token that performs a control function.  It is one of the following symbols:
-              || & && ; ;; ( ) | <newline>
-*/
 bool	is_metacharacter(char c)
 {
-	return (c && strchr("|&;()<> \t\n", c));
+	static const char	*metacharacters;
+	size_t				i;
+
+	metacharacters = "|&;()<> \t\n";
+	i = 0;
+	while (metacharacters[i])
+	{
+		if (c == metacharacters[i])
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 bool	is_word(const char *s)
 {
-	return (*s && !is_metacharacter(*s));
+	if (!*s)
+		return (false);
+	if (is_metacharacter(*s))
+		return (false);
+	return (true);
 }
 
-t_token	*operator(char **rest, char *line)
+t_token	*operator(char **line_loc, char *line)
 {
-	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;				
+	static char *const	operator_list[] = {">>", "<<", "||", "&&", ";;", "<", ">",
+		"&", ";", "(", ")", "|", "\n"};
+	size_t				i;				
 	char				*op;
 
-	while (i < sizeof(operators) / sizeof(*operators))
+	i = 0;
+	while (i < sizeof(operator_list) / sizeof(*operator_list))
 	{
-		if (startswith(line, operators[i]))
+		if (strncmp(line, operator_list[i], ft_strlen(operator_list[i])) == 0)
 		{
-			op = strdup(operators[i]);
+			op = strdup(operator_list[i]);
 			if (op == NULL)
 				fatal_error("strdup");
-			*rest = line + strlen(op);
+			*line_loc = line + ft_strlen(op);
 			return (new_token(op, TK_OP));
 		}
 		i++;
@@ -127,134 +107,56 @@ t_token	*operator(char **rest, char *line)
 	return (NULL);
 }
 
-#define SINGLE_QUOTE_CHAR '\''
-
-t_token *word(char **rest, char *line) {
-	const char *start = line;
+t_token *word(char **line_loc, char *line) {
+	const char *start;
 	char *word;
 
-	// printf("word_before: [%s]\n", line);
-	while (*line && !is_metacharacter(*line) && *line != SINGLE_QUOTE_CHAR)
-		line++;
-	// printf("word_after: [%s]\n", line);
-	if (*line == SINGLE_QUOTE_CHAR) {
-		start++;
-		line++;
-		while (*line != SINGLE_QUOTE_CHAR) {
-			if (*line == '\0') {
-				fatal_error("Unclosed single quote");
-			}
+	start = line;
+	while (*line && !is_metacharacter(*line))
+	{
+		if (*line == SINGLE_QUOTE_CHAR)
+		{
 			line++;
+			while (*line && *line != SINGLE_QUOTE_CHAR)
+				line++;
+			if (*line == '\0')
+			{
+				fatal_error("Unclosed single quote");
+				exit(1);
+			}
+			else
+				line++;
 		}
-		line++;
-	} else if (*line && !is_metacharacter(*line)) {
-		line++;
+		else if (*line == DOUBLE_QUOTE_CHAR)
+		{
+			line++;
+			while (*line && *line != DOUBLE_QUOTE_CHAR)
+				line++;
+			if (*line == '\0')
+			{
+				fatal_error("Unclosed double quote");
+				exit(1);
+			}
+			else
+				line++;
+		}
+		else
+			line++;
 	}
-	size_t word_length = line - start;
-	if (*(line - 1) == SINGLE_QUOTE_CHAR) {
-		word_length--;
-	}
-	word = strndup(start, word_length);
-	if (word == NULL) {
-		fatal_error("strndup failed");
-	}
-	*rest = line;
-	return new_token(word, TK_WORD);
+		word = ft_substr(start, 0, line - start);
+		if (word == NULL)
+			fatal_error("substr");
+		*line_loc = line;
+		return (new_token(word, TK_WORD));
+	
 }
 
-// t_token	*word(char **rest, char *line)
-// {
-// 	const char	*start = line;
-// 	char		*word;
-
-// 	printf("word_before: [%s]\n", line);
-// 	while (*line && !is_metacharacter(*line) && *line != SINGLE_QUOTE_CHAR)
-// 		line++;
-// 	printf("word_after: [%s]\n", line);
-// 	if (*line == SINGLE_QUOTE_CHAR)
-// 	{
-// 		// skip quote
-// 		start++;
-// 		line++;
-// 		while (*line != SINGLE_QUOTE_CHAR)
-// 		{
-// 			if (*line == '\0')
-// 			{
-// 				fatal_error("Unclosed single quote");
-// 				exit(1);
-// 			}
-// 			line++;
-// 		}
-// 		// skip quote
-// 		if (*line == SINGLE_QUOTE_CHAR)
-// 			line++;
-// 	}
-// 	else if (*line != '\0' && !is_metacharacter(*line))
-// 	// else if(*line == ' ')
-// 		line++;
-// 	if (*(line - 1) == SINGLE_QUOTE_CHAR)
-// 		word = strndup(start, line - start -1);
-// 	else
-// 		word = strndup(start, line - start);
-// 	if (word == NULL)
-// 		fatal_error("strndup");
-// 	*rest = line;
-// 	return (new_token(word, TK_WORD));
-// }
-
-// t_token *word(char **rest, char *line) {
-//     const char *start = line;
-//     char *word = NULL;
-//     bool in_quotes = false;
-//     bool word_started = false;
-
-//     while (*line) {
-//         if (!in_quotes && is_metacharacter(*line)) {
-//             // 単語の開始を検出していない、かつメタ文字に遭遇した場合、スキップする
-//             if (!word_started) {
-//                 line++;
-//                 start = line; // スタートを更新
-//                 continue;
-//             }
-//             break; // 単語の終了
-//         } else if (*line == SINGLE_QUOTE_CHAR) {
-//             if (!in_quotes && word_started) {
-//                 // シングルクォートの前に単語が始まっている場合、その単語を終了させる
-//                 break;
-//             }
-//             // シングルクォート内の処理を開始または終了
-//             in_quotes = !in_quotes;
-//             line++;
-//             if (!in_quotes) {
-//                 // 閉じクォート; 単語の終了
-//                 break;
-//             } else {
-//                 // 開始クォート; 単語の開始
-//                 start = line;
-//                 word_started = true;
-//                 continue;
-//             }
-//         } else {
-//             if (!word_started) {
-//                 start = line; // 単語の開始
-//                 word_started = true;
-//             }
-//             line++;
-//         }
-//     }
-
-//     if (word_started) {
-//         // 単語を抽出してトークンを生成
-//         size_t length = line - start - (in_quotes ? 1 : 0); // 閉じクォートを含めない
-//         word = strndup(start, length);
-//         *rest = line + (in_quotes ? 0 : 1); // 閉じクォートの後ろを指す
-//         return new_token(word, TK_WORD);
-//     }
-
-//     *rest = line;
-//     return NULL; // 単語が見つからない場合
-// }
-
+void delete_space(char **line_loc, char *line)
+{
+	while (*line && is_space(*line))
+		line++;
+	*line_loc = line;
+}
 
 t_token	*tokenize(char *line)
 {
@@ -263,16 +165,19 @@ t_token	*tokenize(char *line)
 
 	head.next = NULL;
 	tok = &head;
-	// printf("line: [%s]\n", line);
 	while (*line)
 	{
-		// printf("line: [%s]\n", line);
-		if (consume_blank(&line, line))
-			continue ;
-		else if (is_operator(line))
-			tok = tok->next = operator(&line, line);
+		delete_space(&line, line);
+		if (is_metacharacter(*line))
+		{
+			tok->next = operator(&line, line);
+			tok = tok->next;
+		}
 		else if (is_word(line))
-			tok = tok->next = word(&line, line);
+		{
+			tok->next = word(&line, line);
+			tok = tok->next;
+		}
 		else
 			assert_error("Unexpected Token");
 	}

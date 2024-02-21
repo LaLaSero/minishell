@@ -35,6 +35,34 @@ int token_test(t_token *tok)
 	return 0;
 }
 
+int node_test(t_node *node)
+{
+	printf("node_test\n");
+	if (node == NULL || node->command->args == NULL)
+	{
+		printf("node is NULL\n");
+		return 0;
+	}
+	// if (node->next == NULL || node->next->command->args == NULL)
+	// {
+	// 	printf("node->next is NULL\n");
+	// 	return 0;
+	// }
+	t_token *tmp = node->command->args;
+	while (tmp)
+	{
+		printf("command->args:[%s]\n", tmp->word);
+		tmp = tmp->next;
+	}
+	printf("command->kind:[%d]\n", node->command->kind);
+	printf("command->redirect->filename:[%s]\n", node->command->redirect->filename->word);
+	printf("command->redirect->target_fd:[%d]\n", node->command->redirect->targetfd);
+	printf("node->next->command->args:[%s]\n", node->next->command->args->word);
+	printf("node->next->command->args->next->word:[%s]\n", node->next->command->args->next->word);		
+	printf("node->next->command->kind:[%d]\n", node->next->command->kind);
+	return 0;
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	// return (token_test(tokenize("echo    'hello world' world")));
@@ -44,7 +72,7 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-void hundle_error(char *msg)
+void handle_error(char *msg)
 {
 	perror(msg);
 	exit(-1);
@@ -64,7 +92,7 @@ void excecute_token(t_token *tok)
 	}
 	command_splitted = malloc(sizeof(char *) * (token_count + 1));
 	if (command_splitted == NULL)
-		hundle_error("malloc");
+		handle_error("malloc");
 	for (int i = 0; i < token_count; i++)
 	{
 		command_splitted[i] = tok->word;
@@ -80,17 +108,27 @@ int	interpret(char *line)
 	pid_t		pid;
 	int			wstatus;
 	t_token *tok;
+	t_node  *node;
 
 	pid = fork();
 	if (pid < 0)
-		hundle_error("fork");
+		handle_error("fork");
 	else if (pid == 0)
 	{
 		// child process
 		tok = tokenize(line);
 		token_test(tok);
-
-		excecute_token(tok);
+		expand_token(tok);
+		node = parse(tok);
+		printf("parse done\n");
+		node_test(node);
+		// free_token(tok);
+		// free_node(node);
+		// expand_token(tok);
+		// expand_token(node);
+		// token_test(tok);
+		// excecute_token(tok);
+		// execute_token(node);
 		// 構文= 解析(tok);
 		// 実行(構文);
 	}
@@ -105,8 +143,8 @@ int	interpret(char *line)
 
 void minishell(char **envp)
 {
-	char *line;
-	int  status;
+	char	*line;
+	int		status;
 
 	rl_outstream = stderr;
 	status = 0;
@@ -116,12 +154,10 @@ void minishell(char **envp)
 		line = readline("minishell$ ");
 		if (line == NULL || ft_strncmp(line, "exit", 4) == 0)
 		{
-			// ft_putstr_fd("exit\n", STDERR);
 			exit (status);
 		}
 		if (*line)
 			add_history(line);
-		// ft_putstr_fd(MINISHELL, STDERR);
 		status = interpret(line);
 		free(line);
 	}
