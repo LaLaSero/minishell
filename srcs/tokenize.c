@@ -6,24 +6,6 @@
 #include <stdbool.h>
 
 // #define ERROR_PREFIX "minishell: "
-void	perror_prefix(void)
-{
-	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
-}
-
-void	fatal_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
-	exit(1);
-}
-
-void	assert_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Assert Error: %s\n", msg);
-	exit(255);
-}
 
 t_token	*new_token(char *word, t_token_kind kind)
 {
@@ -87,7 +69,7 @@ t_token	*operator(char **line_loc, char *line)
 {
 	static char *const	operator_list[] = {">>", "<<", "||", "&&", ";;", "<", ">",
 		"&", ";", "(", ")", "|", "\n"};
-	size_t				i;				
+	size_t				i;
 	char				*op;
 
 	i = 0;
@@ -107,6 +89,7 @@ t_token	*operator(char **line_loc, char *line)
 	return (NULL);
 }
 
+
 t_token *word(char **line_loc, char *line) {
 	const char *start;
 	char *word;
@@ -122,7 +105,8 @@ t_token *word(char **line_loc, char *line) {
 			if (*line == '\0')
 			{
 				fatal_error("Unclosed single quote");
-				exit(1);
+				// exit(1);
+				tokenize_error(line, line_loc);
 			}
 			else
 				line++;

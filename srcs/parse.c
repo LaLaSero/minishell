@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/21 15:04:28 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:31:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@
 //                | '<' <word>
 //                | '>>' <word>
 //                | '<<' <word>
+// source: https://cmdse.github.io/pages/appendix/bash-grammar.html
 
-// https://cmdse.github.io/pages/appendix/bash-grammar.html
 
-			   
 t_token	*tokdup(t_token *tok);
 
 
@@ -105,30 +104,12 @@ t_node *new_node(t_node_kind kind)
 	return (node);
 }
 
-t_node	*redirect_out(t_token **tok_loc, t_token *tok)
-{
-	t_node	*node;
 
-	node = new_node(ND_REDIR_OUT);
-	node->filename = tokdup(tok->next);
-	node->targetfd = STDOUT_FILENO;
-	*tok_loc = tok->next->next;
-	return (node);
-}
 
-t_node	*redirect_in(t_token **tok_loc, t_token *tok)
-{
-	t_node	*node;
-
-	node = new_node(ND_REDIR_IN);
-	node->filename = tokdup(tok->next);
-	node->targetfd = STDIN_FILENO;
-	*tok_loc = tok->next->next;
-	return (node);
-}
-
+// <simple_command_element> ::= <word> | <redirection>
 void append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 {
+	extern t_status t_status;
 	if (cur->kind == TK_WORD)
 	{
 		append_token(&command->args, tokdup(cur));
@@ -144,12 +125,15 @@ void append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 	}
 	else
 	{
-		fatal_error("Unexpected token");
+		parse_error(cur, tok_list);
 		printf("Unexpected token\n");
 	}
 	*tok_list = cur;
 }
 
+// <simple_command> ::= <simple_command_element>
+//                    | <simple_command> <simple_command_element>
+// <simple_command>は<simple_command_element>を1つ以上持つという意味
 t_node *simple_command(t_token **tok, t_token *cur)
 {
 	t_node *node;
@@ -164,19 +148,18 @@ t_node *simple_command(t_token **tok, t_token *cur)
 	return (node);
 }
 
+static t_node *_the_first_node(t_node_kind kind);
+
+// <pipeline> ::= <pipeline> '|' <command> <pipeline>
 t_node *pipeline(t_token **tok, t_token *cur)
 {
 	t_node *node;
 
-	node = new_node(ND_PIPELINE);
-	node->inpipe[0] = STDIN_FILENO;
-	node->inpipe[1] = -1;
-	node->outpipe[0] = -1;
-	node->outpipe[1] = STDOUT_FILENO;
+	node = _the_first_node(ND_PIPELINE);
 	node->command = simple_command(&cur, cur);
 	if (is_op(cur, "|"))
 	{
-		printf("pipeline\n");
+		printf("pipeline found\n");
 		node->next = pipeline(&cur, cur->next);
 	}
 	*tok = cur;
@@ -196,4 +179,16 @@ t_token	*tokdup(t_token *tok)
 	if (word == NULL)
 		fatal_error("strdup");
 	return (new_token(word, tok->kind));
+}
+
+static t_node *_the_first_node(t_node_kind kind)
+{
+	t_node *node;
+	
+	node = new_node(kind);
+	node->inpipe[0] = STDIN_FILENO;
+	node->inpipe[1] = -1;
+	node->outpipe[0] = -1;
+	node->outpipe[1] = STDOUT_FILENO;
+	return (node);
 }

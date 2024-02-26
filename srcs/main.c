@@ -7,65 +7,10 @@
 
 void minishell(char **envp);
 
-int token_test(t_token *tok)
-{
-	while (tok)
-{
-    char *kind_str;
-    switch (tok->kind) {
-        case TK_WORD:
-            kind_str = "WORD";
-            break;
-        case TK_RESERVED:
-            kind_str = "RESERVED";
-            break;
-        case TK_OP:
-            kind_str = "OP";
-            break;
-        case TK_EOF:
-            kind_str = "EOF";
-            break;
-        default:
-            kind_str = "UNKNOWN";
-    }
-    printf("[%s] [%s]\n", kind_str, tok->word ? tok->word : "NULL");
-    tok = tok->next;
-
-	}
-	return 0;
-}
-
-int node_test(t_node *node)
-{
-	printf("node_test\n");
-	if (node == NULL || node->command->args == NULL)
-	{
-		printf("node is NULL\n");
-		return 0;
-	}
-	// if (node->next == NULL || node->next->command->args == NULL)
-	// {
-	// 	printf("node->next is NULL\n");
-	// 	return 0;
-	// }
-	t_token *tmp = node->command->args;
-	while (tmp)
-	{
-		printf("command->args:[%s]\n", tmp->word);
-		tmp = tmp->next;
-	}
-	printf("command->kind:[%d]\n", node->command->kind);
-	printf("command->redirect->filename:[%s]\n", node->command->redirect->filename->word);
-	printf("command->redirect->target_fd:[%d]\n", node->command->redirect->targetfd);
-	printf("node->next->command->args:[%s]\n", node->next->command->args->word);
-	printf("node->next->command->args->next->word:[%s]\n", node->next->command->args->next->word);		
-	printf("node->next->command->kind:[%d]\n", node->next->command->kind);
-	return 0;
-}
+t_status status = {};
 
 int main(int argc, char **argv, char **envp)
 {
-	// return (token_test(tokenize("echo    'hello world' world")));
 	(void)argv;
 	if (argc == 1)
 		minishell(envp);
@@ -103,42 +48,54 @@ void excecute_token(t_token *tok)
 	exit(1);
 }
 
-int	interpret(char *line)
+void free_token(t_token *tok)
 {
-	pid_t		pid;
-	int			wstatus;
+	if (tok == NULL)
+		return ;
+	if (tok->word)
+		free(tok->word);
+	free_token(tok->next);
+	free(tok);
+}
+
+void free_node(t_node *node)
+{
+	if (node == NULL)
+		return ;
+	free_token(node->args);
+	free_token(node->filename);
+	free_node(node->redirect);
+	free_node(node->command);
+	free_node(node->next);
+	free(node);
+}
+
+void interpret(char *line)
+{
 	t_token *tok;
 	t_node  *node;
 
-	pid = fork();
-	if (pid < 0)
-		handle_error("fork");
-	else if (pid == 0)
+	tok = tokenize(line);
+	if(status.had_error)
 	{
-		// child process
-		tok = tokenize(line);
-		token_test(tok);
-		expand_token(tok);
-		node = parse(tok);
-		printf("parse done\n");
-		node_test(node);
-		// free_token(tok);
-		// free_node(node);
-		// expand_token(tok);
-		// expand_token(node);
-		// token_test(tok);
-		// excecute_token(tok);
-		// execute_token(node);
-		// 構文= 解析(tok);
-		// 実行(構文);
+		status.exit_status = ERROR_IN_TOKENIZE;
 	}
 	else
 	{
-		// parent process
-		wait(&wstatus);
-		return (WEXITSTATUS(wstatus));
+		node = parse(tok);
+		if(status.had_error)
+		{
+			status.exit_status = ERROR_IN_PARSE;
+		}
+		else
+		{
+			show_node(node);
+			// expand(node);
+			// status.exit_status = execute(node);
+		}
 	}
-	return (0);
+	free_node(node);
+	free_token(tok);
 }
 
 void minishell(char **envp)
@@ -158,7 +115,7 @@ void minishell(char **envp)
 		}
 		if (*line)
 			add_history(line);
-		status = interpret(line);
+		interpret(line);
 		free(line);
 	}
 }

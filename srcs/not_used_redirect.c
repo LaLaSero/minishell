@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 19:18:43 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/19 23:06:34 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:39:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void redirect(int targetfd, char *filename)
 			fatal_error("dup2");
 		close(fd);
 	}
-	// exec_commnd();
 	write(1, "hello\n", 6);
 	dup2(stashed_target_fd, targetfd);
 }

@@ -1,6 +1,7 @@
 NAME = minishell
 SRCS = srcs/main.c srcs/tokenize.c srcs/expand.c srcs/parse.c
-SRCS += pipex/pipex.c pipex/execute_command.c
+SRCS += pipex/pipex.c pipex/execute_command.c srcs/test.c
+SRCS += srcs/redirection.c srcs/error.c
 # SRCS += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 INCLUDE = includes
 CC = cc

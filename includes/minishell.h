@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/22 01:39:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:37:44 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ struct s_var {
 	t_var	*next;
 };
 
+typedef struct g_status {
+	bool 	had_error;
+	int		exit_status;
+	
+}	t_status;
+
 typedef struct s_map	t_map;
 struct s_map {
 	t_var	item_head;
@@ -101,9 +107,21 @@ t_token *expand_token(t_token *tok);
 bool	is_metacharacter(char c);
 t_node *parse(t_token *tok);
 t_token	*new_token(char *word, t_token_kind kind);
-bool	startswith(const char *s, const char *keyword);
-
+void show_node(t_node *node);
+void free_node(t_node *node);
+void free_token(t_token *tok);
+void parse_error(t_token *tok, t_token **tol_list);
+void tokenize_error(char *line, char **line_loc);
+void assert_error(const char *msg);
+t_node	*redirect_out(t_token **tok_loc, t_token *tok);
+t_node	*redirect_in(t_token **tok_loc, t_token *tok);
+t_node *redirect_append(t_token **tok_loc, t_token *tok);
+t_node *new_node(t_node_kind kind);
+void append_node(t_node **node_loc, t_node *node);
+t_token	*tokdup(t_token *tok);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'
+#define ERROR_IN_PARSE 258
+#define ERROR_IN_TOKENIZE 258
 #endif
