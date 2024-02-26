@@ -6,13 +6,25 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/22 01:56:53 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:33:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_map *envmap;
+
+// void	perror_prefix(void)
+// {
+// 	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
+// }
+
+// void	fatal_error(const char *msg)
+// {
+// 	perror_prefix();
+// 	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+// 	exit(1);
+// }
 
 t_var *new_var(char *key, char *value)
 {
@@ -27,7 +39,7 @@ t_var *new_var(char *key, char *value)
 	return (item);
 }
 
-t_map *make_map()
+t_map *init_map()
 {
 	t_map *map;
 
@@ -40,7 +52,7 @@ t_map *make_map()
 	return (map);
 }
 
-int free_map(t_map *map, char *key)
+int remove_var(t_map *map, char *key)
 {
 	t_var *cur;
 	t_var *prev;
@@ -112,7 +124,7 @@ int reload_map(t_map *map, char *key, char *value)
 	
 }
 
-void add_var(t_map *map, char *line, bool null_value)
+int add_var(t_map *map, char *line, bool null_value)
 {
 	char *key;
 	char *value;
@@ -138,15 +150,21 @@ void add_var(t_map *map, char *line, bool null_value)
 	return (is_success);
 }
 
-t_var *make_list_from_env(void)
+void make_map(void)
 {
+	char cwd[PATH_MAX];
 	extern char **environ;
 	
-	envmap = make_map();
+	envmap = init_map();
 	while (*environ)
 	{
 		add_var(envmap, *environ, false);
 		environ++;
+	}
+	if (get_value("PWD") == NULL)
+	{
+		getcwd(cwd, PATH_MAX);
+		map_set(map, "PWD", cwd);
 	}
 }
 char *get_value(char *key)
@@ -164,3 +182,32 @@ char *get_value(char *key)
 	}
 	return (NULL);
 }
+
+// char *extract_key(char *line)
+// {
+// 	char *p;
+// 	char *key;
+
+// 	p = strchr(line, '=');
+// 	if (p == NULL)
+// 		return (strdup(line));
+// 	key = strndup(line, p - line);
+// 	if (key == NULL)
+// 		fatal_error("strndup");
+// 	return (key);
+// }
+
+// int main(int argc, char **argv)
+// {
+// 	char *key = extract_key(argv[1]);
+// 	make_map();
+// 	exe_export(argv);
+// 	printf("[%s]=%s\n", key, get_value(key));
+// 	free(key);
+	
+// }
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }

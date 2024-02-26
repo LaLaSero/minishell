@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 15:31:53 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:52:30 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ t_node *new_node(t_node_kind kind)
 	node->kind = kind;
 	return (node);
 }
-
-
 
 // <simple_command_element> ::= <word> | <redirection>
 void append_command_element(t_node *command, t_token **tok_list, t_token *cur)

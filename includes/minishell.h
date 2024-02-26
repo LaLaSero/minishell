@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 15:37:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:34:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <string.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # define STDOUT 1
 # define STDERR 2
