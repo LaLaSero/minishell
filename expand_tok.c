@@ -7,22 +7,12 @@ typedef struct s_tok
 	struct s_tok	*next;
 }					t_tok;
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+typedef struct s_node
 {
-	char	*mem;
-
-	if (s == NULL)
-		return (NULL);
-	if ((unsigned int)strlen(s) < start)
-		len = 0;
-	if (strlen(s + start) < len)
-		len = strlen(s + start);
-	mem = malloc(sizeof(char) * (len + 1));
-	if (mem == NULL)
-		return (NULL);
-	strlcpy(mem, s + start, len + 1);
-	return (mem);
-}
+	char			*line;
+	char			*treated_line;
+	struct s_node	*next;
+}					t_node;
 
 char	*remove_single_quote(char *line)
 {
@@ -77,6 +67,16 @@ char	*expand_variable(char *line)
 	// return (result);
 }
 
+char	*expand_status()
+{
+	char	*result;
+
+	result = ft_itoa(status);
+	if (result == NULL)
+		
+
+}
+
 char	*remove_double_quote(char *line)
 {
 	char	*start;
@@ -104,25 +104,24 @@ char	*remove_double_quote(char *line)
 	return (result);
 }
 
-// t_tok	*expand(t_tok *ptr)
-// {
-// 	if (!isword(ptr->line))
-// 		return (NULL);
-// 	if (*(ptr->line) == '\'')
-// 		ptr->treated_line = remove_single_quote(ptr->line);
-// 	else if (*(ptr->line) == '\"')
-// 		ptr->treated_line = remove_double_quote(ptr->line);
-// 	else if (*(ptr->line) == '$')
-// 	{
-// 		if (*((ptr->line) + 1) == '\?')
-// 			ptr->treated_line = expand_status();
-// 		else
-// 			ptr->treated_line = expand_variable(ptr->line);
-// 	}
-// 	expand(ptr->next);
-// 	return (ptr);
-// }
-
+t_tok	*expand(t_tok *ptr)
+{
+	if (!isword(ptr->line))
+		return (NULL);
+	if (*(ptr->line) == '\'')
+		ptr->treated_line = remove_single_quote(ptr->line);
+	else if (*(ptr->line) == '\"')
+		ptr->treated_line = remove_double_quote(ptr->line);
+	else if (*(ptr->line) == '$')
+	{
+		if (*((ptr->line) + 1) == '\?')
+			ptr->treated_line = expand_status();
+		else
+			ptr->treated_line = expand_variable(ptr->line);
+	}
+	expand(ptr->next);
+	return (ptr);
+}
 
 int	main(void)
 {
@@ -131,11 +130,12 @@ int	main(void)
 	// テスト用の文字列
 	char input[] = "This is 'a test' string.";
 	char input2[] = "This is \"a test\" string.";
-	//関数を呼び出し
+	// 関数を呼び出し
 	result = remove_single_quote(input);
 	result2 = remove_double_quote(input2);
 	// 結果を表示
 	printf("Original: %s\n", input);
+	printf("Original: %s\n", input2);
 	printf("Modified: %s\n", result);
 	printf("Modified: %s\n", result2);
 	free(result);
