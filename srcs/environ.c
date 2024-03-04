@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 19:33:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:32:05 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_map *envmap;
 // 	exit(1);
 // }
 
-t_var *new_var(char *key, char *value)
+t_var	*new_var(char *key, char *value)
 {
-	t_var *item;
+	t_var	*item;
 
 	item = calloc(1, sizeof(*item));
 	if (item == NULL)
@@ -39,9 +39,9 @@ t_var *new_var(char *key, char *value)
 	return (item);
 }
 
-t_map *init_map()
+t_map	*init_map(void)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = calloc(1, sizeof(*map));
 	if (map == NULL)
@@ -54,8 +54,8 @@ t_map *init_map()
 
 int remove_var(t_map *map, char *key)
 {
-	t_var *cur;
-	t_var *prev;
+	t_var	*cur;
+	t_var	*prev;
 
 	if (key == NULL)
 		return (FAILURE);
@@ -78,9 +78,9 @@ int remove_var(t_map *map, char *key)
 
 }
 
-int reload_map(t_map *map, char *key, char *value)
+int	reload_map(t_map *map, char *key, char *value)
 {
-	t_var *cur;
+	t_var	*cur;
 
 	if (key == NULL)
 		return (FAILURE);
@@ -94,7 +94,7 @@ int reload_map(t_map *map, char *key, char *value)
 	if (cur)
 	{
 		free(cur->value);
-		if(!value)
+		if (!value)
 			cur->value = NULL;
 		else
 		{
@@ -121,15 +121,14 @@ int reload_map(t_map *map, char *key, char *value)
 		map->item_head.next = cur;
 	}
 	return (SUCCESS);
-	
 }
 
-int add_var(t_map *map, char *line, bool null_value)
+int	add_var(t_map *map, char *line, bool null_value)
 {
-	char *key;
-	char *value;
-	char *p;
-	int is_success;
+	char	*key;
+	char	*value;
+	char	*p;
+	int		is_success;
 
 	p = strchr(line, '=');
 	if (p == NULL)
@@ -142,7 +141,6 @@ int add_var(t_map *map, char *line, bool null_value)
 		value = strdup(p + 1);
 		if (value == NULL)
 			fatal_error("strdup");
-		
 	}
 	is_success = reload_map(map, key, value);
 	free(key);
@@ -152,9 +150,10 @@ int add_var(t_map *map, char *line, bool null_value)
 
 void make_map(void)
 {
-	char cwd[PATH_MAX];
-	extern char **environ;
-	
+	char			cwd[PATH_MAX];
+	extern char		**environ;
+	extern t_map	map;
+
 	envmap = init_map();
 	while (*environ)
 	{
@@ -167,9 +166,10 @@ void make_map(void)
 		map_set(map, "PWD", cwd);
 	}
 }
-char *get_value(char *key)
+
+char	*get_value(char *key)
 {
-	t_var *cur;
+	t_var	*cur;
 
 	if (key == NULL)
 		return (NULL);

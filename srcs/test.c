@@ -4,25 +4,25 @@ int token_test(t_token *tok)
 {
 	while (tok)
 {
-    char *kind_str;
-    switch (tok->kind) {
-        case TK_WORD:
-            kind_str = "WORD";
-            break;
-        case TK_RESERVED:
-            kind_str = "RESERVED";
-            break;
-        case TK_OP:
-            kind_str = "OP";
-            break;
-        case TK_EOF:
-            kind_str = "EOF";
-            break;
-        default:
-            kind_str = "UNKNOWN";
-    }
-    printf("[%s] [%s]\n", kind_str, tok->word ? tok->word : "NULL");
-    tok = tok->next;
+	char *kind_str;
+	switch (tok->kind) {
+		case TK_WORD:
+			kind_str = "WORD";
+			break;
+		case TK_RESERVED:
+			kind_str = "RESERVED";
+			break;
+		case TK_OP:
+			kind_str = "OP";
+			break;
+		case TK_EOF:
+			kind_str = "EOF";
+			break;
+		default:
+			kind_str = "UNKNOWN";
+	}
+	printf("[%s] [%s]\n", kind_str, tok->word ? tok->word : "NULL");
+	tok = tok->next;
 
 	}
 	return 0;

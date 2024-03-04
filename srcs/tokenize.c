@@ -91,8 +91,8 @@ t_token	*operator(char **line_loc, char *line)
 
 
 t_token *word(char **line_loc, char *line) {
-	const char *start;
-	char *word;
+	const char	*start;
+	char		*word;
 
 	start = line;
 	while (*line && !is_metacharacter(*line))

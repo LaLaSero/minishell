@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 15:52:30 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:28:17 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ bool	is_control_operator(t_token *tok)
 	return (false);
 }
 
-void append_token(t_token **tok_loc, t_token *tok)
+void	append_token(t_token **tok_loc, t_token *tok)
 {
-	t_token *last;
+	t_token	*last;
 
 	if (*tok_loc == NULL)
 	{
@@ -78,9 +78,9 @@ void append_token(t_token **tok_loc, t_token *tok)
 	last->next = tok;
 }
 
-void append_node(t_node **node_loc, t_node *node)
+void	append_node(t_node **node_loc, t_node *node)
 {
-	t_node *last;
+	t_node	*last;
 
 	if (*node_loc == NULL)
 	{
@@ -93,9 +93,9 @@ void append_node(t_node **node_loc, t_node *node)
 	last->next = node;
 }
 
-t_node *new_node(t_node_kind kind)
+t_node	*new_node(t_node_kind kind)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = calloc(1, sizeof(*node));
 	if (node == NULL)
@@ -105,9 +105,10 @@ t_node *new_node(t_node_kind kind)
 }
 
 // <simple_command_element> ::= <word> | <redirection>
-void append_command_element(t_node *command, t_token **tok_list, t_token *cur)
+void	append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 {
-	extern t_status t_status;
+	extern t_status	t_status;
+
 	if (cur->kind == TK_WORD)
 	{
 		append_token(&command->args, tokdup(cur));
@@ -134,7 +135,7 @@ void append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 // <simple_command>は<simple_command_element>を1つ以上持つという意味
 t_node *simple_command(t_token **tok, t_token *cur)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = new_node(ND_SIMPLE_CMD);
 	append_command_element(node, &cur, cur);
@@ -146,7 +147,7 @@ t_node *simple_command(t_token **tok, t_token *cur)
 	return (node);
 }
 
-static t_node *_the_first_node(t_node_kind kind);
+static t_node	*_the_first_node(t_node_kind kind);
 
 // <pipeline> ::= <pipeline> '|' <command> <pipeline>
 t_node *pipeline(t_token **tok, t_token *cur)
@@ -179,10 +180,10 @@ t_token	*tokdup(t_token *tok)
 	return (new_token(word, tok->kind));
 }
 
-static t_node *_the_first_node(t_node_kind kind)
+static t_node	*_the_first_node(t_node_kind kind)
 {
-	t_node *node;
-	
+	t_node	*node;
+
 	node = new_node(kind);
 	node->inpipe[0] = STDIN_FILENO;
 	node->inpipe[1] = -1;

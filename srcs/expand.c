@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:34:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/19 16:38:34 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:26:10 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/get_next_line.h"
-# include "../libft/libft.h"
-# include "../includes/minishell.h" 
-# include "../includes/pipex.h"
+#include "../includes/get_next_line.h"
+#include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../includes/pipex.h"
 
 void	append_char(char **s, char c)
 {
@@ -48,16 +48,13 @@ void	quote_removal(t_token *tok)
 	{
 		if (*p == SINGLE_QUOTE_CHAR)
 		{
-			// skip quote
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
 			{
 				if (*p == '\0')
-					// todo("Unclosed single quote");
 					fatal_error("Unclosed single quote");
 				append_char(&new_word, *p++);
 			}
-			// skip quote
 			p++;
 		}
 		else
@@ -69,7 +66,7 @@ void	quote_removal(t_token *tok)
 }
 
 
-t_token *expand_token(t_token *tok)
+t_token	*expand_token(t_token *tok)
 {
 	quote_removal(tok);
 	return (tok);

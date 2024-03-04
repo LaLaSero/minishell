@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 15:33:46 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:20:00 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void tokenize_error(char *line, char **line_loc)
 	status.had_error = true;
 	// perror_prefix();
 	dprintf(STDERR_FILENO, "Tokenize Error: ");
-	while(*line)
+	while (*line)
 		line++;
 	*line_loc = line;
 	

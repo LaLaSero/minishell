@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.c                                         :+:      :+:    :+:   */
+/*   not_used_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 19:18:43 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/26 15:39:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:26:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int duplicate_fd(int fd)
 }
 
 
-void redirect(int targetfd, char *filename)
+void	redirect(int targetfd, char *filename)
 {
-	int fd;
-	int stashed_target_fd;
+	int	fd;
+	int	stashed_target_fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
@@ -59,7 +59,7 @@ void redirect(int targetfd, char *filename)
 	dup2(stashed_target_fd, targetfd);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	(void)argv;
 	// int fd = open("sample.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);

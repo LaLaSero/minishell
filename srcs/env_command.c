@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/23 13:05:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:28:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_map *envmap;
 
-int	env_command()
+int	env_command(void)
 {
 	t_var	*cur;
 
