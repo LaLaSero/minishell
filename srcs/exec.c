@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/04 20:58:38 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/04 21:51:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,39 @@ int	exec_builtin(t_node *command)
 		builtin_pwd();
 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
 		builtin_unset();
-	return(FAILURE);
+	return (FAILURE);
+}
+
+int	get_filefd(t_node *node)
+{
+	if (node == NULL)
+		return (SUCCESS);
+	if (node->kind == ND_PIPELINE)
+	{
+		if (get_filefd(node->command) == EXIT_FAILURE)
+			return (FAILURE);
+		if (get_filefd(node->next) == FAILURE)
+			return (FAILURE);
+		return (SUCCESS);
+	}
+	else if (node->kind == ND_SIMPLE_CMD)
+		return (get_filefd(node->redirect));
+	else if (node->kind == ND_REDIR_OUT)
+		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (node->kind == ND_REDIR_IN)
+		node->filefd = open(node->filename->word, O_RDONLY);
+	else if (node->kind == ND_REDIR_HEREDOC)
+		node ->filefd = open_heredoc();
+	else
+	{
+		fatal_error("get filefd");
+		return (FAILURE);
+	}
+	if (node->filefd < 0)
+	{
+		fatal_error("open error");
+		return (FAILURE);
+	}
 }
 
 int	exec(t_node *node)
