@@ -3,48 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/04 21:51:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:16:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// int	isbuiltin(t_node *command)
+// {
+// 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
+// 		return (1);
+// 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
+// 		return (1);
+// 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
+// 		return (1);
+// 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
+// 		return (1);
+// 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
+// 		return (1);
+// 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
+// 		return (1);
+// 	return (0);
+// }
 
-int	isbuiltin(t_node *command)
+// int	exec_builtin(t_node *command)
+// {
+// 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
+// 		builtin_cd(command);
+// 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
+// 		builtin_echo(command);
+// 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
+// 		builtin_exit(1);
+// 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
+// 		builtin_export(command);
+// 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
+// 		builtin_pwd();
+// 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
+// 		builtin_unset();
+// 	else if (ft_strncmp(command->args->word, "env", 4) == 0)
+// 		builtin_env();
+// 	return (FAILURE);
+// }
+
+int stash_fd(int fd)
 {
-	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-		return (1);
-	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-		return (1);
-	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-		return (1);
-	else if (ft_strncmp(command->args->word, "export", 7) == 0)
-		return (1);
-	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-		return (1);
-	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-		return (1);
-	return (0);
+	int	stash;
+
+	stash = fcntl(fd, F_DUPFD, 10);
+	if (stash < 0)
+	{
+		fatal_error("stash error");
+		return (FAILURE);
+	}
+	if (close(fd) < 0)
+	{
+		fatal_error("close error");
+		return (FAILURE);
+	}
+	return (stash);
+
 }
 
-int	exec_builtin(t_node *command)
+int open_heredoc(char *delimiter)
 {
-	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-		builtin_cd(command);
-	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-		builtin_echo(command);
-	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-		builtin_exit(1);
-	else if (ft_strncmp(command->args->word, "export", 7) == 0)
-		builtin_export(command);
-	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-		builtin_pwd();
-	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-		builtin_unset();
-	return (FAILURE);
+	char *line;
+	int	pipefd[2];
+
+	if (pipe(pipefd) < 0)
+	{
+		fatal_error("pipe error");
+		return (FAILURE);
+	}
+	while (1)
+	{
+		line = readline("> ");
+		if (line == NULL)
+		{
+			close(pipefd[1]);
+			close(pipefd[0]);
+			return (FAILURE);
+		}
+		if (strncmp(line, delimiter, strlen(delimiter)) == 0)
+		{
+			free(line);
+			break;
+		}
+		write(pipefd[1], line, strlen(line));
+		write(pipefd[1], "\n", 1);
+		free(line);
+	}
 }
 
 int	get_filefd(t_node *node)
@@ -65,8 +115,10 @@ int	get_filefd(t_node *node)
 		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (node->kind == ND_REDIR_IN)
 		node->filefd = open(node->filename->word, O_RDONLY);
+	else if (node->kind == ND_REDIR_APPEND)
+		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (node->kind == ND_REDIR_HEREDOC)
-		node ->filefd = open_heredoc();
+		node ->filefd = open_heredoc(node->delimiter->word);
 	else
 	{
 		fatal_error("get filefd");
@@ -77,21 +129,199 @@ int	get_filefd(t_node *node)
 		fatal_error("open error");
 		return (FAILURE);
 	}
+	node->filefd = stash_fd(node->filefd);
+	return (get_filefd(node->next));
 }
+
+int is_redir_kind(t_node_kind kind)
+{
+	if (kind == ND_REDIR_OUT || kind == ND_REDIR_IN
+		|| kind == ND_REDIR_APPEND || kind == ND_REDIR_HEREDOC)
+		return (true);
+	return (false);
+}
+
+void dup_redirect(t_node *node)
+{
+	if (node == NULL)
+		return ;
+	if (is_redir_kind(node->kind))
+	{
+		if (dup2(node->filefd, node->targetfd) < 0)
+			fatal_error("dup2 error");
+	}
+	else
+	{
+		fatal_error("dup_redirect");
+	}
+	dup_redirect(node->next);
+}
+
+int get_sizeof_token(t_token *args)
+{
+	int		i;
+	t_token	*tmp;
+
+	i = 0;
+	tmp = args;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char **convert_to_argv(t_token *args)
+{
+	int		i;
+	char	**argv;
+	t_token	*tmp;
+
+	i = get_sizeof_token(args);
+	argv = calloc(i + 1, sizeof(*argv));
+	if (argv == NULL)
+		fatal_error("calloc");
+	i = 0;
+	tmp = args;
+	while (tmp)
+	{
+		argv[i] = strdup(tmp->word);
+		tmp = tmp->next;
+		i++;
+	}
+	argv[i] = NULL;
+	return (argv);
+}
+
+void free_argv(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}
+
+void reset_redirect(t_node *node)
+{
+	if (node == NULL)
+		return ;
+	reset_redirect(node->next);
+	if (is_redir_kind(node->kind))
+	{
+		if (close(node->filefd) < 0)
+			fatal_error("close error");
+		if (close(node->targetfd) < 0)
+			fatal_error("close error");
+		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
+			fatal_error("dup2 error");
+	}
+	
+}
+
+extern t_map *envmap;
+
+// void show_argv(char **argv)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (argv[i])
+// 	{
+// 		printf("argv[%d]: %s\n", i, argv[i]);
+// 		i++;
+// 	}
+// }
+
+// void show_envp(char **envp)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		printf("envp[%d]: %s\n", i, envp[i]);
+// 		i++;
+// 	}
+// }
+
+int exec_nonbuiltin(t_node *node)
+{
+	char *path;
+	char **argv;
+	extern char **environ;
+
+	dup_redirect(node->command->redirect);
+	argv = convert_to_argv(node->command->args);
+	execute_command(argv, get_environ(envmap));
+	free_argv(argv);
+	reset_redirect(node->command->redirect);
+	fatal_error("execve error");
+}
+
+static void	cpy_pipe(int dst[2], int src[2])
+{
+	dst[0] = src[0];
+	dst[1] = src[1];
+}
+
+void	set_pipe(t_node *node)
+{
+	if (node->next == NULL)
+		return ;
+	pipe(node->outpipe);
+	cpy_pipe(node->next->inpipe, node->outpipe);
+}
+
+pid_t exec_pipeline(t_node *node)
+{
+	pid_t	pid;
+
+	if (node == NULL)
+		return (FAILURE);
+	set_pipe(node);
+	pid = fork();
+	if (pid < 0)
+	{
+		fatal_error("fork error");
+		return (FAILURE);
+	}
+	else if (pid == 0)
+	{
+		exit(exec_nonbuiltin(node));
+		// if (isbuiltin(node))
+		// 	exit(exec_builtin(node));
+		// else
+		// 	exit(exec_nonbuiltin(node));
+	}
+	if (node->next)
+		return (exec_pipeline(node->next));
+	return (pid);
+}
+
 
 int	exec(t_node *node)
 {
 	int	status;
+	pid_t pid_to_wait;
 
 	if (get_filefd(node) == FAILURE)
 		return (FAILURE);
-	if (node->next == NULL && isbuiltin(node->command))
-	{
-		status = exec_builtin(node);
-	}
-	else
-	{
-		status = exec_pipeline(node);
-	}
+	exec_pipeline(node);
+	return 0;
+	// if (node->next == NULL && isbuiltin(node->command))
+	// {
+	// 	status = exec_builtin(node);
+	// }
+	// else
+	// {
+	// 	pid_to_wait = exec_pipeline(node);
+	// 	// status = wait_process(pid_to_wait);
+	// }
 	return (status);
 }

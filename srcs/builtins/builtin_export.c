@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/04 19:08:11 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:05:44 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_map *envmap;
 
 static void _show_declare(void)
 {
@@ -28,7 +30,7 @@ static void _show_declare(void)
 }
 
 // export KEY1=VALUE1 KEY2=VALUE2 ...
-int exe_export(char **argv)
+int builtin_export(char **argv)
 {
 	int i;
 

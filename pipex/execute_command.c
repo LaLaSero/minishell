@@ -6,11 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/02/15 01:19:12 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:31:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 static void	free_str(char **path)
 {
@@ -54,7 +55,7 @@ static char	*find_path_list(char **envp)
 	if (path_list == NULL)
 	{
 		write(2, "No such file or directory\n", 26);
-		exit(-1);
+		return (NULL);
 	}
 	return (path_list);
 }
@@ -126,13 +127,17 @@ static char	*find_accessible_path(char *path_list, char *command)
 // }
 
 
-
 void	execute_command(char **command_splitted, char **envp)
 {
 	char	*path_list;
 	char	*accessible_path;
 
 	path_list = find_path_list(envp);
+	if (!path_list)
+	{
+		printf("NULL\n");
+		exit(-1);
+	}
 	if (is_fullpath(command_splitted[0]) == 1)
 		accessible_path = ft_strdup(command_splitted[0]);
 	else if (is_fullpath(command_splitted[0]) == 2)

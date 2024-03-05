@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/04 20:25:09 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:54:25 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
 
 # define STDOUT 1
 # define STDERR 2
@@ -64,6 +67,8 @@ struct s_node {
 	t_node *command;
 	int targetfd;
 	int filefd;
+	int stashed_targetfd;
+	t_token *delimiter;
 };
 
 
@@ -121,6 +126,13 @@ t_node *redirect_append(t_token **tok_loc, t_token *tok);
 t_node *new_node(t_node_kind kind);
 void append_node(t_node **node_loc, t_node *node);
 t_token	*tokdup(t_token *tok);
+int	exec(t_node *node);
+char **get_environ(t_map *map);
+size_t get_sizeof_map(t_map *map);
+char	*get_value(char *key);
+void	execute_command(char **command_splitted, char **envp);
+void make_map(void);
+char	*get_full_sentence(t_var *var);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

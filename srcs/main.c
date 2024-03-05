@@ -2,12 +2,11 @@
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
 # include "../includes/pipex.h"
-# include <readline/readline.h>
-# include <readline/history.h>
 
 void minishell(char **envp);
 
 t_status status = {};
+t_map *envmap;
 
 int main(int argc, char **argv, char **envp)
 {
@@ -89,9 +88,11 @@ void interpret(char *line)
 		}
 		else
 		{
-			show_node(node);
+			// show_node(node);
 			// expand(node);
 			// status.exit_status = execute(node);
+			make_map();
+			status.exit_status = exec(node);
 		}
 	}
 	free_node(node);

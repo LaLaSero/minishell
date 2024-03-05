@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/04 18:32:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:29:47 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_map *envmap;
-
-// void	perror_prefix(void)
-// {
-// 	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
-// }
-
-// void	fatal_error(const char *msg)
-// {
-// 	perror_prefix();
-// 	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
-// 	exit(1);
-// }
+extern t_map *envmap;
 
 t_var	*new_var(char *key, char *value)
 {
@@ -152,7 +140,7 @@ void make_map(void)
 {
 	char			cwd[PATH_MAX];
 	extern char		**environ;
-	extern t_map	map;
+	// extern t_map	map;
 
 	envmap = init_map();
 	while (*environ)
@@ -160,11 +148,11 @@ void make_map(void)
 		add_var(envmap, *environ, false);
 		environ++;
 	}
-	if (get_value("PWD") == NULL)
-	{
-		getcwd(cwd, PATH_MAX);
-		map_set(map, "PWD", cwd);
-	}
+	// if (get_value("PWD") == NULL)
+	// {
+	// 	getcwd(cwd, PATH_MAX);
+	// 	map_set(map, "PWD", cwd);
+	// }
 }
 
 char	*get_value(char *key)
@@ -181,6 +169,45 @@ char	*get_value(char *key)
 		cur = cur->next;
 	}
 	return (NULL);
+}
+
+size_t get_sizeof_map(t_map *map)
+{
+	size_t i;
+	t_var *cur;
+
+	i = 0;
+	cur = map->item_head.next;
+	while (cur)
+	{
+		i++;
+		cur = cur->next;
+	}
+	return (i);
+}
+
+char **get_environ(t_map *map)
+{
+	size_t i;
+	size_t size;
+	t_var *cur;
+	char **environ;
+
+	size = get_sizeof_map(map);
+	environ = calloc(size + 1, sizeof(char *));
+	i = 0;
+	cur = map->item_head.next;
+	while (cur)
+	{
+		environ[i] = get_full_sentence(cur);
+		if (environ[i] == NULL)
+			fatal_error("calloc");
+		// sprintf(environ[i], "%s=%s", cur->key, cur->value);
+		i++;
+		cur = cur->next;
+	}
+	environ[i] = NULL;
+	return (environ);
 }
 
 // char *extract_key(char *line)
@@ -211,3 +238,21 @@ char	*get_value(char *key)
 // static void destructor() {
 //     system("leaks -q a.out");
 // }
+
+char	*get_full_sentence(t_var *var)
+{
+	size_t	strsize;
+	char	*string;
+
+	strsize = strlen(var->key) + 2;
+	if (var->value)
+		strsize += strlen(var->value);
+	string = malloc(strsize);
+	strlcpy(string, var->key, strsize);
+	if (var->value)
+	{
+		strlcat(string, "=", strsize);
+		strlcat(string, var->value, strsize);
+	}
+	return (string);
+}
