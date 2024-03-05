@@ -64,8 +64,8 @@ void free_node(t_node *node)
 	free_token(node->args);
 	free_token(node->filename);
 	free_node(node->redirect);
-	free_node(node->command);
 	free_node(node->next);
+	free_node(node->command);
 	free(node);
 }
 
@@ -101,7 +101,6 @@ void interpret(char *line)
 
 void minishell(char **envp)
 {
-	char	*line;
 	int		status;
 
 	rl_outstream = stderr;
@@ -111,13 +110,17 @@ void minishell(char **envp)
 	{
 		char *line;
 		line = readline("minishell$ ");
-		if (line == NULL || ft_strncmp(line, "exit", 4) == 0)
+		if (line == NULL)
+			break;
+		if (ft_strncmp(line, "exit", 4) == 0)
 		{
 			exit (status);
 		}
 		if (*line)
 			add_history(line);
-		interpret(line);
+		if (ft_strncmp(line, "\0", 1) != 0)
+			interpret(line);
 		free(line);
 	}
+	exit(status);
 }

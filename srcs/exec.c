@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/05 18:59:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:49:06 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ pid_t exec_pipeline(t_node *node)
 		// else
 		// 	exit(exec_nonbuiltin(node));
 	}
+	wait(NULL);
 	reset_parent_pipe(node);
 	if (node->next)
 		return (exec_pipeline(node->next));
