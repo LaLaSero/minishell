@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/05 18:16:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:59:36 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,16 @@ void	set_pipe(t_node *node)
 	cpy_pipe(node->next->inpipe, node->outpipe);
 }
 
+void reset_parent_pipe(t_node *node)
+{
+	if (node->inpipe[0] != STDIN_FILENO)
+		if (close(node->inpipe[0]) < 0)
+			fatal_error("close error");
+	if (node->next)
+		if (close(node->outpipe[1]) < 0)
+			fatal_error("close error");
+}
+
 pid_t exec_pipeline(t_node *node)
 {
 	pid_t	pid;
@@ -299,6 +309,7 @@ pid_t exec_pipeline(t_node *node)
 		// else
 		// 	exit(exec_nonbuiltin(node));
 	}
+	reset_parent_pipe(node);
 	if (node->next)
 		return (exec_pipeline(node->next));
 	return (pid);

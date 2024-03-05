@@ -91,7 +91,7 @@ void interpret(char *line)
 			// show_node(node);
 			// expand(node);
 			// status.exit_status = execute(node);
-			make_map();
+			// make_map();
 			status.exit_status = exec(node);
 		}
 	}
@@ -106,6 +106,7 @@ void minishell(char **envp)
 
 	rl_outstream = stderr;
 	status = 0;
+	make_map();
 	while(1)
 	{
 		char *line;
