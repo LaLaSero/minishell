@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/05 17:54:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/08 01:34:33 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,12 @@ char	*get_value(char *key);
 void	execute_command(char **command_splitted, char **envp);
 void make_map(void);
 char	*get_full_sentence(t_var *var);
+int builtin_export(char **argv);
+int	add_var(t_map *map, char *line, bool null_value);
+int	builtin_env(void);
+int builtin_unset(char **argv);
+int remove_var(t_map *map, char *key);
+int builtin_pwd(void);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

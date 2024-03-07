@@ -6,15 +6,16 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/05 18:08:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/08 01:35:07 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
+# include "../libft/libft.h"
 
 // stat関数使って現在のディレクトリとしているパスと
 // 環境変数のPWDが一致しているか確認する関数を作成する
-int builtin_pwd(char **argv)
+int builtin_pwd(void)
 {
 	char *path;
 

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/05 18:05:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/08 00:11:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static void _show_declare(void)
 int builtin_export(char **argv)
 {
 	int i;
+	int status;
 
+	status = SUCCESS;
 	if (!argv[1])
 	{
 		_show_declare();
@@ -45,9 +47,9 @@ int builtin_export(char **argv)
 		if (add_var(envmap, argv[1], false) == FAILURE)
 		{
 			dprintf(STDERR_FILENO, "export: '%s': not a valid identifier\n", *argv);
-			return (FAILURE);
+			status = FAILURE;
 		}
 		i++;
 	}
-	return (SUCCESS);
+	return (status);
 }

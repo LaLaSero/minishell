@@ -6,8 +6,31 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/05 18:04:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/08 01:06:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
+
+extern t_map *envmap;
+
+int builtin_unset(char **argv)
+{
+	int i;
+	int status;
+
+	status = SUCCESS;
+	i = 0;
+	while (argv[i])
+	{
+		if (remove_var(envmap, argv[i]) == FAILURE)
+		{
+			dprintf(STDERR_FILENO, "unset: '%s': not a valid identifier\n", argv[i]);
+			status = FAILURE;
+		}
+		else
+			status = FAILURE;
+		i++;
+	}
+	return (status);
+}

@@ -91,7 +91,6 @@ void interpret(char *line)
 			// show_node(node);
 			// expand(node);
 			// status.exit_status = execute(node);
-			// make_map();
 			status.exit_status = exec(node);
 		}
 	}
@@ -111,7 +110,7 @@ void minishell(char **envp)
 		char *line;
 		line = readline("minishell$ ");
 		if (line == NULL)
-			break;
+			break ;
 		if (ft_strncmp(line, "exit", 4) == 0)
 		{
 			exit (status);

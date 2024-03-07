@@ -6,47 +6,62 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/05 20:49:06 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/08 01:32:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../libft/libft.h"
 
-// int	isbuiltin(t_node *command)
-// {
+char **convert_to_argv(t_token *args);
+void dup_redirect(t_node *node);
+void free_argv(char **argv);
+void reset_redirect(t_node *node);
+
+int	isbuiltin(t_node *command)
+{
+	// printf("isbuiltin\n");
 // 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
 // 		return (1);
 // 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
 // 		return (1);
 // 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
 // 		return (1);
-// 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
-// 		return (1);
-// 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-// 		return (1);
-// 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-// 		return (1);
-// 	return (0);
-// }
+	if (ft_strncmp(command->args->word, "export", 7) == 0)
+		return (true);
+	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
+		return (1);
+	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
+		return (1);
+	else if (ft_strncmp(command->args->word, "env", 4) == 0)
+		return (true);
+	return (false);
+}
 
-// int	exec_builtin(t_node *command)
-// {
-// 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-// 		builtin_cd(command);
-// 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-// 		builtin_echo(command);
-// 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-// 		builtin_exit(1);
-// 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
-// 		builtin_export(command);
-// 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-// 		builtin_pwd();
-// 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-// 		builtin_unset();
-// 	else if (ft_strncmp(command->args->word, "env", 4) == 0)
-// 		builtin_env();
-// 	return (FAILURE);
-// }
+int	exec_builtin(t_node *node)
+{
+	char **argv;
+	printf("exec_builtin\n");
+	dup_redirect(node->command->redirect);
+	argv = convert_to_argv(node->command->args);
+	// if (ft_strncmp(command->args->word, "cd", 3) == 0)
+	// 	builtin_cd(command);
+	// else if (ft_strncmp(command->args->word, "echo", 5) == 0)
+	// 	builtin_echo(command);
+	// else if (ft_strncmp(command->args->word, "exit", 5) == 0)
+	// 	builtin_exit(1);
+	if (ft_strncmp(node->command->args->word, "export", 7) == 0)
+		builtin_export(argv);
+	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
+		builtin_pwd();
+	else if (ft_strncmp(node->command->args->word, "unset", 6) == 0)
+		builtin_unset(&argv[1]);
+	else if (ft_strncmp(node->command->args->word, "env", 4) == 0)
+		builtin_env();
+	free_argv(argv);
+	reset_redirect(node->command->redirect);
+	return (FAILURE);
+}
 
 int stash_fd(int fd)
 {
@@ -221,7 +236,6 @@ void reset_redirect(t_node *node)
 		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
 			fatal_error("dup2 error");
 	}
-	
 }
 
 extern t_map *envmap;
@@ -304,8 +318,11 @@ pid_t exec_pipeline(t_node *node)
 	else if (pid == 0)
 	{
 		exit(exec_nonbuiltin(node));
-		// if (isbuiltin(node))
+		// if (isbuiltin(node) == true)
+		// {
+		// 	printf("isbuiltindesu\n");
 		// 	exit(exec_builtin(node));
+		// }
 		// else
 		// 	exit(exec_nonbuiltin(node));
 	}
@@ -316,6 +333,17 @@ pid_t exec_pipeline(t_node *node)
 	return (pid);
 }
 
+int wait_process(pid_t pid)
+{
+	int	status;
+
+	if (waitpid(pid, &status, 0) < 0)
+	{
+		fatal_error("waitpid error");
+		return (FAILURE);
+	}
+	return (status);
+}
 
 int	exec(t_node *node)
 {
@@ -324,16 +352,16 @@ int	exec(t_node *node)
 
 	if (get_filefd(node) == FAILURE)
 		return (FAILURE);
-	exec_pipeline(node);
-	return 0;
-	// if (node->next == NULL && isbuiltin(node->command))
-	// {
-	// 	status = exec_builtin(node);
-	// }
-	// else
-	// {
-	// 	pid_to_wait = exec_pipeline(node);
-	// 	// status = wait_process(pid_to_wait);
-	// }
+	// exec_pipeline(node);
+	// return 0;
+	if (node->next == NULL && isbuiltin(node->command))
+	{
+		status = exec_builtin(node);
+	}
+	else
+	{
+		pid_to_wait = exec_pipeline(node);
+		status = wait_process(pid_to_wait);
+	}
 	return (status);
 }
