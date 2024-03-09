@@ -10,6 +10,7 @@ t_map *envmap;
 
 int main(int argc, char **argv, char **envp)
 {
+	status.had_error = false;
 	(void)argv;
 	if (argc == 1)
 		minishell(envp);
@@ -74,15 +75,20 @@ void interpret(char *line)
 	t_token *tok;
 	t_node  *node;
 
+	status.had_error = false;
 	tok = tokenize(line);
-	if(status.had_error)
+	if (tok->kind == TK_EOF)
+	{
+		;
+	}
+	else if(status.had_error)
 	{
 		status.exit_status = ERROR_IN_TOKENIZE;
 	}
 	else
 	{
 		node = parse(tok);
-		if(status.had_error)
+		if(status.had_error == true)
 		{
 			status.exit_status = ERROR_IN_PARSE;
 		}
@@ -93,8 +99,8 @@ void interpret(char *line)
 			// status.exit_status = execute(node);
 			status.exit_status = exec(node);
 		}
+		free_node(node);
 	}
-	free_node(node);
 	free_token(tok);
 }
 
@@ -117,8 +123,7 @@ void minishell(char **envp)
 		}
 		if (*line)
 			add_history(line);
-		if (ft_strncmp(line, "\0", 1) != 0)
-			interpret(line);
+		interpret(line);
 		free(line);
 	}
 	exit(status);

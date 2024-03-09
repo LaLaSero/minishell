@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/08 01:32:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:22:50 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,17 @@ void reset_parent_pipe(t_node *node)
 			fatal_error("close error");
 }
 
+void set_child_pipe(t_node *node)
+{
+	close(node->outpipe[0]);
+	dup2(node->outpipe[0], STDIN_FILENO);
+	if (node->inpipe[0] != STDIN_FILENO)
+		close(node->inpipe[0]);
+	dup2(node->inpipe[1], STDOUT_FILENO);
+	if (node->outpipe[1] != STDOUT_FILENO)
+		close(node->outpipe[1]);
+}
+
 pid_t exec_pipeline(t_node *node)
 {
 	pid_t	pid;
@@ -317,6 +328,7 @@ pid_t exec_pipeline(t_node *node)
 	}
 	else if (pid == 0)
 	{
+		set_child_pipe(node);
 		exit(exec_nonbuiltin(node));
 		// if (isbuiltin(node) == true)
 		// {
@@ -337,10 +349,20 @@ int wait_process(pid_t pid)
 {
 	int	status;
 
-	if (waitpid(pid, &status, 0) < 0)
+	while (1)
 	{
-		fatal_error("waitpid error");
-		return (FAILURE);
+		
+		if (waitpid(pid, &status, 0) < 0)
+		{
+			if (errno == ECHILD)
+				break ;
+			if (errno == EINTR)
+				continue ;
+			else
+				fatal_error("waitpid error");
+			return (FAILURE);
+		}
+		
 	}
 	return (status);
 }

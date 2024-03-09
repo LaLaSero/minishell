@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/08 00:06:01 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/10 00:13:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 
 t_token	*tokdup(t_token *tok);
-
+extern t_status	status;
 
 bool	is_op(t_token *tok, char *op)
 {
@@ -128,7 +128,7 @@ void	append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 	}
 	else
 	{
-		parse_error(cur, tok_list);
+		parse_error(cur, &cur);
 		printf("Unexpected token\n");
 	}
 	*tok_list = cur;
@@ -162,7 +162,6 @@ t_node *pipeline(t_token **tok, t_token *cur)
 	node->command = simple_command(&cur, cur);
 	if (is_op(cur, "|"))
 	{
-		printf("pipeline found\n");
 		node->next = pipeline(&cur, cur->next);
 	}
 	*tok = cur;

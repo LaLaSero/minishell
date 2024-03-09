@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:34:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/04 18:26:10 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:35:13 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	quote_removal(t_token *tok)
 	tok->word = new_word;
 	quote_removal(tok->next);
 }
-
 
 t_token	*expand_token(t_token *tok)
 {

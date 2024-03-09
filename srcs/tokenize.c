@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 // #define ERROR_PREFIX "minishell: "
+extern t_status status;
 
 t_token	*new_token(char *word, t_token_kind kind)
 {
@@ -86,6 +87,7 @@ t_token	*operator(char **line_loc, char *line)
 		i++;
 	}
 	assert_error("Unexpected operator");
+	status.had_error = true;
 	return (NULL);
 }
 
@@ -106,6 +108,7 @@ t_token *word(char **line_loc, char *line) {
 			{
 				fatal_error("Unclosed single quote");
 				// exit(1);
+				status.had_error = true;
 				tokenize_error(line, line_loc);
 			}
 			else
@@ -135,11 +138,17 @@ t_token *word(char **line_loc, char *line) {
 	
 }
 
-void delete_space(char **line_loc, char *line)
+int delete_space(char **line_loc, char *line)
 {
-	while (*line && is_space(*line))
-		line++;
+	if (is_space(*line))
+	{
+		while (*line && is_space(*line))
+			line++;
+		*line_loc = line;
+		return (true);
+	}
 	*line_loc = line;
+	return (false);
 }
 
 t_token	*tokenize(char *line)
@@ -151,7 +160,8 @@ t_token	*tokenize(char *line)
 	tok = &head;
 	while (*line)
 	{
-		delete_space(&line, line);
+		if (delete_space(&line, line) == true)
+			continue;
 		if (is_metacharacter(*line))
 		{
 			tok->next = operator(&line, line);
@@ -163,7 +173,10 @@ t_token	*tokenize(char *line)
 			tok = tok->next;
 		}
 		else
+		{
 			assert_error("Unexpected Token");
+			status.had_error = true;
+		}
 	}
 	tok->next = new_token(NULL, TK_EOF);
 	return (head.next);

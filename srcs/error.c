@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/04 18:20:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:35:36 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void parse_error(t_token *tok, t_token **tol_list)
 	*tol_list = tok;
 }
 
-void tokenize_error(char *line, char **line_loc)
+void	tokenize_error(char *line, char **line_loc)
 {
 	size_t	i;
-	extern t_status status;
+	extern t_status	status;
 
 	status.had_error = true;
 	// perror_prefix();
