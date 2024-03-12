@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/09 19:51:58 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:36:47 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char	*get_value(char *key)
 	cur = envmap->item_head.next;
 	while (cur)
 	{
-		if (strncmp(key, cur->key, strlen(key)) == 0)
+		if (strncmp(key, cur->key, strlen(key) + 1) == 0)
 			return (cur->value);
 		cur = cur->next;
 	}

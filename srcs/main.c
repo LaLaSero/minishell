@@ -8,9 +8,17 @@ void minishell(char **envp);
 t_status status = {};
 t_map *envmap;
 
-int main(int argc, char **argv, char **envp)
+void init_status(void)
 {
 	status.had_error = false;
+	status.exit_status = 0;
+	status.signal = 0;
+	status.is_interrupted = false;
+}
+
+int main(int argc, char **argv, char **envp)
+{
+	init_status();
 	(void)argv;
 	if (argc == 1)
 		minishell(envp);
@@ -78,9 +86,7 @@ void interpret(char *line)
 	status.had_error = false;
 	tok = tokenize(line);
 	if (tok->kind == TK_EOF)
-	{
 		;
-	}
 	else if(status.had_error)
 	{
 		status.exit_status = ERROR_IN_TOKENIZE;

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/09 22:49:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:00:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ struct s_var {
 
 typedef struct g_status {
 	bool 	had_error;
-	int		exit_status;
-	
+	long	exit_status;
+	int		signal;
+	int		is_interrupted;
 }	t_status;
 
 typedef struct s_map	t_map;
@@ -140,6 +141,7 @@ int builtin_unset(char **argv);
 int remove_var(t_map *map, char *key);
 int builtin_pwd(void);
 int builtin_echo(char **argv);
+int builtin_cd(char **argv);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

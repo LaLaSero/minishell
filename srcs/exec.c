@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/09 23:22:50 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/12 00:59:29 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void reset_redirect(t_node *node);
 int	isbuiltin(t_node *command)
 {
 	// printf("isbuiltin\n");
-// 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-// 		return (1);
-// 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-// 		return (1);
+	if (ft_strncmp(command->args->word, "cd", 3) == 0)
+		return (1);
+	if (ft_strncmp(command->args->word, "echo", 5) == 0)
+		return (1);
 // 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
 // 		return (1);
-	if (ft_strncmp(command->args->word, "export", 7) == 0)
+	else if (ft_strncmp(command->args->word, "export", 7) == 0)
 		return (true);
 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
 		return (1);
@@ -41,16 +41,16 @@ int	isbuiltin(t_node *command)
 int	exec_builtin(t_node *node)
 {
 	char **argv;
-	printf("exec_builtin\n");
+
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
-	// if (ft_strncmp(command->args->word, "cd", 3) == 0)
-	// 	builtin_cd(command);
-	// else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-	// 	builtin_echo(command);
+	if (ft_strncmp(node->command->args->word, "cd", 3) == 0)
+		builtin_cd(argv);
+	else if (ft_strncmp(node->command->args->word, "echo", 5) == 0)
+		builtin_echo(argv);
 	// else if (ft_strncmp(command->args->word, "exit", 5) == 0)
 	// 	builtin_exit(1);
-	if (ft_strncmp(node->command->args->word, "export", 7) == 0)
+	else if (ft_strncmp(node->command->args->word, "export", 7) == 0)
 		builtin_export(argv);
 	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
 		builtin_pwd();
