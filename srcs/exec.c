@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/12 00:59:29 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:36:14 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,10 +305,10 @@ void reset_parent_pipe(t_node *node)
 void set_child_pipe(t_node *node)
 {
 	close(node->outpipe[0]);
-	dup2(node->outpipe[0], STDIN_FILENO);
+	dup2(node->inpipe[0], STDIN_FILENO);
 	if (node->inpipe[0] != STDIN_FILENO)
 		close(node->inpipe[0]);
-	dup2(node->inpipe[1], STDOUT_FILENO);
+	dup2(node->outpipe[1], STDOUT_FILENO);
 	if (node->outpipe[1] != STDOUT_FILENO)
 		close(node->outpipe[1]);
 }

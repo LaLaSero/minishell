@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/12 11:08:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:28:10 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void update_oldpwd(char *pwd_value)
 	char *oldpwd_value;
 
 	if (pwd_value == NULL)
-		add_var(envmap, "OLDPWD=NULL", true);
+		add_var(envmap, "OLDPWD", true);
 	else
 	{
 		oldpwd_value = ft_strjoin("OLDPWD=", pwd_value);
-		add_var(envmap, oldpwd_value, true);
+		add_var(envmap, oldpwd_value, false);
 		free(oldpwd_value);
 	}
 }
