@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 19:00:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:49:16 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static int monitor_readline(void)
 		status.is_interrupted = true;
 		rl_replace_line("", 0);
 		rl_done = true;
+	}
+	else if (status.signal == SIGQUIT)
+	{
+		printf("exit\n");
 	}
 	return (0);
 }

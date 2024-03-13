@@ -124,10 +124,10 @@ void minishell(char **envp)
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		if (ft_strncmp(line, "exit", 4) == 0)
-		{
-			exit (status);
-		}
+		// if (ft_strncmp(line, "exit", 4) == 0)
+		// {
+		// 	exit (status);
+		// }
 		if (*line)
 			add_history(line);
 		interpret(line);
@@ -135,3 +135,8 @@ void minishell(char **envp)
 	}
 	exit(status);
 }
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q minishell");
+// }

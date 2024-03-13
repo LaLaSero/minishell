@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/13 17:11:17 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 21:14:07 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	isbuiltin(t_node *command)
 		return (1);
 	if (ft_strncmp(command->args->word, "echo", 5) == 0)
 		return (1);
-// 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-// 		return (1);
+	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
+		return (1);
 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
 		return (true);
 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
@@ -48,8 +48,8 @@ int	exec_builtin(t_node *node)
 		builtin_cd(argv);
 	else if (ft_strncmp(node->command->args->word, "echo", 5) == 0)
 		builtin_echo(argv);
-	// else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-	// 	builtin_exit(1);
+	else if (ft_strncmp(node->command->args->word, "exit", 5) == 0)
+		builtin_exit(argv);
 	else if (ft_strncmp(node->command->args->word, "export", 7) == 0)
 		builtin_export(argv);
 	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
