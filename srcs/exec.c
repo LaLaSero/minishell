@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/13 15:36:14 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:11:17 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int open_heredoc(char *delimiter)
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}
+	return (SUCCESS);
 }
 
 int	get_filefd(t_node *node)

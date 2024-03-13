@@ -117,6 +117,7 @@ void minishell(char **envp)
 	rl_outstream = stderr;
 	status = 0;
 	make_map();
+	setup_signal();
 	while(1)
 	{
 		char *line;

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/10 03:22:23 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:00:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 #include <readline/readline.h>
 
 extern t_status status;
-extern rl_event_hook_func_t *rl_event_hook;
 extern int rl_done;
 
 
 static int monitor_readline(void)
 {
-	if (status.signal == SIGINT)
+	if (status.signal == 0)
+		return (0);
+	else if (status.signal == SIGINT)
 	{
 		status.signal =  0;
 		status.is_interrupted = true;
@@ -58,7 +59,7 @@ void disable_signal(int signum)
 		fatal_error("sigaction");
 }
 
-void set_signal(int signum)
+void report_signal(int signum)
 {
 	status.signal = signum;
 }
@@ -69,12 +70,12 @@ void modify_signal(int signum)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	sa.sa_handler = set_signal;
+	sa.sa_handler = report_signal;
 	if (sigaction(signum, &sa, NULL) < 0)
 		fatal_error("sigaction");
 }
 
-void	setup_signal(int signum)
+void	setup_signal(void)
 {
 	extern int _rl_echo_control_chars;
 
@@ -86,5 +87,4 @@ void	setup_signal(int signum)
 	}
 	disable_signal(SIGQUIT);
 	modify_signal(SIGINT);
-	
 }

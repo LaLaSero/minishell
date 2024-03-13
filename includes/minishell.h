@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/12 01:00:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:35:50 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int remove_var(t_map *map, char *key);
 int builtin_pwd(void);
 int builtin_echo(char **argv);
 int builtin_cd(char **argv);
+void	setup_signal(void);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'
