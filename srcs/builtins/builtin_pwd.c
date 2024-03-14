@@ -6,28 +6,49 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/09 19:51:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:30:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
 # include "../libft/libft.h"
 
-// stat関数使って現在のディレクトリとしているパスと
-// 環境変数のPWDが一致しているか確認する関数を作成する
+bool is_correct_cwd(char *pwd)
+{
+	struct stat stat_pwd, stat_cwd;
+
+	if (stat(pwd, &stat_pwd) != 0)
+	{
+		return false;
+	}
+	if (stat(".", &stat_cwd) != 0)
+	{
+		return false;
+	}
+	return (stat_pwd.st_ino == stat_cwd.st_ino
+			&& stat_pwd.st_dev == stat_cwd.st_dev);
+}
+
 int builtin_pwd(void)
 {
-	char *path;
+	char	*pwd;
+	char	cwd[PATH_MAX];
 
-	path = get_value("PWD");
-	if (path == NULL)
+	pwd = get_value("PWD");
+	if (pwd == NULL || is_correct_cwd(pwd) == false)
 	{
-		ft_putendl_fd("minishell: pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", STDERR);
-		return (FAILURE);
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+		{
+			printf("cwd is NULL\n");
+			return (FAILURE);
+		}
+		write(STDOUT, cwd, ft_strlen(cwd));
+		write(STDOUT, "\n", 1);
+		return (SUCCESS);
 	}
 	else
 	{
-		write(STDOUT, path, ft_strlen(path));
+		write(STDOUT, pwd, ft_strlen(pwd));
 		write(STDOUT, "\n", 1);
 		return (SUCCESS);
 	}

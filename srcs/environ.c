@@ -6,11 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 15:27:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:34:51 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../libft/libft.h"
 
 extern t_map *envmap;
 
@@ -147,7 +148,7 @@ void make_map(void)
 {
 	char			cwd[PATH_MAX];
 	extern char		**environ;
-	// extern t_map	map;
+	char 			*temp;
 
 	envmap = init_map();
 	while (*environ)
@@ -155,11 +156,13 @@ void make_map(void)
 		add_var(envmap, *environ, false);
 		environ++;
 	}
-	// if (get_value("PWD") == NULL)
-	// {
-	// 	getcwd(cwd, PATH_MAX);
-	// 	map_set(map, "PWD", cwd);
-	// }
+	if (get_value("PWD") == NULL)
+	{
+		getcwd(cwd, PATH_MAX);
+		temp = ft_strjoin("PWD=", cwd);
+		add_var(envmap, temp, false);
+		free(temp);
+	}
 }
 
 char	*get_value(char *key)

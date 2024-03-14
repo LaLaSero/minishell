@@ -100,9 +100,9 @@ void interpret(char *line)
 		}
 		else
 		{
-			// show_node(node);
-			// expand(node);
+			expand(node);
 			// status.exit_status = execute(node);
+			// show_node(node);
 			status.exit_status = exec(node);
 		}
 		free_node(node);

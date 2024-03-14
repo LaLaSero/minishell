@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/14 04:00:41 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:00:34 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	isbuiltin(t_node *command)
 {
 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
 		return (true);
-	if (ft_strncmp(command->args->word, "echo", 5) == 0)
+	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
 		return (true);
 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
 		return (true);
@@ -348,14 +348,12 @@ pid_t exec_pipeline(t_node *node)
 	else if (pid == 0)
 	{
 		set_child_pipe(node);
-		exit(exec_nonbuiltin(node));
-		// if (isbuiltin(node) == true)
-		// {
-		// 	printf("isbuiltindesu\n");
-		// 	exit(exec_builtin(node));
-		// }
-		// else
-		// 	exit(exec_nonbuiltin(node));
+		if (isbuiltin(node->command) == true)
+		{
+			exit(exec_builtin(node));
+		}
+		else
+			exit(exec_nonbuiltin(node));
 	}
 	wait(NULL);
 	reset_parent_pipe(node);

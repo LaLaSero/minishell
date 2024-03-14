@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 22:04:11 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:28:51 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ bool is_only_digit(char *str)
 	return (true);
 }
 
-int fit_res_to_int(long res)
+int	fit_res_to_int(long res)
 {
 	res = res % 256;
 	if (res < 0)
@@ -80,7 +80,7 @@ int fit_res_to_int(long res)
 	return ((int)res);
 }
 
-void print_exit_error(char *arg, char *message)
+void	print_exit_error(char *arg, char *message)
 {
 	ft_putstr_fd("exit\n", STDERR);
 	ft_putstr_fd("minishell: exit: ", STDERR);

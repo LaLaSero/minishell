@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 15:28:10 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:56:33 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int builtin_cd(char **argv)
 	update_oldpwd(pwd_value);
 	if (argv_to_path(argv, path) == FAILURE)
 		return (FAILURE);
-	printf("path: [%s]\n", path);
 	if (chdir(path) < 0)
 	{
 		dprintf(STDERR_FILENO, "minishell: cd: %s: No such file or directory\n", argv[1]);

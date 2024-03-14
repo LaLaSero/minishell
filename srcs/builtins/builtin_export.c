@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/10 02:36:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:28:16 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static void _show_declare(void)
 }
 
 // export KEY1=VALUE1 KEY2=VALUE2 ...
-int builtin_export(char **argv)
+int	builtin_export(char **argv)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	status = SUCCESS;
 	if (!argv[1])

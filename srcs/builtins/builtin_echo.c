@@ -6,14 +6,14 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/09 22:53:59 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:28:34 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
 # include "../libft/libft.h"
 
-int builtin_echo(char **argv)
+int	builtin_echo(char **argv)
 {
 	int i;
 	int n;
