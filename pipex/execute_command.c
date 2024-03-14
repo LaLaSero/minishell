@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/05 19:05:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:24:00 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static char	*find_path_list(char **envp)
 	}
 	if (path_list == NULL)
 	{
-		printf("No such file or directory path\n");
 		return (NULL);
 	}
 	return (path_list);
@@ -133,18 +132,13 @@ void	execute_command(char **command_splitted, char **envp)
 	char	*accessible_path;
 
 	path_list = find_path_list(envp);
-	if (!path_list)
-	{
-		printf("NULL\n");
-		exit(-1);
-	}
 	if (is_fullpath(command_splitted[0]) == 1)
 		accessible_path = ft_strdup(command_splitted[0]);
-	else if (is_fullpath(command_splitted[0]) == 2)
+	else if (is_fullpath(command_splitted[0]) == 2 || path_list == NULL)
 	{
 		free_str(command_splitted);
 		free(path_list);
-		printf("No such file or directory is full\n");
+		printf("No such file or directory\n");
 		exit(-1);
 	}
 	else
