@@ -42,10 +42,10 @@ SRCS += srcs/builtins/builtin_cd.c srcs/builtins/builtin_exit.c
 SRCS += srcs/builtins/builtin_export.c srcs/builtins/builtin_env.c srcs/builtins/builtin_unset.c
 SRCS += srcs/builtins/builtin_pwd.c srcs/builtins/builtin_echo.c
 INCLUDE = includes
-CC = gcc
+CC = cc
 READLINE_DIR = $(shell brew --prefix readline)
 CFLAGS = -I$(INCLUDE) -I$(READLINE_DIR)/include
-LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+LDFLAGS = -L$(READLINE_DIR)/lib -lreadline
 OBJS = $(SRCS:.c=.o)
 LIBFT = libft/libft.a
 

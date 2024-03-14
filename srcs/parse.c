@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/10 00:13:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 04:01:25 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 //               | '<' <word>
 //               | '>>' <word>
 //               | '<<' <word>
-
+// 
 // 以下のbnf定義を元にパーサーを実装する
 // <pipeline> ::= <pipeline> '|' <command> <pipeline>
 // <command> ::= <simple_command>
@@ -37,7 +37,6 @@
 //                | '>>' <word>
 //                | '<<' <word>
 // source: https://cmdse.github.io/pages/appendix/bash-grammar.html
-
 
 t_token	*tokdup(t_token *tok);
 extern t_status	status;
@@ -125,6 +124,10 @@ void	append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 	else if (is_op(cur, ">>") && cur->next->kind == TK_WORD)
 	{
 		append_node(&command->redirect, redirect_append(&cur, cur));
+	}
+	else if (is_op(cur, "<<") && cur->next->kind == TK_WORD)
+	{
+		append_node(&command->redirect, redirect_heredoc(&cur, cur));
 	}
 	else
 	{

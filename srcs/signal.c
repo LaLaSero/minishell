@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 20:49:16 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:17:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 extern t_status status;
 extern int rl_done;
-
 
 static int monitor_readline(void)
 {

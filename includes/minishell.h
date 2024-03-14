@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 21:14:41 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:18:08 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int builtin_echo(char **argv);
 int builtin_cd(char **argv);
 void	setup_signal(void);
 int builtin_exit(char **argv);
+t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

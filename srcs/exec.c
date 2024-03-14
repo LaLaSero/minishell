@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/13 21:14:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/14 04:00:41 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@ void reset_redirect(t_node *node);
 
 int	isbuiltin(t_node *command)
 {
-	// printf("isbuiltin\n");
 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-		return (1);
+		return (true);
 	if (ft_strncmp(command->args->word, "echo", 5) == 0)
-		return (1);
+		return (true);
 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-		return (1);
+		return (true);
 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
 		return (true);
 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-		return (1);
+		return (true);
 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-		return (1);
+		return (true);
 	else if (ft_strncmp(command->args->word, "env", 4) == 0)
 		return (true);
 	return (false);
@@ -40,7 +39,7 @@ int	isbuiltin(t_node *command)
 
 int	exec_builtin(t_node *node)
 {
-	char **argv;
+	char	**argv;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
@@ -60,7 +59,7 @@ int	exec_builtin(t_node *node)
 		builtin_env();
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
-	return (FAILURE);
+	return (false);
 }
 
 int stash_fd(int fd)
@@ -82,26 +81,16 @@ int stash_fd(int fd)
 
 }
 
-int open_heredoc(char *delimiter)
+void write_user_input_to_pipe(char *delimiter, int pipefd[2])
 {
-	char *line;
-	int	pipefd[2];
+	char			*line;
+	extern t_status	status;
 
-	if (pipe(pipefd) < 0)
-	{
-		fatal_error("pipe error");
-		return (FAILURE);
-	}
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL)
-		{
-			close(pipefd[1]);
-			close(pipefd[0]);
-			return (FAILURE);
-		}
-		if (strncmp(line, delimiter, strlen(delimiter)) == 0)
+		if (line == NULL || strncmp(line, delimiter, strlen(delimiter) + 1) == 0
+			|| status.is_interrupted == true)
 		{
 			free(line);
 			break;
@@ -110,7 +99,35 @@ int open_heredoc(char *delimiter)
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}
-	return (SUCCESS);
+}
+
+int open_heredoc(char *delimiter)
+{
+	char *line;
+	int	pipefd[2];
+	extern t_status status;
+
+	if (pipe(pipefd) < 0)
+	{
+		fatal_error("pipe error");
+		return (FAILURE);
+	}
+	write_user_input_to_pipe(delimiter, pipefd);
+	if (close(pipefd[1]) < 0)
+	{
+		fatal_error("close error");
+		return (FAILURE);
+	}
+	if (status.is_interrupted == true)
+	{
+		if (close(pipefd[0]) < 0)
+		{
+			fatal_error("close error");
+			return (FAILURE);
+		}
+		return (FAILURE);
+	}
+	return (pipefd[0]);
 }
 
 int	get_filefd(t_node *node)
@@ -277,6 +294,7 @@ int exec_nonbuiltin(t_node *node)
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
 	fatal_error("execve error");
+	return (FAILURE);
 }
 
 static void	cpy_pipe(int dst[2], int src[2])
@@ -349,11 +367,20 @@ pid_t exec_pipeline(t_node *node)
 int wait_process(pid_t pid)
 {
 	int	status;
+	int temp_status;
+	pid_t wpid;
 
 	while (1)
 	{
-		
-		if (waitpid(pid, &status, 0) < 0)
+		wpid = wait(&temp_status);
+		if (wpid == pid)
+		{
+			if (WIFSIGNALED(temp_status))
+				status = WTERMSIG(temp_status) + 128;
+			else
+				status = WEXITSTATUS(temp_status);
+		}
+		else if (wpid < 0)
 		{
 			if (errno == ECHILD)
 				break ;
@@ -363,7 +390,6 @@ int wait_process(pid_t pid)
 				fatal_error("waitpid error");
 			return (FAILURE);
 		}
-		
 	}
 	return (status);
 }
@@ -375,8 +401,6 @@ int	exec(t_node *node)
 
 	if (get_filefd(node) == FAILURE)
 		return (FAILURE);
-	// exec_pipeline(node);
-	// return 0;
 	if (node->next == NULL && isbuiltin(node->command))
 	{
 		status = exec_builtin(node);
