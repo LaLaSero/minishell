@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/15 16:38:51 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:56:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 	if (value)
 		while (*value)
 			append_char(dst, *value++);
+	else
+		append_char(dst, '\0');
 	*rest = p;
 }
 

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/14 21:00:34 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:55:05 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,8 @@ char **convert_to_argv(t_token *args)
 	tmp = args;
 	while (tmp)
 	{
-		argv[i] = strdup(tmp->word);
+		if (tmp->word != NULL)
+			argv[i] = strdup(tmp->word);
 		tmp = tmp->next;
 		i++;
 	}
