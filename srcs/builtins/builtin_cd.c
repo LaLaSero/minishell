@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 01:11:39 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:29:01 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 extern t_map *envmap;
 
-void update_oldpwd(char *pwd_value)
+void	update_oldpwd(char *pwd_value)
 {
-	char *oldpwd_value;
+	char	*oldpwd_value;
 
 	if (pwd_value == NULL)
 		add_var(envmap, "OLDPWD", true);
@@ -29,7 +29,7 @@ void update_oldpwd(char *pwd_value)
 	}
 }
 
-bool detect_target(char **path_loc, char *path, char *target)
+bool	detect_target(char **path_loc, char *path, char *target)
 {
 	size_t	len;
 
@@ -45,7 +45,7 @@ bool detect_target(char **path_loc, char *path, char *target)
 	return (false);
 }
 
-void remove_last_dir(char *pwd_value)
+void	remove_last_dir(char *pwd_value)
 {
 	size_t	len;
 
@@ -62,7 +62,7 @@ void remove_last_dir(char *pwd_value)
 	}
 }
 
-void add_dir(char *new_pwd, char *path, char **path_loc)
+void	add_dir(char *new_pwd, char *path, char **path_loc)
 {
 	size_t	len;
 
@@ -75,10 +75,10 @@ void add_dir(char *new_pwd, char *path, char **path_loc)
 	*path_loc = path;
 }
 
-char *update_pwd_value(char *pwd_value, char *path)
+char	*update_pwd_value(char *pwd_value, char *path)
 {
-	char newpwd_value[PATH_MAX];
-	char *res;
+	char	newpwd_value[PATH_MAX];
+	char	*res;
 
 	if (*path == '/' || pwd_value == NULL)
 		ft_strlcpy(newpwd_value, path, PATH_MAX);
@@ -100,9 +100,9 @@ char *update_pwd_value(char *pwd_value, char *path)
 	return (res);
 }
 
-int argv_to_path(char **argv, char *path)
+int	argv_to_path(char **argv, char *path)
 {
-	char *home_value;
+	char	*home_value;
 
 	if (argv[1] == NULL)
 	{
@@ -119,21 +119,21 @@ int argv_to_path(char **argv, char *path)
 	return (SUCCESS);
 }
 
-int builtin_cd(char **argv)
+int	builtin_cd(char **argv)
 {
-	char *pwd_value;
-	char *newpwd_value;
-	char path[PATH_MAX];
-	char *joined_newpwd;
+	char	*pwd_value;
+	char	*newpwd_value;
+	char	path[PATH_MAX];
+	char	*joined_newpwd;
 
 	pwd_value = get_value("PWD");
 	update_oldpwd(pwd_value);
 	if (argv_to_path(argv, path) == FAILURE)
-		return (FAILURE);
+		return (255);
 	if (chdir(path) < 0)
 	{
 		dprintf(STDERR_FILENO, "minishell: cd: %s: No such file or directory\n", argv[1]);
-		return (FAILURE);
+		return (255);
 	}
 	newpwd_value = update_pwd_value(pwd_value, path);
 	joined_newpwd = ft_strjoin("PWD=", newpwd_value);

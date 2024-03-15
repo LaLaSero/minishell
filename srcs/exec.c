@@ -6,12 +6,14 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/16 00:55:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:30:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
+
+extern t_map *envmap;
 
 char **convert_to_argv(t_token *args);
 void dup_redirect(t_node *node);
@@ -40,26 +42,28 @@ int	isbuiltin(t_node *command)
 int	exec_builtin(t_node *node)
 {
 	char	**argv;
+	int		status;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
+	status = 0;
 	if (ft_strncmp(node->command->args->word, "cd", 3) == 0)
-		builtin_cd(argv);
+		status = builtin_cd(argv);
 	else if (ft_strncmp(node->command->args->word, "echo", 5) == 0)
-		builtin_echo(argv);
+		status = builtin_echo(argv);
 	else if (ft_strncmp(node->command->args->word, "exit", 5) == 0)
-		builtin_exit(argv);
+		status = builtin_exit(argv);
 	else if (ft_strncmp(node->command->args->word, "export", 7) == 0)
-		builtin_export(argv);
+		status = builtin_export(argv);
 	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
-		builtin_pwd();
+		status = builtin_pwd();
 	else if (ft_strncmp(node->command->args->word, "unset", 6) == 0)
-		builtin_unset(&argv[1]);
+		status = builtin_unset(&argv[1]);
 	else if (ft_strncmp(node->command->args->word, "env", 4) == 0)
-		builtin_env();
+		status = builtin_env();
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
-	return (false);
+	return (status);
 }
 
 int stash_fd(int fd)
@@ -257,32 +261,6 @@ void reset_redirect(t_node *node)
 	}
 }
 
-extern t_map *envmap;
-
-// void show_argv(char **argv)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (argv[i])
-// 	{
-// 		printf("argv[%d]: %s\n", i, argv[i]);
-// 		i++;
-// 	}
-// }
-
-// void show_envp(char **envp)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		printf("envp[%d]: %s\n", i, envp[i]);
-// 		i++;
-// 	}
-// }
-
 int exec_nonbuiltin(t_node *node)
 {
 	char *path;
@@ -312,7 +290,7 @@ void	set_pipe(t_node *node)
 	cpy_pipe(node->next->inpipe, node->outpipe);
 }
 
-void reset_parent_pipe(t_node *node)
+void set_parent_pipe(t_node *node)
 {
 	if (node->inpipe[0] != STDIN_FILENO)
 		if (close(node->inpipe[0]) < 0)
@@ -348,6 +326,7 @@ pid_t exec_pipeline(t_node *node)
 	}
 	else if (pid == 0)
 	{
+		reset_signals();
 		set_child_pipe(node);
 		if (isbuiltin(node->command) == true)
 		{
@@ -356,8 +335,7 @@ pid_t exec_pipeline(t_node *node)
 		else
 			exit(exec_nonbuiltin(node));
 	}
-	wait(NULL);
-	reset_parent_pipe(node);
+	set_parent_pipe(node);
 	if (node->next)
 		return (exec_pipeline(node->next));
 	return (pid);

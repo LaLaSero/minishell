@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/16 00:56:39 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:39:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void expand_macro(char **dst, char **rest, char *p)
 		assert_error("Expected $? macro");
 	p += ft_strlen("$?");
 	temp = *dst;
-	status.exit_status = 255;
 	*dst = ft_itoa(status.exit_status);
 	free(temp);
 	*rest = p;

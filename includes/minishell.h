@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:31:54 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:38:38 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ struct s_var {
 
 typedef struct g_status {
 	bool 	had_error;
-	long	exit_status;
+	int	exit_status;
 	int		signal;
 	int		is_interrupted;
 }	t_status;
@@ -146,6 +146,7 @@ void	setup_signal(void);
 int builtin_exit(char **argv);
 t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
+void reset_signals(void);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

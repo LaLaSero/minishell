@@ -6,16 +6,17 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:30:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:27:27 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
 # include "../libft/libft.h"
 
-bool is_correct_cwd(char *pwd)
+bool	is_correct_cwd(char *pwd)
 {
-	struct stat stat_pwd, stat_cwd;
+	struct stat	stat_pwd;
+	struct stat	stat_cwd;
 
 	if (stat(pwd, &stat_pwd) != 0)
 	{
@@ -29,7 +30,7 @@ bool is_correct_cwd(char *pwd)
 			&& stat_pwd.st_dev == stat_cwd.st_dev);
 }
 
-int builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*pwd;
 	char	cwd[PATH_MAX];

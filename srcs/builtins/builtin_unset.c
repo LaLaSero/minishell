@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:28:27 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:29:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	builtin_unset(char **argv)
 		if (remove_var(envmap, argv[i]) == FAILURE)
 		{
 			dprintf(STDERR_FILENO, "unset: '%s': not a valid identifier\n", argv[i]);
-			status = FAILURE;
+			status = 255;
 		}
 		else
-			status = FAILURE;
+			status = 255;
 		i++;
 	}
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:28:16 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:29:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 extern t_map *envmap;
 
-static void _show_declare(void)
+static void	_show_declare(void)
 {
-	t_var *cur;
+	t_var	*cur;
 
 	cur = envmap->item_head.next;
 	while (cur)
@@ -47,7 +47,7 @@ int	builtin_export(char **argv)
 		if (add_var(envmap, argv[1], false) == FAILURE)
 		{
 			dprintf(STDERR_FILENO, "export: '%s': not a valid identifier\n", *argv);
-			status = FAILURE;
+			status = 255;
 		}
 		i++;
 	}

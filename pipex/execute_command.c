@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 21:24:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:58:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	*find_accessible_path(char *path_list, char *command)
 	{
 		free_str(path);
 		write(2, "command not found\n", 18);
-		exit(-1);
+		exit(127);
 	}
 	free_str(path);
 	return (accessible_path);
@@ -139,7 +139,7 @@ void	execute_command(char **command_splitted, char **envp)
 		free_str(command_splitted);
 		free(path_list);
 		printf("No such file or directory\n");
-		exit(-1);
+		exit(127);
 	}
 	else
 		accessible_path = find_accessible_path(path_list, command_splitted[0]);

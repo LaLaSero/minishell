@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:28:51 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 01:53:22 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	print_exit_error(char *arg, char *message)
 
 int builtin_exit(char **argv)
 {
-	extern t_status status;
-	bool is_valud;
-	long res;
+	extern t_status	status;
+	bool			is_valud;
+	long			res;
 
 	is_valud = true;
 	if (!argv[1])
