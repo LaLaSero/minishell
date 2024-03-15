@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/14 19:59:31 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:38:51 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,26 @@ bool	is_identifier(const char *s)
 bool	is_variable(char *s)
 {
 	return (s[0] == '$' && is_alpha_under(s[1]));
+}
+
+bool is_macro(char *s)
+{
+	return ((s[0] == '$' && s[1] == '?'));
+}
+
+void expand_macro(char **dst, char **rest, char *p)
+{
+	extern t_status status;
+	char *temp;
+
+	if (is_macro(p) == false)
+		assert_error("Expected $? macro");
+	p += ft_strlen("$?");
+	temp = *dst;
+	status.exit_status = 255;
+	*dst = ft_itoa(status.exit_status);
+	free(temp);
+	*rest = p;
 }
 
 // $variable を展開する
@@ -150,6 +170,8 @@ void	expand_variable_tok(t_token *tok)
 			append_double_quote(&new_word, &old_word, old_word);
 		else if (is_variable(old_word))
 			expand_variable_str(&new_word, &old_word, old_word);
+		else if (is_macro(old_word))
+			expand_macro(&new_word, &old_word, old_word);
 		else
 			append_char(&new_word, *old_word++);
 	}
