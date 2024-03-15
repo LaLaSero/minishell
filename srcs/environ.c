@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/14 19:34:51 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 01:10:47 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int remove_var(t_map *map, char *key)
 	cur = map->item_head.next;
 	while (cur)
 	{
-		if (strncmp(key, cur->key, strlen(key)) == 0)
+		if (strncmp(key, cur->key, strlen(key) + 1) == 0)
 		{
 			prev->next = cur->next;
 			free(cur->key);

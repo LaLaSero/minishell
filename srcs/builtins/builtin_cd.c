@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:32:14 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 01:11:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int argv_to_path(char **argv, char *path)
 	if (argv[1] == NULL)
 	{
 		home_value = get_value("HOME");
-		printf("home_value: %s\n", home_value);
 		if (home_value == NULL)
 		{
 			dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
