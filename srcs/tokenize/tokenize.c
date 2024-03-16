@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:21:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:30:46 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_token *word(char **line_loc, char *line) {
 	
 }
 
-int delete_space(char **line_loc, char *line)
+int	delete_space(char **line_loc, char *line)
 {
 	if (is_space(*line))
 	{

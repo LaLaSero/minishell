@@ -7,6 +7,7 @@ SRCS += srcs/test.c
 SRCS += srcs/exec/exec.c srcs/exec/execute_command.c
 SRCS += srcs/redirect/redirection.c
 SRCS += srcs/error/error.c
+SRCS += srcs/frees/frees.c
 SRCS += srcs/signal/signal.c srcs/signal/signal_utils.c
 SRCS += srcs/environ_map/environ_utils.c srcs/environ_map/map_utils.c srcs/environ_map/map_init.c
 SRCS += srcs/builtins/cd_dir/builtin_cd.c srcs/builtins/cd_dir/cd_utils.c

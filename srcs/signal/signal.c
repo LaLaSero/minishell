@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 18:47:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:43:44 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern t_status status;
 void disable_signal(int signum);
 void report_signal(int signum);
 
-static int monitor_readline(void)
+static int	monitor_readline(void)
 {
 	if (status.signal == 0)
 		return (0);
@@ -30,43 +30,10 @@ static int monitor_readline(void)
 	}
 	else if (status.signal == SIGQUIT)
 	{
-		printf("exit\n");
+		write(STDERR_FILENO, "exit\n", 5);
 	}
 	return (0);
 }
-
-// void reset_signal(int signum)
-// {
-// 	struct sigaction	sa;
-
-// 	sigemptyset(&sa.sa_mask);
-// 	sa.sa_flags = SA_RESTART;
-// 	sa.sa_handler = SIG_DFL;
-// 	if (sigaction(signum, &sa, NULL) < 0)
-// 		fatal_error("sigaction");
-// }
-
-// void reset_signals(void)
-// {
-// 	reset_signal(SIGINT);
-// 	reset_signal(SIGQUIT);
-// }
-
-// void disable_signal(int signum)
-// {
-// 	struct sigaction	sa;
-
-// 	sigemptyset(&sa.sa_mask);
-// 	sa.sa_flags = SA_RESTART;
-// 	sa.sa_handler = SIG_IGN;
-// 	if (sigaction(signum, &sa, NULL) < 0)
-// 		fatal_error("sigaction");
-// }
-
-// void report_signal(int signum)
-// {
-// 	status.signal = signum;
-// }
 
 void modify_signal(int signum)
 {

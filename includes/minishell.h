@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:21:10 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:25:06 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,9 @@ int builtin_exit(char **argv);
 t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
 void reset_signals(void);
+
+void	free_node(t_node *node);
+void	free_token(t_token *tok);
 
 bool	is_op(t_token *tok, char *op);
 bool	is_control_operator(t_token *tok);

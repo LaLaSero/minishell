@@ -6,13 +6,13 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:44:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 18:46:33 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:31:13 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void reset_signal(int signum)
+void	reset_signal(int signum)
 {
 	struct sigaction	sa;
 
@@ -23,13 +23,13 @@ void reset_signal(int signum)
 		fatal_error("sigaction");
 }
 
-void reset_signals(void)
+void	reset_signals(void)
 {
 	reset_signal(SIGINT);
 	reset_signal(SIGQUIT);
 }
 
-void disable_signal(int signum)
+void	disable_signal(int signum)
 {
 	struct sigaction	sa;
 
@@ -40,7 +40,7 @@ void disable_signal(int signum)
 		fatal_error("sigaction");
 }
 
-void report_signal(int signum)
+void	report_signal(int signum)
 {
 	extern t_status	status;
 
