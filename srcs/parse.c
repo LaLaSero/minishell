@@ -6,13 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 16:01:52 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:04:32 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
-# include "../includes/pipex.h"
 
 // bnf definition by usatie
 // <pipeline> = <simple_command> ('|' <pipeline>)

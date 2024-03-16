@@ -6,15 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/16 02:39:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:55:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../includes/get_next_line.h"
-#include "../libft/libft.h"
 #include "../includes/minishell.h" 
-#include "../includes/pipex.h"
+#include "../libft/libft.h"
 
 void	append_char(char **s, char c)
 {

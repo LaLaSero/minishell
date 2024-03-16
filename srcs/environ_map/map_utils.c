@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:44:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:40:59 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	add_var(t_map *map, char *line, bool null_value)
 	char	*p;
 	int		is_success;
 
+	key = NULL;
+	value = NULL;
 	p = strchr(line, '=');
 	if (p == NULL && null_value == false)
 		fatal_error("Invalid environment variable");

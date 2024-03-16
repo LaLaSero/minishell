@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/16 17:31:14 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:39:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int stash_fd(int fd)
 
 }
 
-void write_user_input_to_pipe(char *delimiter, int pipefd[2])
+void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 {
 	char			*line;
 	extern t_status	status;
@@ -107,7 +107,6 @@ void write_user_input_to_pipe(char *delimiter, int pipefd[2])
 
 int	open_heredoc(char *delimiter)
 {
-	char			*line;
 	int				pipefd[2];
 	extern t_status	status;
 
@@ -209,7 +208,7 @@ int get_sizeof_token(t_token *args)
 	return (i);
 }
 
-char **convert_to_argv(t_token *args)
+char	**convert_to_argv(t_token *args)
 {
 	int		i;
 	char	**argv;
@@ -263,7 +262,6 @@ void reset_redirect(t_node *node)
 
 int exec_nonbuiltin(t_node *node)
 {
-	char *path;
 	char **argv;
 	extern char **environ;
 

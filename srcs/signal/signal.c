@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/13 22:17:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:47:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <readline/readline.h>
 
 extern t_status status;
-extern int rl_done;
+void disable_signal(int signum);
+void report_signal(int signum);
 
 static int monitor_readline(void)
 {
@@ -34,38 +35,38 @@ static int monitor_readline(void)
 	return (0);
 }
 
-void reset_signal(int signum)
-{
-	struct sigaction	sa;
+// void reset_signal(int signum)
+// {
+// 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = SIG_DFL;
-	if (sigaction(signum, &sa, NULL) < 0)
-		fatal_error("sigaction");
-}
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_flags = SA_RESTART;
+// 	sa.sa_handler = SIG_DFL;
+// 	if (sigaction(signum, &sa, NULL) < 0)
+// 		fatal_error("sigaction");
+// }
 
-void reset_signals(void)
-{
-	reset_signal(SIGINT);
-	reset_signal(SIGQUIT);
-}
+// void reset_signals(void)
+// {
+// 	reset_signal(SIGINT);
+// 	reset_signal(SIGQUIT);
+// }
 
-void disable_signal(int signum)
-{
-	struct sigaction	sa;
+// void disable_signal(int signum)
+// {
+// 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = SIG_IGN;
-	if (sigaction(signum, &sa, NULL) < 0)
-		fatal_error("sigaction");
-}
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_flags = SA_RESTART;
+// 	sa.sa_handler = SIG_IGN;
+// 	if (sigaction(signum, &sa, NULL) < 0)
+// 		fatal_error("sigaction");
+// }
 
-void report_signal(int signum)
-{
-	status.signal = signum;
-}
+// void report_signal(int signum)
+// {
+// 	status.signal = signum;
+// }
 
 void modify_signal(int signum)
 {

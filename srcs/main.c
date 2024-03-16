@@ -1,9 +1,19 @@
-# include "../includes/get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
+/*   Updated: 2024/03/16 19:04:15 by yutakagi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
-# include "../includes/pipex.h"
 
-void minishell(char **envp);
+void minishell();
 
 t_status status = {};
 t_map *envmap;
@@ -16,12 +26,12 @@ void init_status(void)
 	status.is_interrupted = false;
 }
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
 	init_status();
 	(void)argv;
 	if (argc == 1)
-		minishell(envp);
+		minishell();
 	return (0);
 }
 
@@ -101,7 +111,6 @@ void interpret(char *line)
 		else
 		{
 			expand(node);
-			// status.exit_status = execute(node);
 			// show_node(node);
 			status.exit_status = exec(node);
 		}
@@ -110,7 +119,7 @@ void interpret(char *line)
 	free_token(tok);
 }
 
-void minishell(char **envp)
+void minishell()
 {
 	int		status;
 
@@ -124,10 +133,6 @@ void minishell(char **envp)
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		// if (ft_strncmp(line, "exit", 4) == 0)
-		// {
-		// 	exit (status);
-		// }
 		if (*line)
 			add_history(line);
 		interpret(line);

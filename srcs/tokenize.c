@@ -1,12 +1,20 @@
-#include <string.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
+/*   Updated: 2024/03/16 18:48:29 by yutakagi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 #include <assert.h>
-#include <stdbool.h>
 
-// #define ERROR_PREFIX "minishell: "
-extern t_status status;
+extern t_status	status;
 
 t_token	*new_token(char *word, t_token_kind kind)
 {
