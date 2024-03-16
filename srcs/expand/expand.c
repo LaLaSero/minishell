@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/16 18:55:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 05:05:31 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	append_char(char **s, char c)
 
 	size = 2;
 	if (*s)
-		size += strlen(*s);
+		size += ft_strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
 		fatal_error("malloc");
@@ -87,7 +87,7 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 	char	*var_name;
 	char	*value;
 
-	var_name = calloc(1, sizeof(char));
+	var_name = ft_calloc(1, sizeof(char));
 	if (var_name == NULL)
 		fatal_error("calloc");
 	if (*p != '$')

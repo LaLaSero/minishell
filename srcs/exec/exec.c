@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/16 19:09:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:49:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL || strncmp(line, delimiter, strlen(delimiter) + 1) == 0
+		if (line == NULL || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
 			|| status.is_interrupted == true)
 		{
 			free(line);
 			break;
 		}
-		write(pipefd[1], line, strlen(line));
+		write(pipefd[1], line, ft_strlen(line));
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}
@@ -215,7 +215,7 @@ char	**convert_to_argv(t_token *args)
 	t_token	*tmp;
 
 	i = get_sizeof_token(args);
-	argv = calloc(i + 1, sizeof(*argv));
+	argv = ft_calloc(i + 1, sizeof(*argv));
 	if (argv == NULL)
 		fatal_error("calloc");
 	i = 0;
@@ -223,7 +223,7 @@ char	**convert_to_argv(t_token *args)
 	while (tmp)
 	{
 		if (tmp->word != NULL)
-			argv[i] = strdup(tmp->word);
+			argv[i] = ft_strdup(tmp->word);
 		tmp = tmp->next;
 		i++;
 	}

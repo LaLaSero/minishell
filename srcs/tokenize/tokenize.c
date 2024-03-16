@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:30:46 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 05:08:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 {
 	t_token	*tok;
 
-	tok = calloc(1, sizeof(*tok));
+	tok = ft_calloc(1, sizeof(*tok));
 	if (tok == NULL)
 		fatal_error("calloc");
 	tok->word = word;
@@ -30,7 +30,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 
 t_token	*operator(char **line_loc, char *line)
 {
-	static char *const	operator_list[] = {">>", "<<", "||", "&&", ";;", "<", ">",
+	static char *const	operator_list[] = { "<", ">",">>", "<<", "||", "&&", ";;",
 		"&", ";", "(", ")", "|", "\n"};
 	size_t				i;
 	char				*op;
@@ -38,9 +38,9 @@ t_token	*operator(char **line_loc, char *line)
 	i = 0;
 	while (i < sizeof(operator_list) / sizeof(*operator_list))
 	{
-		if (strncmp(line, operator_list[i], ft_strlen(operator_list[i])) == 0)
+		if (ft_strncmp(line, operator_list[i], ft_strlen(operator_list[i])) == 0)
 		{
-			op = strdup(operator_list[i]);
+			op = ft_strdup(operator_list[i]);
 			if (op == NULL)
 				fatal_error("strdup");
 			*line_loc = line + ft_strlen(op);
@@ -69,9 +69,9 @@ t_token *word(char **line_loc, char *line) {
 			if (*line == '\0')
 			{
 				fatal_error("Unclosed single quote");
-				// exit(1);
 				status.had_error = true;
 				tokenize_error(line, line_loc);
+				exit(1);
 			}
 			else
 				line++;
@@ -84,6 +84,8 @@ t_token *word(char **line_loc, char *line) {
 			if (*line == '\0')
 			{
 				fatal_error("Unclosed double quote");
+				status.had_error = true;
+				tokenize_error(line, line_loc);
 				exit(1);
 			}
 			else

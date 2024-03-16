@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environ.c                                          :+:      :+:    :+:   */
+/*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:44:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:27:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_value(char *key)
 	cur = envmap->item_head.next;
 	while (cur)
 	{
-		if (strncmp(key, cur->key, strlen(key) + 1) == 0)
+		if (ft_strncmp(key, cur->key, ft_strlen(key) + 1) == 0)
 			return (cur->value);
 		cur = cur->next;
 	}
@@ -39,7 +39,7 @@ char	**get_environ(t_map *map)
 	char	**environ;
 
 	size = get_sizeof_map(map);
-	environ = calloc(size + 1, sizeof(char *));
+	environ = ft_calloc(size + 1, sizeof(char *));
 	i = 0;
 	cur = map->item_head.next;
 	while (cur)
@@ -59,9 +59,9 @@ char	*get_full_sentence(t_var *var)
 	size_t	strsize;
 	char	*string;
 
-	strsize = strlen(var->key) + 2;
+	strsize = ft_strlen(var->key) + 2;
 	if (var->value)
-		strsize += strlen(var->value);
+		strsize += ft_strlen(var->value);
 	string = malloc(strsize);
 	strlcpy(string, var->key, strsize);
 	if (var->value)

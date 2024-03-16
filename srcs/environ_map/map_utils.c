@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 18:40:59 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:59:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 
 extern t_map	*envmap;
 int				reload_map(t_map *map, char *key, char *value);
+
+char	*ft_strndup(char *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = ft_calloc(n + 1, sizeof(char));
+	if (str == NULL)
+		fatal_error("calloc");
+	i = 0;
+	while (i < n)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	return (str);
+}
 
 int	add_var(t_map *map, char *line, bool null_value)
 {
@@ -25,22 +42,22 @@ int	add_var(t_map *map, char *line, bool null_value)
 
 	key = NULL;
 	value = NULL;
-	p = strchr(line, '=');
+	p = ft_strchr(line, '=');
 	if (p == NULL && null_value == false)
 		fatal_error("Invalid environment variable");
 	else if(p == NULL)
 	{
-		key = strdup(line);
+		key = ft_strdup(line);
 		if (key == NULL)
 			fatal_error("strdup");
 		value = NULL;
 	}
 	else
 	{
-		key = strndup(line, p - line);
+		key = ft_strndup(line, p - line);
 		if (key == NULL)
 			fatal_error("strndup");
-		value = strdup(p + 1);
+		value = ft_strdup(p + 1);
 		if (value == NULL)
 			fatal_error("strdup");
 	}
@@ -61,7 +78,7 @@ int remove_var(t_map *map, char *key)
 	cur = map->item_head.next;
 	while (cur)
 	{
-		if (strncmp(key, cur->key, strlen(key) + 1) == 0)
+		if (ft_strncmp(key, cur->key, ft_strlen(key) + 1) == 0)
 		{
 			prev->next = cur->next;
 			free(cur->key);
@@ -99,7 +116,7 @@ int	reload_map(t_map *map, char *key, char *value)
 	cur = map->item_head.next;
 	while (cur)
 	{
-		if (strncmp(key, cur->key, strlen(key)) == 0)
+		if (ft_strncmp(key, cur->key, ft_strlen(key)) == 0)
 			break ;
 		cur = cur->next;
 	}
@@ -110,7 +127,7 @@ int	reload_map(t_map *map, char *key, char *value)
 			cur->value = NULL;
 		else
 		{
-			cur->value = strdup(value);
+			cur->value = ft_strdup(value);
 			if (cur->value == NULL)
 				fatal_error("strdup");
 		}
@@ -119,13 +136,13 @@ int	reload_map(t_map *map, char *key, char *value)
 	{
 		if (value == NULL)
 		{
-			cur = new_var(strdup(key), NULL);
+			cur = new_var(ft_strdup(key), NULL);
 			if (cur->value == NULL)
 				fatal_error("new_var");
 		}
 		else
 		{
-			cur = new_var(strdup(key), strdup(value));
+			cur = new_var(ft_strdup(key), ft_strdup(value));
 			if (cur->key == NULL || cur->value == NULL)
 				fatal_error("new_var");
 		}

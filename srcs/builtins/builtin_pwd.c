@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 02:27:27 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:38:01 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	builtin_pwd(void)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
 		{
-			printf("cwd is NULL\n");
+			write(STDOUT, "cwd is NULL\n", 12);
 			return (FAILURE);
 		}
 		write(STDOUT, cwd, ft_strlen(cwd));

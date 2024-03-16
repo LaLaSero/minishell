@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:15:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:53:12 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_token	*tokdup(t_token *tok)
 {
 	char	*word;
 
-	word = strdup(tok->word);
+	word = ft_strdup(tok->word);
 	if (word == NULL)
 		fatal_error("strdup");
 	return (new_token(word, tok->kind));

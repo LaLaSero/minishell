@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:10:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:42:12 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 # include "../libft/libft.h"
 
 extern t_map *envmap;
+
+static void _show_cd_error(char *message)
+{
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, "cd: ", 4);
+	write(STDERR_FILENO, message, ft_strlen(message));
+	write(STDERR_FILENO, "\n", 1);
+
+}
 
 static char	*_update_pwd_value(char *pwd_value, char *path)
 {
@@ -49,7 +58,7 @@ static int	_argv_to_path(char **argv, char *path)
 		home_value = get_value("HOME");
 		if (home_value == NULL)
 		{
-			dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+			_show_cd_error("HOME not set");
 			return (FAILURE);
 		}
 		ft_strlcpy(path, home_value, PATH_MAX);
@@ -72,7 +81,7 @@ int	builtin_cd(char **argv)
 		return (1);
 	if (chdir(path) < 0)
 	{
-		dprintf(STDERR_FILENO, "minishell: cd: %s: No such file or directory\n", argv[1]);
+		_show_cd_error("No such file or directory");
 		return (1);
 	}
 	newpwd_value = _update_pwd_value(pwd_value, path);

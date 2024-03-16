@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:43:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:27:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_var	*new_var(char *key, char *value)
 {
 	t_var	*item;
 
-	item = calloc(1, sizeof(*item));
+	item = ft_calloc(1, sizeof(*item));
 	if (item == NULL)
 		fatal_error("calloc");
 	item->key = key;
@@ -32,7 +32,7 @@ t_map	*init_map(void)
 {
 	t_map	*map;
 
-	map = calloc(1, sizeof(*map));
+	map = ft_calloc(1, sizeof(*map));
 	if (map == NULL)
 		fatal_error("calloc");
 	map->item_head.key = NULL;

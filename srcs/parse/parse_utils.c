@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:11:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:14:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:23:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_op(t_token *tok, char *op)
 {
 	if (tok->kind != TK_OP)
 		return (false);
-	return (strcmp(tok->word, op) == 0);
+	return (ft_strncmp(tok->word, op, ft_strlen(tok->word) + 1) == 0);
 }
 
 bool	is_control_operator(t_token *tok)
@@ -27,7 +27,7 @@ bool	is_control_operator(t_token *tok)
 
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (strncmp(tok->word, operators[i], strlen(operators[i])) == 0)
+		if (ft_strncmp(tok->word, operators[i], ft_strlen(operators[i]) + 1) == 0)
 			return (true);
 		i++;
 	}
@@ -68,7 +68,7 @@ t_node	*new_node(t_node_kind kind)
 {
 	t_node	*node;
 
-	node = calloc(1, sizeof(*node));
+	node = ft_calloc(1, sizeof(*node));
 	if (node == NULL)
 		fatal_error("calloc");
 	node->kind = kind;

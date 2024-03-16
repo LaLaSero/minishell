@@ -6,13 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:26:50 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:16:18 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
-
 
 bool	is_space(char c)
 {
@@ -29,7 +28,7 @@ bool	is_operator(const char *s)
 	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
+		if (ft_strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
 			return (true);
 		i++;
 	}

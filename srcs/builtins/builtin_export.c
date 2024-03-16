@@ -6,11 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 02:29:39 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 04:47:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../libft/libft.h"
 
 extern t_map *envmap;
 
@@ -46,7 +47,10 @@ int	builtin_export(char **argv)
 	{
 		if (add_var(envmap, argv[1], false) == FAILURE)
 		{
-			dprintf(STDERR_FILENO, "export: '%s': not a valid identifier\n", *argv);
+			write(STDERR_FILENO, "minishell: ", 11);
+			write(STDERR_FILENO, "export: '", 9);
+			write(STDERR_FILENO, argv[i], ft_strlen(argv[i]));
+			write(STDERR_FILENO, "': not a valid identifier\n", 26);
 			status = 255;
 		}
 		i++;
