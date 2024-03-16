@@ -37,7 +37,8 @@
 NAME = minishell
 SRCS = srcs/main.c srcs/tokenize.c srcs/expand.c srcs/parse.c
 SRCS += pipex/pipex.c pipex/execute_command.c srcs/test.c
-SRCS += srcs/redirection.c srcs/error.c srcs/exec.c srcs/environ.c srcs/signal.c
+SRCS += srcs/redirection.c srcs/error.c srcs/exec.c srcs/signal.c
+SRCS += srcs/environ_map/environ_utils.c srcs/environ_map/map_utils.c srcs/environ_map/map_init.c
 SRCS += srcs/builtins/cd_dir/builtin_cd.c srcs/builtins/cd_dir/cd_utils.c
 SRCS += srcs/builtins/exit_dir/builtin_exit.c srcs/builtins/exit_dir/exit_utils.c
 SRCS += srcs/builtins/builtin_export.c srcs/builtins/builtin_env.c srcs/builtins/builtin_unset.c

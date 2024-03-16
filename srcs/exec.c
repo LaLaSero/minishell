@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/16 02:30:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:31:14 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ void write_user_input_to_pipe(char *delimiter, int pipefd[2])
 	}
 }
 
-int open_heredoc(char *delimiter)
+int	open_heredoc(char *delimiter)
 {
-	char *line;
-	int	pipefd[2];
-	extern t_status status;
+	char			*line;
+	int				pipefd[2];
+	extern t_status	status;
 
 	if (pipe(pipefd) < 0)
 	{
@@ -170,7 +170,7 @@ int	get_filefd(t_node *node)
 	return (get_filefd(node->next));
 }
 
-int is_redir_kind(t_node_kind kind)
+int	is_redir_kind(t_node_kind kind)
 {
 	if (kind == ND_REDIR_OUT || kind == ND_REDIR_IN
 		|| kind == ND_REDIR_APPEND || kind == ND_REDIR_HEREDOC)
@@ -178,7 +178,7 @@ int is_redir_kind(t_node_kind kind)
 	return (false);
 }
 
-void dup_redirect(t_node *node)
+void	dup_redirect(t_node *node)
 {
 	if (node == NULL)
 		return ;

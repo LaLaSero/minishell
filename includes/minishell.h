@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:18:55 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:40:47 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,13 @@ long	ft_atol(char *string, bool *is_valid);
 bool	is_only_digit(char *str);
 int		fit_res_to_int(long res);
 void	print_exit_error(char *arg, char *message);
+
+int		add_var(t_map *map, char *line, bool null_value);
+int		remove_var(t_map *map, char *key);
+char	*get_value(char *key);
+size_t	get_sizeof_map(t_map *map);
+int		reload_map(t_map *map, char *key, char *value);
+t_var	*new_var(char *key, char *value);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'
