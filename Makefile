@@ -1,7 +1,12 @@
 NAME = minishell
-SRCS = srcs/main.c srcs/tokenize.c srcs/expand.c srcs/parse.c
-SRCS += srcs/execute_command.c srcs/test.c
-SRCS += srcs/redirection.c srcs/error.c srcs/exec.c 
+SRCS = srcs/main.c
+SRCS += srcs/expand/expand.c
+SRCS += srcs/tokenize/tokenize.c srcs/tokenize/tokenize_utils.c
+SRCS += srcs/parse/parse.c srcs/parse/parse_utils.c
+SRCS += srcs/test.c
+SRCS += srcs/exec/exec.c srcs/exec/execute_command.c
+SRCS += srcs/redirect/redirection.c
+SRCS += srcs/error/error.c
 SRCS += srcs/signal/signal.c srcs/signal/signal_utils.c
 SRCS += srcs/environ_map/environ_utils.c srcs/environ_map/map_utils.c srcs/environ_map/map_init.c
 SRCS += srcs/builtins/cd_dir/builtin_cd.c srcs/builtins/cd_dir/cd_utils.c

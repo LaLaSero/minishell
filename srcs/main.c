@@ -6,14 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:04:15 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:08:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
-
-void minishell();
 
 t_status status = {};
 t_map *envmap;
@@ -24,15 +22,6 @@ void init_status(void)
 	status.exit_status = 0;
 	status.signal = 0;
 	status.is_interrupted = false;
-}
-
-int main(int argc, char **argv)
-{
-	init_status();
-	(void)argv;
-	if (argc == 1)
-		minishell();
-	return (0);
 }
 
 void handle_error(char *msg)
@@ -139,6 +128,15 @@ void minishell()
 		free(line);
 	}
 	exit(status);
+}
+
+int	main(int argc, char **argv)
+{
+	init_status();
+	(void)argv;
+	if (argc == 1)
+		minishell();
+	return (0);
 }
 
 // __attribute__((destructor))

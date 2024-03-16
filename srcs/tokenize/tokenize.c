@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 18:48:29 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:21:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,52 +26,6 @@ t_token	*new_token(char *word, t_token_kind kind)
 	tok->word = word;
 	tok->kind = kind;
 	return (tok);
-}
-
-bool	is_space(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (true);
-	return (false);
-}
-
-bool	is_operator(const char *s)
-{
-	static char	*const operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;
-
-	while (i < sizeof(operators) / sizeof(*operators))
-	{
-		if (strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-bool	is_metacharacter(char c)
-{
-	static const char	*metacharacters;
-	size_t				i;
-
-	metacharacters = "|&;()<> \t\n";
-	i = 0;
-	while (metacharacters[i])
-	{
-		if (c == metacharacters[i])
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-bool	is_word(const char *s)
-{
-	if (!*s)
-		return (false);
-	if (is_metacharacter(*s))
-		return (false);
-	return (true);
 }
 
 t_token	*operator(char **line_loc, char *line)

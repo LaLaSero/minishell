@@ -6,14 +6,14 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:02:11 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:10:10 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 # include "../libft/libft.h"
 
-static void _show_error(char *command, char *message)
+static void	_show_error(char *command, char *message)
 {
 	write(STDERR_FILENO, "minishell: ", 11);
 	write(2, command, ft_strlen(command));

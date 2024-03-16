@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/16 18:39:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:09:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,8 +262,8 @@ void reset_redirect(t_node *node)
 
 int exec_nonbuiltin(t_node *node)
 {
-	char **argv;
-	extern char **environ;
+	char		**argv;
+	extern char	**environ;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
