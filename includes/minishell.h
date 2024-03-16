@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 02:38:38 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:18:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,17 @@ int builtin_exit(char **argv);
 t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
 void reset_signals(void);
+
+void	update_oldpwd(char *pwd_value);
+bool	detect_target(char **path_loc, char *path, char *target);
+void	remove_last_dir(char *pwd_value);
+void	add_dir(char *new_pwd, char *path, char **path_loc);
+
+bool	does_overflow(long result, int flag, char *string, bool *is_valid);
+long	ft_atol(char *string, bool *is_valid);
+bool	is_only_digit(char *str);
+int		fit_res_to_int(long res);
+void	print_exit_error(char *arg, char *message);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

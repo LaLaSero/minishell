@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/09 19:35:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:02:25 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void parse_error(t_token *tok, t_token **tol_list)
 	status.had_error = true;
 
 	// error_prefix();
-	printf("parse_error: %s\n", tok->word);
+	printf("minishell: syntax error near unexpected token `%s'\n", tok->word);
 	while (tok && tok->kind != TK_EOF)
 	{
 		// printf("%s\n", tok->word);
