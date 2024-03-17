@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:08:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:25:46 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	quote_removal(t_token *tok)
 		return ;
 	p = tok->word;
 	new_word = NULL;
-	while (*p && !is_metacharacter(*p))
+	while (*p)
 	{
 		if (*p == SINGLE_QUOTE_CHAR)
 		{

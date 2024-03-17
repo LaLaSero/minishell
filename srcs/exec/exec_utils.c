@@ -6,16 +6,16 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:09:43 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:42:05 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-int	get_sizeof_token(t_token *args)
+size_t	get_sizeof_token(t_token *args)
 {
-	int		i;
+	size_t	i;
 	t_token	*tmp;
 
 	i = 0;
@@ -26,29 +26,6 @@ int	get_sizeof_token(t_token *args)
 		tmp = tmp->next;
 	}
 	return (i);
-}
-
-char	**convert_to_argv(t_token *args)
-{
-	int		i;
-	char	**argv;
-	t_token	*tmp;
-
-	i = get_sizeof_token(args);
-	argv = ft_calloc(i + 1, sizeof(*argv));
-	if (argv == NULL)
-		fatal_error("calloc");
-	i = 0;
-	tmp = args;
-	while (tmp)
-	{
-		if (tmp->word != NULL)
-			argv[i] = ft_strdup(tmp->word);
-		tmp = tmp->next;
-		i++;
-	}
-	argv[i] = NULL;
-	return (argv);
 }
 
 void	free_argv(char **argv)
@@ -62,6 +39,49 @@ void	free_argv(char **argv)
 		i++;
 	}
 	free(argv);
+}
+
+char	**convert_to_argv(t_token *args)
+{
+	int		i;
+	char	**argv;
+	t_token	*tmp;
+	char **splitted;
+
+	t_token *temp = args;
+	splitted = NULL;
+	if (args->word && ft_strchr(args->word, ' '))
+	{
+		splitted = ft_split(args->word, ' ');
+		if (splitted == NULL)
+			fatal_error("split");
+		args->word = ft_strdup(splitted[0]);
+		i = 1;
+		t_token *next_temp = args->next;
+		while (splitted[i])
+		{
+			args->next = new_token(strdup(splitted[i]), TK_WORD);
+			args = args->next;
+			i++;
+		}
+		args->next = next_temp;
+		free_argv(splitted);
+	}
+	i = get_sizeof_token(temp);
+	argv = ft_calloc(i + 1, sizeof(*argv));
+	if (argv == NULL)
+		fatal_error("calloc");
+	i = 0;
+	tmp = temp;
+	while (tmp)
+	{
+		if (tmp->word != NULL)
+			argv[i] = ft_strdup(tmp->word);
+		tmp = tmp->next;
+		i++;
+	}
+	argv[i] = NULL;
+	return (argv);
 }
 
 int	isbuiltin(t_node *command)

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/17 19:05:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:26:17 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	expand_variable(t_node *node)
 t_node	*expand(t_node *node)
 {
 	expand_variable(node);
+	// show_node(node);
 	remove_quote(node);
 	return (NULL);
 }

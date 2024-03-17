@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/17 20:11:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:28:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,19 +228,6 @@ int	get_filefd(t_node *node)
 // 	}
 // 	argv[i] = NULL;
 // 	return (argv);
-// }
-
-// void free_argv(char **argv)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (argv[i])
-// 	{
-// 		free(argv[i]);
-// 		i++;
-// 	}
-// 	free(argv);
 // }
 
 // void reset_redirect(t_node *node)

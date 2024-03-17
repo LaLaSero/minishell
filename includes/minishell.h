@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:12:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:24:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2]);
 int		open_heredoc(char *delimiter);
 
 
-int		get_sizeof_token(t_token *args);
+size_t	get_sizeof_token(t_token *args);
 char	**convert_to_argv(t_token *args);
 void	free_argv(char **argv);
 int		isbuiltin(t_node *command);
