@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:04:34 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:12:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,24 @@ t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
 void	reset_signals(void);
 
+void	write_user_input_to_pipe(char *delimiter, int pipefd[2]);
+int		open_heredoc(char *delimiter);
+
+
+int		get_sizeof_token(t_token *args);
+char	**convert_to_argv(t_token *args);
+void	free_argv(char **argv);
+int		isbuiltin(t_node *command);
+int		stash_fd(int fd);
+
+void	set_pipe(t_node *node);
+void	set_parent_pipe(t_node *node);
+void	set_child_pipe(t_node *node);
+
+void	reset_redirect(t_node *node);
+int		is_redir_kind(t_node_kind kind);
+void	dup_redirect(t_node *node);
+
 void	free_node(t_node *node);
 void	free_token(t_token *tok);
 
@@ -152,6 +170,7 @@ bool	is_control_operator(t_token *tok);
 void	append_token(t_token **tok_loc, t_token *tok);
 void	append_node(t_node **node_loc, t_node *node);
 t_node	*new_node(t_node_kind kind);
+t_node	*_the_first_node(t_node_kind kind);
 
 bool	is_space(char c);
 bool	is_operator(const char *s);
@@ -173,7 +192,7 @@ int		add_var(t_map *map, char *line, bool null_value);
 int		remove_var(t_map *map, char *key);
 char	*get_value(char *key);
 size_t	get_sizeof_map(t_map *map);
-int		reload_map(t_map *map, char *key, char *value);
+int		remake_map(t_map *map, char *key, char *value);
 t_var	*new_var(char *key, char *value);
 
 bool	is_alpha_under(char c);

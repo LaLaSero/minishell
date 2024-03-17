@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:59:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:05:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 
 extern t_map	*envmap;
-int				reload_map(t_map *map, char *key, char *value);
+int				remake_map(t_map *map, char *key, char *value);
 
 char	*ft_strndup(char *s, size_t n)
 {
@@ -61,13 +61,13 @@ int	add_var(t_map *map, char *line, bool null_value)
 		if (value == NULL)
 			fatal_error("strdup");
 	}
-	is_success = reload_map(map, key, value);
+	is_success = remake_map(map, key, value);
 	free(key);
 	free(value);
 	return (is_success);
 }
 
-int remove_var(t_map *map, char *key)
+int	remove_var(t_map *map, char *key)
 {
 	t_var	*cur;
 	t_var	*prev;
@@ -105,49 +105,4 @@ size_t	get_sizeof_map(t_map *map)
 		cur = cur->next;
 	}
 	return (i);
-}
-
-int	reload_map(t_map *map, char *key, char *value)
-{
-	t_var	*cur;
-
-	if (key == NULL)
-		return (FAILURE);
-	cur = map->item_head.next;
-	while (cur)
-	{
-		if (ft_strncmp(key, cur->key, ft_strlen(key)) == 0)
-			break ;
-		cur = cur->next;
-	}
-	if (cur)
-	{
-		free(cur->value);
-		if (!value)
-			cur->value = NULL;
-		else
-		{
-			cur->value = ft_strdup(value);
-			if (cur->value == NULL)
-				fatal_error("strdup");
-		}
-	}
-	else
-	{
-		if (value == NULL)
-		{
-			cur = new_var(ft_strdup(key), NULL);
-			if (cur->value == NULL)
-				fatal_error("new_var");
-		}
-		else
-		{
-			cur = new_var(ft_strdup(key), ft_strdup(value));
-			if (cur->key == NULL || cur->value == NULL)
-				fatal_error("new_var");
-		}
-		cur->next = map->item_head.next;
-		map->item_head.next = cur;
-	}
-	return (SUCCESS);
 }

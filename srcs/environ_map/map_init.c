@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:27:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:21:01 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_map	*init_map(void)
 	return (map);
 }
 
-void make_map(void)
+void	make_map(void)
 {
 	char			cwd[PATH_MAX];
 	extern char		**environ;

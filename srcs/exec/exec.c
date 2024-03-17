@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/17 19:08:41 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:11:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ void dup_redirect(t_node *node);
 void free_argv(char **argv);
 void reset_redirect(t_node *node);
 
-int	isbuiltin(t_node *command)
-{
-	if (ft_strncmp(command->args->word, "cd", 3) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "export", 7) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
-		return (true);
-	else if (ft_strncmp(command->args->word, "env", 4) == 0)
-		return (true);
-	return (false);
-}
+// int	isbuiltin(t_node *command)
+// {
+// 	if (ft_strncmp(command->args->word, "cd", 3) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "echo", 5) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "exit", 5) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "export", 7) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "pwd", 4) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "unset", 6) == 0)
+// 		return (true);
+// 	else if (ft_strncmp(command->args->word, "env", 4) == 0)
+// 		return (true);
+// 	return (false);
+// }
 
 int	exec_builtin(t_node *node)
 {
@@ -66,72 +66,71 @@ int	exec_builtin(t_node *node)
 	return (status);
 }
 
-int stash_fd(int fd)
-{
-	int	stash;
+// int	stash_fd(int fd)
+// {
+// 	int	stash;
 
-	stash = fcntl(fd, F_DUPFD, 10);
-	if (stash < 0)
-	{
-		fatal_error("stash error");
-		return (FAILURE);
-	}
-	if (close(fd) < 0)
-	{
-		fatal_error("close error");
-		return (FAILURE);
-	}
-	return (stash);
+// 	stash = fcntl(fd, F_DUPFD, 10);
+// 	if (stash < 0)
+// 	{
+// 		fatal_error("stash error");
+// 		return (FAILURE);
+// 	}
+// 	if (close(fd) < 0)
+// 	{
+// 		fatal_error("close error");
+// 		return (FAILURE);
+// 	}
+// 	return (stash);
+// }
 
-}
+// void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
+// {
+// 	char			*line;
+// 	extern t_status	g_status;
 
-void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
-{
-	char			*line;
-	extern t_status	g_status;
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (line == NULL || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
+// 			|| g_status.is_interrupted == true)
+// 		{
+// 			free(line);
+// 			break;
+// 		}
+// 		write(pipefd[1], line, ft_strlen(line));
+// 		write(pipefd[1], "\n", 1);
+// 		free(line);
+// 	}
+// }
 
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
-			|| g_status.is_interrupted == true)
-		{
-			free(line);
-			break;
-		}
-		write(pipefd[1], line, ft_strlen(line));
-		write(pipefd[1], "\n", 1);
-		free(line);
-	}
-}
+// int	open_heredoc(char *delimiter)
+// {
+// 	int				pipefd[2];
+// 	extern t_status	g_status;
 
-int	open_heredoc(char *delimiter)
-{
-	int				pipefd[2];
-	extern t_status	g_status;
-
-	if (pipe(pipefd) < 0)
-	{
-		fatal_error("pipe error");
-		return (FAILURE);
-	}
-	write_user_input_to_pipe(delimiter, pipefd);
-	if (close(pipefd[1]) < 0)
-	{
-		fatal_error("close error");
-		return (FAILURE);
-	}
-	if (g_status.is_interrupted == true)
-	{
-		if (close(pipefd[0]) < 0)
-		{
-			fatal_error("close error");
-			return (FAILURE);
-		}
-		return (FAILURE);
-	}
-	return (pipefd[0]);
-}
+// 	if (pipe(pipefd) < 0)
+// 	{
+// 		fatal_error("pipe error");
+// 		return (FAILURE);
+// 	}
+// 	write_user_input_to_pipe(delimiter, pipefd);
+// 	if (close(pipefd[1]) < 0)
+// 	{
+// 		fatal_error("close error");
+// 		return (FAILURE);
+// 	}
+// 	if (g_status.is_interrupted == true)
+// 	{
+// 		if (close(pipefd[0]) < 0)
+// 		{
+// 			fatal_error("close error");
+// 			return (FAILURE);
+// 		}
+// 		return (FAILURE);
+// 	}
+// 	return (pipefd[0]);
+// }
 
 int	get_filefd(t_node *node)
 {
@@ -169,96 +168,96 @@ int	get_filefd(t_node *node)
 	return (get_filefd(node->next));
 }
 
-int	is_redir_kind(t_node_kind kind)
-{
-	if (kind == ND_REDIR_OUT || kind == ND_REDIR_IN
-		|| kind == ND_REDIR_APPEND || kind == ND_REDIR_HEREDOC)
-		return (true);
-	return (false);
-}
+// int	is_redir_kind(t_node_kind kind)
+// {
+// 	if (kind == ND_REDIR_OUT || kind == ND_REDIR_IN
+// 		|| kind == ND_REDIR_APPEND || kind == ND_REDIR_HEREDOC)
+// 		return (true);
+// 	return (false);
+// }
 
-void	dup_redirect(t_node *node)
-{
-	if (node == NULL)
-		return ;
-	if (is_redir_kind(node->kind))
-	{
-		if (dup2(node->filefd, node->targetfd) < 0)
-			fatal_error("dup2 error");
-	}
-	else
-	{
-		fatal_error("dup_redirect");
-	}
-	dup_redirect(node->next);
-}
+// void	dup_redirect(t_node *node)
+// {
+// 	if (node == NULL)
+// 		return ;
+// 	if (is_redir_kind(node->kind))
+// 	{
+// 		if (dup2(node->filefd, node->targetfd) < 0)
+// 			fatal_error("dup2 error");
+// 	}
+// 	else
+// 	{
+// 		fatal_error("dup_redirect");
+// 	}
+// 	dup_redirect(node->next);
+// }
 
-int get_sizeof_token(t_token *args)
-{
-	int		i;
-	t_token	*tmp;
+// int get_sizeof_token(t_token *args)
+// {
+// 	int		i;
+// 	t_token	*tmp;
 
-	i = 0;
-	tmp = args;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
+// 	i = 0;
+// 	tmp = args;
+// 	while (tmp)
+// 	{
+// 		i++;
+// 		tmp = tmp->next;
+// 	}
+// 	return (i);
+// }
 
-char	**convert_to_argv(t_token *args)
-{
-	int		i;
-	char	**argv;
-	t_token	*tmp;
+// char	**convert_to_argv(t_token *args)
+// {
+// 	int		i;
+// 	char	**argv;
+// 	t_token	*tmp;
 
-	i = get_sizeof_token(args);
-	argv = ft_calloc(i + 1, sizeof(*argv));
-	if (argv == NULL)
-		fatal_error("calloc");
-	i = 0;
-	tmp = args;
-	while (tmp)
-	{
-		if (tmp->word != NULL)
-			argv[i] = ft_strdup(tmp->word);
-		tmp = tmp->next;
-		i++;
-	}
-	argv[i] = NULL;
-	return (argv);
-}
+// 	i = get_sizeof_token(args);
+// 	argv = ft_calloc(i + 1, sizeof(*argv));
+// 	if (argv == NULL)
+// 		fatal_error("calloc");
+// 	i = 0;
+// 	tmp = args;
+// 	while (tmp)
+// 	{
+// 		if (tmp->word != NULL)
+// 			argv[i] = ft_strdup(tmp->word);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	argv[i] = NULL;
+// 	return (argv);
+// }
 
-void free_argv(char **argv)
-{
-	int	i;
+// void free_argv(char **argv)
+// {
+// 	int	i;
 
-	i = 0;
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
-}
+// 	i = 0;
+// 	while (argv[i])
+// 	{
+// 		free(argv[i]);
+// 		i++;
+// 	}
+// 	free(argv);
+// }
 
-void reset_redirect(t_node *node)
-{
-	if (node == NULL)
-		return ;
-	reset_redirect(node->next);
-	if (is_redir_kind(node->kind))
-	{
-		if (close(node->filefd) < 0)
-			fatal_error("close error");
-		if (close(node->targetfd) < 0)
-			fatal_error("close error");
-		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
-			fatal_error("dup2 error");
-	}
-}
+// void reset_redirect(t_node *node)
+// {
+// 	if (node == NULL)
+// 		return ;
+// 	reset_redirect(node->next);
+// 	if (is_redir_kind(node->kind))
+// 	{
+// 		if (close(node->filefd) < 0)
+// 			fatal_error("close error");
+// 		if (close(node->targetfd) < 0)
+// 			fatal_error("close error");
+// 		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
+// 			fatal_error("dup2 error");
+// 	}
+// }
 
 int exec_nonbuiltin(t_node *node)
 {
@@ -274,40 +273,40 @@ int exec_nonbuiltin(t_node *node)
 	return (FAILURE);
 }
 
-static void	cpy_pipe(int dst[2], int src[2])
-{
-	dst[0] = src[0];
-	dst[1] = src[1];
-}
+// static void	cpy_pipe(int dst[2], int src[2])
+// {
+// 	dst[0] = src[0];
+// 	dst[1] = src[1];
+// }
 
-void	set_pipe(t_node *node)
-{
-	if (node->next == NULL)
-		return ;
-	pipe(node->outpipe);
-	cpy_pipe(node->next->inpipe, node->outpipe);
-}
+// void	set_pipe(t_node *node)
+// {
+// 	if (node->next == NULL)
+// 		return ;
+// 	pipe(node->outpipe);
+// 	cpy_pipe(node->next->inpipe, node->outpipe);
+// }
 
-void set_parent_pipe(t_node *node)
-{
-	if (node->inpipe[0] != STDIN_FILENO)
-		if (close(node->inpipe[0]) < 0)
-			fatal_error("close error");
-	if (node->next)
-		if (close(node->outpipe[1]) < 0)
-			fatal_error("close error");
-}
+// void set_parent_pipe(t_node *node)
+// {
+// 	if (node->inpipe[0] != STDIN_FILENO)
+// 		if (close(node->inpipe[0]) < 0)
+// 			fatal_error("close error");
+// 	if (node->next)
+// 		if (close(node->outpipe[1]) < 0)
+// 			fatal_error("close error");
+// }
 
-void set_child_pipe(t_node *node)
-{
-	close(node->outpipe[0]);
-	dup2(node->inpipe[0], STDIN_FILENO);
-	if (node->inpipe[0] != STDIN_FILENO)
-		close(node->inpipe[0]);
-	dup2(node->outpipe[1], STDOUT_FILENO);
-	if (node->outpipe[1] != STDOUT_FILENO)
-		close(node->outpipe[1]);
-}
+// void set_child_pipe(t_node *node)
+// {
+// 	close(node->outpipe[0]);
+// 	dup2(node->inpipe[0], STDIN_FILENO);
+// 	if (node->inpipe[0] != STDIN_FILENO)
+// 		close(node->inpipe[0]);
+// 	dup2(node->outpipe[1], STDOUT_FILENO);
+// 	if (node->outpipe[1] != STDOUT_FILENO)
+// 		close(node->outpipe[1]);
+// }
 
 pid_t exec_pipeline(t_node *node)
 {

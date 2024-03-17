@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:11:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:23:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:14:02 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,43 +34,24 @@ bool	is_control_operator(t_token *tok)
 	return (false);
 }
 
-void	append_token(t_token **tok_loc, t_token *tok)
+t_token	*tokdup(t_token *tok)
 {
-	t_token	*last;
+	char	*word;
 
-	if (*tok_loc == NULL)
-	{
-		*tok_loc = tok;
-		return ;
-	}
-	last = *tok_loc;
-	while (last->next)
-		last = last->next;
-	last->next = tok;
+	word = ft_strdup(tok->word);
+	if (word == NULL)
+		fatal_error("strdup");
+	return (new_token(word, tok->kind));
 }
 
-void	append_node(t_node **node_loc, t_node *node)
-{
-	t_node	*last;
-
-	if (*node_loc == NULL)
-	{
-		*node_loc = node;
-		return ;
-	}
-	last = *node_loc;
-	while (last->next)
-		last = last->next;
-	last->next = node;
-}
-
-t_node	*new_node(t_node_kind kind)
+t_node	*_the_first_node(t_node_kind kind)
 {
 	t_node	*node;
 
-	node = ft_calloc(1, sizeof(*node));
-	if (node == NULL)
-		fatal_error("calloc");
-	node->kind = kind;
+	node = new_node(kind);
+	node->inpipe[0] = STDIN_FILENO;
+	node->inpipe[1] = -1;
+	node->outpipe[0] = -1;
+	node->outpipe[1] = STDOUT_FILENO;
 	return (node);
 }

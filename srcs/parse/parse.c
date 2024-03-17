@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:29:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:15:14 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,15 @@ void	append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 		cur = cur->next;
 	}
 	else if (is_op(cur, ">") && cur->next->kind == TK_WORD)
-	{
 		append_node(&command->redirect, redirect_out(&cur, cur));
-	}
 	else if (is_op(cur, "<") && cur->next->kind == TK_WORD)
-	{
 		append_node(&command->redirect, redirect_in(&cur, cur));
-	}
 	else if (is_op(cur, ">>") && cur->next->kind == TK_WORD)
-	{
 		append_node(&command->redirect, redirect_append(&cur, cur));
-	}
 	else if (is_op(cur, "<<") && cur->next->kind == TK_WORD)
-	{
 		append_node(&command->redirect, redirect_heredoc(&cur, cur));
-	}
 	else
-	{
 		parse_error(cur, &cur);
-	}
 	*tok_list = cur;
 }
 
@@ -75,8 +65,6 @@ t_node *simple_command(t_token **tok, t_token *cur)
 	return (node);
 }
 
-static t_node	*_the_first_node(t_node_kind kind);
-
 // <pipeline> ::= <pipeline> '|' <command> <pipeline>
 t_node *pipeline(t_token **tok, t_token *cur)
 {
@@ -92,29 +80,7 @@ t_node *pipeline(t_token **tok, t_token *cur)
 	return (node);
 }
 
-t_node *parse(t_token *tok)
+t_node	*parse(t_token *tok)
 {
 	return (pipeline(&tok, tok));
-}
-
-t_token	*tokdup(t_token *tok)
-{
-	char	*word;
-
-	word = ft_strdup(tok->word);
-	if (word == NULL)
-		fatal_error("strdup");
-	return (new_token(word, tok->kind));
-}
-
-static t_node	*_the_first_node(t_node_kind kind)
-{
-	t_node	*node;
-
-	node = new_node(kind);
-	node->inpipe[0] = STDIN_FILENO;
-	node->inpipe[1] = -1;
-	node->outpipe[0] = -1;
-	node->outpipe[1] = STDOUT_FILENO;
-	return (node);
 }
