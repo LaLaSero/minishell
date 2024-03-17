@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/17 18:16:32 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:08:41 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,9 +341,9 @@ pid_t exec_pipeline(t_node *node)
 
 int wait_process(pid_t pid)
 {
-	int	status;
-	int temp_status;
-	pid_t wpid;
+	int		status;
+	int		temp_status;
+	pid_t	wpid;
 
 	while (1)
 	{
@@ -371,8 +371,8 @@ int wait_process(pid_t pid)
 
 int	exec(t_node *node)
 {
-	int	status;
-	pid_t pid_to_wait;
+	int		status;
+	pid_t	pid_to_wait;
 
 	if (get_filefd(node) == FAILURE)
 		return (FAILURE);

@@ -6,13 +6,13 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/08 02:13:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:54:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern t_map *envmap;
+extern t_map	*envmap;
 
 int	builtin_env(void)
 {

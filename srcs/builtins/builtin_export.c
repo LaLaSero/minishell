@@ -6,14 +6,14 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:47:53 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:55:22 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-extern t_map *envmap;
+extern t_map	*envmap;
 
 static void	_show_declare(void)
 {

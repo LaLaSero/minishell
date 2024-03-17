@@ -6,14 +6,14 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:37:17 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:55:28 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h" 
 # include "../libft/libft.h"
 
-extern t_map *envmap;
+extern t_map	*envmap;
 
 static void	_show_unset_error(char *key)
 {

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:42:12 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:54:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 extern t_map *envmap;
 
-static void _show_cd_error(char *message)
+static void	_show_cd_error(char *message)
 {
 	write(STDERR_FILENO, "minishell: ", 11);
 	write(STDERR_FILENO, "cd: ", 4);

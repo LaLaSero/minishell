@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:13:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:52:59 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ t_token *word(char **line_loc, char *line)
 	start = line;
 	while (*line && !is_metacharacter(*line))
 	{
-		if (*line == SINGLE_QUOTE_CHAR)
+		if (*line == '\'')
 		{
 			line++;
-			while (*line && *line != SINGLE_QUOTE_CHAR)
+			while (*line && *line != '\'')
 				line++;
 			if (*line == '\0')
 			{
@@ -77,10 +77,10 @@ t_token *word(char **line_loc, char *line)
 			else
 				line++;
 		}
-		else if (*line == DOUBLE_QUOTE_CHAR)
+		else if (*line == '\"')
 		{
 			line++;
-			while (*line && *line != DOUBLE_QUOTE_CHAR)
+			while (*line && *line != '\"')
 				line++;
 			if (*line == '\0')
 			{

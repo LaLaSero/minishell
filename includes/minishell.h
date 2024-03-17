@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:07:09 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:04:34 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 # define STDOUT 1
 # define STDERR 2
 # define STDIN 0
 # define MINISHELL "MINISHELL$ "
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef struct s_token		t_token;
 enum e_token_kind {
@@ -45,7 +46,8 @@ enum e_token_kind {
 };
 typedef enum e_token_kind	t_token_kind;
 
-enum e_node_kind {
+enum e_node_kind
+{
 	ND_PIPELINE,
 	ND_SIMPLE_CMD,
 	ND_REDIR_OUT,
@@ -56,24 +58,24 @@ enum e_node_kind {
 typedef enum e_node_kind	t_node_kind;
 
 typedef struct s_node	t_node;
-struct s_node {
+struct s_node
+{
 	t_token		*args;
 	t_node_kind	kind;
 	t_node		*next;
-	t_node *redirect;
-	t_token *filename;
-	int inpipe[2];
-	int outpipe[2];
-	t_node *command;
-	int targetfd;
-	int filefd;
-	int stashed_targetfd;
-	t_token *delimiter;
+	t_node		*redirect;
+	t_token		*filename;
+	int			inpipe[2];
+	int			outpipe[2];
+	t_node		*command;
+	int			targetfd;
+	int			filefd;
+	int			stashed_targetfd;
+	t_token		*delimiter;
 };
 
-
-// `word` is zero terminated string.
-struct s_token {
+struct s_token
+{
 	char			*word;
 	t_token_kind	kind;
 	t_token			*next;
@@ -81,31 +83,25 @@ struct s_token {
 
 typedef struct s_var	t_var;
 
-struct s_var {
+struct s_var
+{
 	char	*key;
 	char	*value;
 	t_var	*next;
 };
 
 typedef struct g_status {
-	bool 	had_error;
-	int	exit_status;
+	bool	had_error;
+	int		exit_status;
 	int		signal;
 	int		is_interrupted;
 }	t_status;
 
 typedef struct s_map	t_map;
-struct s_map {
+struct s_map
+{
 	t_var	item_head;
 };
-
-# ifndef SUCCESS
-#  define SUCCESS 0
-# endif
-
-# ifndef FAILURE
-#  define FAILURE 1
-# endif
 
 t_token	*tokenize(char *line);
 void	fatal_error(const char *msg);
@@ -113,40 +109,40 @@ void	fatal_error(const char *msg);
 void	perror_prefix(void);
 t_token *expand_token(t_token *tok);
 bool	is_metacharacter(char c);
-t_node *parse(t_token *tok);
+t_node	*parse(t_token *tok);
 t_token	*new_token(char *word, t_token_kind kind);
-void show_node(t_node *node);
-void free_node(t_node *node);
-void free_token(t_token *tok);
-void parse_error(t_token *tok, t_token **tol_list);
-void tokenize_error(char *line, char **line_loc);
-void assert_error(const char *msg);
+void	show_node(t_node *node);
+void	free_node(t_node *node);
+void	free_token(t_token *tok);
+void	parse_error(t_token *tok, t_token **tol_list);
+void	tokenize_error(char *line, char **line_loc);
+void	assert_error(const char *msg);
 t_node	*redirect_out(t_token **tok_loc, t_token *tok);
 t_node	*redirect_in(t_token **tok_loc, t_token *tok);
-t_node *redirect_append(t_token **tok_loc, t_token *tok);
-t_node *new_node(t_node_kind kind);
-void append_node(t_node **node_loc, t_node *node);
+t_node	*redirect_append(t_token **tok_loc, t_token *tok);
+t_node	*new_node(t_node_kind kind);
+void	append_node(t_node **node_loc, t_node *node);
 t_token	*tokdup(t_token *tok);
-int	exec(t_node *node);
-char **get_environ(t_map *map);
-size_t get_sizeof_map(t_map *map);
+int		exec(t_node *node);
+char	**get_environ(t_map *map);
+size_t	get_sizeof_map(t_map *map);
 char	*get_value(char *key);
 void	execute_command(char **command_splitted, char **envp);
-void make_map(void);
+void	make_map(void);
 char	*get_full_sentence(t_var *var);
-int builtin_export(char **argv);
-int	add_var(t_map *map, char *line, bool null_value);
-int	builtin_env(void);
-int builtin_unset(char **argv);
-int remove_var(t_map *map, char *key);
-int builtin_pwd(void);
-int builtin_echo(char **argv);
-int builtin_cd(char **argv);
+int		builtin_export(char **argv);
+int		add_var(t_map *map, char *line, bool null_value);
+int		builtin_env(void);
+int		builtin_unset(char **argv);
+int		remove_var(t_map *map, char *key);
+int		builtin_pwd(void);
+int		builtin_echo(char **argv);
+int		builtin_cd(char **argv);
 void	setup_signal(void);
-int builtin_exit(char **argv);
+int		builtin_exit(char **argv);
 t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
-void reset_signals(void);
+void	reset_signals(void);
 
 void	free_node(t_node *node);
 void	free_token(t_token *tok);
@@ -179,6 +175,18 @@ char	*get_value(char *key);
 size_t	get_sizeof_map(t_map *map);
 int		reload_map(t_map *map, char *key, char *value);
 t_var	*new_var(char *key, char *value);
+
+bool	is_alpha_under(char c);
+bool	is_alpha_num_under(char c);
+bool	is_identifier(const char *s);
+bool	is_variable(char *s);
+bool	is_macro(char *s);
+void	remove_quote(t_node *node);
+void	quote_removal(t_token *tok);
+void	append_single_quote(char **dst, char **rest, char *p);
+void	append_double_quote(char **dst, char **rest, char *p);
+void	expand_variable_str(char **dst, char **rest, char *p);
+void	append_char(char **s, char c);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

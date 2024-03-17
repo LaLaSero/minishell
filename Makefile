@@ -1,6 +1,6 @@
 NAME = minishell
 SRCS = srcs/main.c
-SRCS += srcs/expand/expand.c
+SRCS += srcs/expand/expand.c srcs/expand/expand_utils_is.c srcs/expand/expand_utils_quote.c
 SRCS += srcs/tokenize/tokenize.c srcs/tokenize/tokenize_utils.c
 SRCS += srcs/parse/parse.c srcs/parse/parse_utils.c
 SRCS += srcs/test.c
