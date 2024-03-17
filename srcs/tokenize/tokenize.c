@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 05:08:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:13:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <assert.h>
 
-extern t_status	status;
+extern t_status	g_status;
 
 t_token	*new_token(char *word, t_token_kind kind)
 {
@@ -49,12 +49,13 @@ t_token	*operator(char **line_loc, char *line)
 		i++;
 	}
 	assert_error("Unexpected operator");
-	status.had_error = true;
+	g_status.had_error = true;
 	return (NULL);
 }
 
 
-t_token *word(char **line_loc, char *line) {
+t_token *word(char **line_loc, char *line)
+{
 	const char	*start;
 	char		*word;
 
@@ -69,7 +70,7 @@ t_token *word(char **line_loc, char *line) {
 			if (*line == '\0')
 			{
 				fatal_error("Unclosed single quote");
-				status.had_error = true;
+				g_status.had_error = true;
 				tokenize_error(line, line_loc);
 				exit(1);
 			}
@@ -84,7 +85,7 @@ t_token *word(char **line_loc, char *line) {
 			if (*line == '\0')
 			{
 				fatal_error("Unclosed double quote");
-				status.had_error = true;
+				g_status.had_error = true;
 				tokenize_error(line, line_loc);
 				exit(1);
 			}
@@ -102,7 +103,7 @@ t_token *word(char **line_loc, char *line) {
 	
 }
 
-int	delete_space(char **line_loc, char *line)
+static int	_delete_space(char **line_loc, char *line)
 {
 	if (is_space(*line))
 	{
@@ -124,7 +125,7 @@ t_token	*tokenize(char *line)
 	tok = &head;
 	while (*line)
 	{
-		if (delete_space(&line, line) == true)
+		if (_delete_space(&line, line) == true)
 			continue;
 		if (is_metacharacter(*line))
 		{
@@ -139,7 +140,7 @@ t_token	*tokenize(char *line)
 		else
 		{
 			assert_error("Unexpected Token");
-			status.had_error = true;
+			g_status.had_error = true;
 		}
 	}
 	tok->next = new_token(NULL, TK_EOF);

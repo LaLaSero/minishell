@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:20:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:17:59 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 int	builtin_exit(char **argv)
 {
-	extern t_status	status;
+	extern t_status	g_status;
 	bool			is_valud;
 	long			res;
 
 	ft_putstr_fd("exit\n", STDOUT);
 	is_valud = true;
 	if (!argv[1])
-		exit(status.exit_status);
+		exit(g_status.exit_status);
 	else if (argv[2])
 	{
 		print_exit_error(NULL, "too many arguments\n");

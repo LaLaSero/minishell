@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:25:06 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:07:09 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,6 @@ t_var	*new_var(char *key, char *value);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'
-#define ERROR_IN_PARSE 258
-#define ERROR_IN_TOKENIZE 258
+#define TOKENIZE_ERROR_NUMBER 258
+#define PARSE_ERROR_NUMBER 258
 #endif

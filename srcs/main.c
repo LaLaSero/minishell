@@ -6,52 +6,52 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:46:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:13:27 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
 
-t_status status = {};
+t_status g_status = {};
 t_map *envmap;
 
-void	init_status(void)
+static void	_init_status(void)
 {
-	status.had_error = false;
-	status.exit_status = 0;
-	status.signal = 0;
-	status.is_interrupted = false;
+	g_status.had_error = false;
+	g_status.exit_status = 0;
+	g_status.signal = 0;
+	g_status.is_interrupted = false;
 }
 
-void	interpret(char *line)
+static void	_analyze(char *line)
 {
 	t_token	*tok;
 	t_node	*node;
 
-	status.had_error = false;
+	g_status.had_error = false;
 	tok = tokenize(line);
 	if (tok->kind == TK_EOF)
 		;
-	else if(status.had_error)
-		status.exit_status = ERROR_IN_TOKENIZE;
+	else if(g_status.had_error)
+		g_status.exit_status = TOKENIZE_ERROR_NUMBER;
 	else
 	{
 		node = parse(tok);
-		if(status.had_error == true)
-			status.exit_status = ERROR_IN_PARSE;
+		if(g_status.had_error == true)
+			g_status.exit_status = PARSE_ERROR_NUMBER;
 		else
 		{
 			expand(node);
 			// show_node(node);
-			status.exit_status = exec(node);
+			g_status.exit_status = exec(node);
 		}
 		free_node(node);
 	}
 	free_token(tok);
 }
 
-void	minishell()
+static void	_minishell_loop(void)
 {
 	char	*line;
 
@@ -65,19 +65,19 @@ void	minishell()
 			break ;
 		if (*line)
 			add_history(line);
-		interpret(line);
+		_analyze(line);
 		free(line);
 	}
 	write(1, "exit\n", 5);
-	exit(status.exit_status);
+	exit(g_status.exit_status);
 }
 
 int	main(int argc, char **argv)
 {
-	init_status();
+	_init_status();
 	(void)argv;
 	if (argc == 1)
-		minishell();
+		_minishell_loop();
 	return (0);
 }
 

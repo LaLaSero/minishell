@@ -6,22 +6,13 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:53:12 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:29:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../libft/libft.h"
 # include "../includes/minishell.h" 
 
-// bnf definition by usatie
-// <pipeline> = <simple_command> ('|' <pipeline>)
-// <simple_command> = <command_element>+
-// <command_element> = <word> | <redirection>
-// <redirection> = '>' <word>
-//               | '<' <word>
-//               | '>>' <word>
-//               | '<<' <word>
-// 
 // 以下のbnf定義を元にパーサーを実装する
 // <pipeline> ::= <pipeline> '|' <command> <pipeline>
 // <command> ::= <simple_command>
@@ -36,15 +27,9 @@
 //                | '>>' <word>
 //                | '<<' <word>
 // source: https://cmdse.github.io/pages/appendix/bash-grammar.html
-
-t_token	*tokdup(t_token *tok);
-extern t_status	status;
-
 // <simple_command_element> ::= <word> | <redirection>
 void	append_command_element(t_node *command, t_token **tok_list, t_token *cur)
 {
-	extern t_status	t_status;
-
 	if (cur->kind == TK_WORD)
 	{
 		append_token(&command->args, tokdup(cur));

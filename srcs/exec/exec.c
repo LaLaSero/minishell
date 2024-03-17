@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/17 04:49:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:16:32 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int stash_fd(int fd)
 void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 {
 	char			*line;
-	extern t_status	status;
+	extern t_status	g_status;
 
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
-			|| status.is_interrupted == true)
+			|| g_status.is_interrupted == true)
 		{
 			free(line);
 			break;
@@ -108,7 +108,7 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 int	open_heredoc(char *delimiter)
 {
 	int				pipefd[2];
-	extern t_status	status;
+	extern t_status	g_status;
 
 	if (pipe(pipefd) < 0)
 	{
@@ -121,7 +121,7 @@ int	open_heredoc(char *delimiter)
 		fatal_error("close error");
 		return (FAILURE);
 	}
-	if (status.is_interrupted == true)
+	if (g_status.is_interrupted == true)
 	{
 		if (close(pipefd[0]) < 0)
 		{

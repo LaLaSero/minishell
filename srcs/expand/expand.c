@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/17 05:05:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:15:38 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ bool is_macro(char *s)
 
 void expand_macro(char **dst, char **rest, char *p)
 {
-	extern t_status status;
+	extern t_status g_status;
 	char *temp;
 
 	if (is_macro(p) == false)
 		assert_error("Expected $? macro");
 	p += ft_strlen("$?");
 	temp = *dst;
-	*dst = ft_itoa(status.exit_status);
+	*dst = ft_itoa(g_status.exit_status);
 	free(temp);
 	*rest = p;
 }

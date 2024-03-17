@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:44:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:31:13 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:18:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	disable_signal(int signum)
 
 void	report_signal(int signum)
 {
-	extern t_status	status;
+	extern t_status	g_status;
 
-	status.signal = signum;
+	g_status.signal = signum;
 }

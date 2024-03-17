@@ -6,29 +6,30 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:43:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:20:03 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <readline/readline.h>
 
-extern t_status status;
-void disable_signal(int signum);
-void report_signal(int signum);
+void			disable_signal(int signum);
+void			report_signal(int signum);
 
 static int	monitor_readline(void)
 {
-	if (status.signal == 0)
+	extern t_status	g_status;
+
+	if (g_status.signal == 0)
 		return (0);
-	else if (status.signal == SIGINT)
+	else if (g_status.signal == SIGINT)
 	{
-		status.signal =  0;
-		status.is_interrupted = true;
+		g_status.signal =  0;
+		g_status.is_interrupted = true;
 		rl_replace_line("", 0);
 		rl_done = true;
 	}
-	else if (status.signal == SIGQUIT)
+	else if (g_status.signal == SIGQUIT)
 	{
 		write(STDERR_FILENO, "exit\n", 5);
 	}
