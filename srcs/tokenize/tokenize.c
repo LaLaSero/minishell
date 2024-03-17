@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:52:59 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:42:43 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 
 t_token	*operator(char **line_loc, char *line)
 {
-	static char *const	operator_list[] = { "<", ">",">>", "<<", "||", "&&", ";;",
+	static char *const	operator_list[] = {">>", "<<", "<", ">", "||", "&&", ";;",
 		"&", ";", "(", ")", "|", "\n"};
 	size_t				i;
 	char				*op;
@@ -69,10 +69,10 @@ t_token *word(char **line_loc, char *line)
 				line++;
 			if (*line == '\0')
 			{
-				fatal_error("Unclosed single quote");
 				g_status.had_error = true;
 				tokenize_error(line, line_loc);
-				exit(1);
+				write(1, "Unclosed single quote\n", 23);
+				// exit(-1);
 			}
 			else
 				line++;
@@ -84,10 +84,10 @@ t_token *word(char **line_loc, char *line)
 				line++;
 			if (*line == '\0')
 			{
-				fatal_error("Unclosed double quote");
 				g_status.had_error = true;
 				tokenize_error(line, line_loc);
-				exit(1);
+				write(1, "Unclosed double quote\n", 23);
+				// exit(-1);
 			}
 			else
 				line++;
