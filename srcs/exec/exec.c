@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/18 01:28:56 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:59:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,17 +153,13 @@ int	get_filefd(t_node *node)
 	else if (node->kind == ND_REDIR_APPEND)
 		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (node->kind == ND_REDIR_HEREDOC)
-		node ->filefd = open_heredoc(node->delimiter->word);
+		node->filefd = open_heredoc(node->delimiter->word);
 	else
-	{
 		fatal_error("get filefd");
-		return (FAILURE);
-	}
 	if (node->filefd < 0)
-	{
 		fatal_error("open error");
+	else if (node->filefd == FAILURE)
 		return (FAILURE);
-	}
 	node->filefd = stash_fd(node->filefd);
 	return (get_filefd(node->next));
 }
@@ -361,7 +357,9 @@ int	exec(t_node *node)
 	pid_t	pid_to_wait;
 
 	if (get_filefd(node) == FAILURE)
+	{
 		return (FAILURE);
+	}
 	if (node->next == NULL && isbuiltin(node->command))
 	{
 		status = exec_builtin(node);

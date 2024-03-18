@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:05:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:37:52 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,24 @@ char	*ft_strndup(char *s, size_t n)
 	return (str);
 }
 
+static int	_wrapped_remake_map(t_map *map, char *key, char *value)
+{
+	int	is_success;
+
+	is_success = remake_map(map, key, value);
+	free(key);
+	free(value);
+	return (is_success);
+}
+
 int	add_var(t_map *map, char *line, bool null_value)
 {
 	char	*key;
 	char	*value;
 	char	*p;
-	int		is_success;
 
-	key = NULL;
 	value = NULL;
+	key = NULL;
 	p = ft_strchr(line, '=');
 	if (p == NULL && null_value == false)
 		fatal_error("Invalid environment variable");
@@ -50,7 +59,6 @@ int	add_var(t_map *map, char *line, bool null_value)
 		key = ft_strdup(line);
 		if (key == NULL)
 			fatal_error("strdup");
-		value = NULL;
 	}
 	else
 	{
@@ -61,10 +69,7 @@ int	add_var(t_map *map, char *line, bool null_value)
 		if (value == NULL)
 			fatal_error("strdup");
 	}
-	is_success = remake_map(map, key, value);
-	free(key);
-	free(value);
-	return (is_success);
+	return (_wrapped_remake_map(map, key, value));
 }
 
 int	remove_var(t_map *map, char *key)
