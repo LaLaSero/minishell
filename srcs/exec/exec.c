@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/18 20:57:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:24:06 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	exec_builtin(t_node *node)
 int	exec_nonbuiltin(t_node *node)
 {
 	extern char		**environ;
-	extern t_status g_status;
+	extern t_status	g_status;
 	char			**argv;
 
 	dup_redirect(node->command->redirect);
@@ -69,10 +69,7 @@ pid_t	exec_pipeline(t_node *node)
 	set_pipe(node);
 	pid = fork();
 	if (pid < 0)
-	{
 		fatal_error("fork error");
-		return (FAILURE);
-	}
 	else if (pid == 0)
 	{
 		reset_signals();
@@ -114,7 +111,6 @@ int	wait_process(pid_t pid)
 				continue ;
 			else
 				fatal_error("waitpid error");
-			return (FAILURE);
 		}
 	}
 	return (status);

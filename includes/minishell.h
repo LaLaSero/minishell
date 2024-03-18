@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:57:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:17:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ t_node	*expand(t_node *node);
 void	reset_signals(void);
 int		get_filefd(t_node *node);
 
+t_token	*word(char **line_loc, char *line);
 void	write_user_input_to_pipe(char *delimiter, int pipefd[2]);
 int		open_heredoc(char *delimiter);
 

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:32:17 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:14:18 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	fatal_error(const char *msg)
 
 void	assert_error(const char *msg)
 {
+	extern t_status	g_status;
+
+	g_status.had_error = true;
 	perror_prefix();
 	write(STDERR_FILENO, "Assert Error: ", 14);
 	write(STDERR_FILENO, msg, ft_strlen(msg));
