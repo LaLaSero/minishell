@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:05:30 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:09:19 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct g_status
 	int		exit_status;
 	int		signal;
 	int		is_interrupted;
+	t_map	*envmap;
 }	t_status;
 
 typedef struct s_map	t_map;

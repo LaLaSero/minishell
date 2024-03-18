@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:24:42 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:10:02 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../includes/minishell.h" 
 
 t_status	g_status;
-t_map		*envmap;
 
 static void	_init_status(void)
 {
@@ -22,6 +21,7 @@ static void	_init_status(void)
 	g_status.exit_status = 0;
 	g_status.signal = 0;
 	g_status.is_interrupted = false;
+	g_status.envmap = NULL;
 }
 
 static void	_analyze(char *line)
