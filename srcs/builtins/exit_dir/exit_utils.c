@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:14:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:18:29 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:14:05 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ long	ft_atol(char *string, bool *is_valid)
 	while (*string == ' ' || *string == '\t' || *string == '\n'
 		|| *string == '\v' || *string == '\f' || *string == '\r')
 		string++;
+	if (*string == '\0')
+		*is_valid = false;
 	flag = 1;
 	if (*string == '-' || *string == '+')
 	{
@@ -57,10 +59,11 @@ long	ft_atol(char *string, bool *is_valid)
 	return (result * flag);
 }
 
-bool is_only_digit(char *str)
+bool	is_only_digit(char *str)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i])

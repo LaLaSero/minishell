@@ -6,13 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:48:06 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:48:32 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:02:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
-
 
 void	realloc_var(t_var *var, char *value)
 {
