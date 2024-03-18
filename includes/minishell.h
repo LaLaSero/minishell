@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:26:07 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 20:57:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		builtin_exit(char **argv);
 t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok);
 t_node	*expand(t_node *node);
 void	reset_signals(void);
+int		get_filefd(t_node *node);
 
 void	write_user_input_to_pipe(char *delimiter, int pipefd[2]);
 int		open_heredoc(char *delimiter);
