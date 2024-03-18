@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:10:02 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:03:27 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	_analyze(char *line)
 		else
 		{
 			expand(node);
-			// show_node(node);
 			g_status.exit_status = exec(node);
 		}
 		free_node(node);
