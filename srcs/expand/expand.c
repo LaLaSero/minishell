@@ -3,35 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:50:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:48:54 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
-
-void	append_char(char **s, char c)
-{
-	size_t	size;
-	char	*new;
-
-	size = 2;
-	if (*s)
-		size += ft_strlen(*s);
-	new = malloc(size);
-	if (new == NULL)
-		fatal_error("malloc");
-	if (*s)
-		strlcpy(new, *s, size);
-	new[size - 2] = c;
-	new[size - 1] = '\0';
-	if (*s)
-		free(*s);
-	*s = new;
-}
 
 void	expand_macro(char **dst, char **rest, char *p)
 {
@@ -47,7 +27,6 @@ void	expand_macro(char **dst, char **rest, char *p)
 	*rest = p;
 }
 
-// $variable を展開する
 void	expand_variable_str(char **dst, char **rest, char *p)
 {
 	char	*var_name;
@@ -60,7 +39,8 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 		assert_error("Expected dollar sign");
 	p++;
 	if (!is_alpha_under(*p))
-		assert_error("Variable must starts with alphabetic character or underscore.");
+		assert_error
+			("Variable must starts with alphabetic character or underscore.");
 	append_char(&var_name, *p++);
 	while (is_alpha_num_under(*p))
 		append_char(&var_name, *p++);
@@ -74,7 +54,6 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 	*rest = p;
 }
 
-// トークンに含まれるvariableを展開する
 void	expand_variable_tok(t_token *tok)
 {
 	char	*new_word;
@@ -104,14 +83,12 @@ void	expand_variable_tok(t_token *tok)
 	expand_variable_tok(tok->next);
 }
 
-// nodeに含まれるtokenを展開する
 void	expand_variable(t_node *node)
 {
 	if (node == NULL)
 		return ;
 	expand_variable_tok(node->args);
 	expand_variable_tok(node->filename);
-	// do not expand heredoc delimiter	expand_variable(node->redirect);
 	expand_variable(node->command);
 	expand_variable(node->next);
 }

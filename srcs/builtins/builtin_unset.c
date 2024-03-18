@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:29:36 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:41:52 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	_show_unset_error(char *key)
 
 int	builtin_unset(char **argv)
 {
-	extern t_status g_status	;
+	extern t_status	g_status;
 	int				status;
 	int				i;
 

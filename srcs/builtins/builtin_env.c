@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:29:34 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:39:44 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	builtin_env(void)
 {
-	extern t_status g_status	;
+	extern t_status	g_status;
 	t_var			*cur;
 
 	cur = g_status.envmap->item_head.next;

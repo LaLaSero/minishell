@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:29:39 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:42:59 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	update_oldpwd(char *pwd_value)
 {
-	extern t_status g_status	;
+	extern t_status	g_status;
 	char			*oldpwd_value;
 
 	if (pwd_value == NULL)

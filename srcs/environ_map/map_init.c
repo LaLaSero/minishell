@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:31:40 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:43:57 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_map	*init_map(void)
 void	make_map(void)
 {
 	extern char		**environ;
-	extern t_status g_status;
+	extern t_status	g_status;
 	char			cwd[PATH_MAX];
 	char			*temp;
 

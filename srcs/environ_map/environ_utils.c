@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:29:42 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:43:40 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 char	*get_value(char *key)
 {
-	extern t_status g_status	;
+	extern t_status	g_status;
 	t_var			*cur;
 
 	if (key == NULL)

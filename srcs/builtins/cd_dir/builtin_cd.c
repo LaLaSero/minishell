@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:29:37 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:42:36 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	_argv_to_path(char **argv, char *path)
 
 int	builtin_cd(char **argv)
 {
-	extern t_status g_status	;
+	extern t_status	g_status;
 	char			*pwd_value;
 	char			*newpwd_value;
 	char			path[PATH_MAX];
