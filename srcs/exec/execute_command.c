@@ -6,12 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:46:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:17:08 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-# include "../libft/libft.h"
+#include "../libft/libft.h"
 
 static void	_show_error(char *command, char *message)
 {

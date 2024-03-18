@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 10:49:50 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:23:19 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_token	*operator(char **line_loc, char *line)
 	i = 0;
 	while (i < sizeof(operator_list) / sizeof(*operator_list))
 	{
-		if (ft_strncmp(line, operator_list[i], ft_strlen(operator_list[i])) == 0)
+		if (ft_strncmp(line, operator_list[i],
+				ft_strlen(operator_list[i])) == 0)
 		{
 			op = ft_strdup(operator_list[i]);
 			if (op == NULL)
@@ -53,7 +54,7 @@ t_token	*operator(char **line_loc, char *line)
 }
 
 
-t_token *word(char **line_loc, char *line)
+t_token	*word(char **line_loc, char *line)
 {
 	const char	*start;
 	char		*word;
@@ -71,7 +72,6 @@ t_token *word(char **line_loc, char *line)
 				g_status.had_error = true;
 				tokenize_error(line, line_loc);
 				write(1, "Unclosed single quote\n", 23);
-				// exit(-1);
 			}
 			else
 				line++;
@@ -86,7 +86,6 @@ t_token *word(char **line_loc, char *line)
 				g_status.had_error = true;
 				tokenize_error(line, line_loc);
 				write(1, "Unclosed double quote\n", 23);
-				// exit(-1);
 			}
 			else
 				line++;
@@ -94,12 +93,11 @@ t_token *word(char **line_loc, char *line)
 		else
 			line++;
 	}
-		word = ft_substr(start, 0, line - start);
-		if (word == NULL)
-			fatal_error("substr");
-		*line_loc = line;
-		return (new_token(word, TK_WORD));
-	
+	word = ft_substr(start, 0, line - start);
+	if (word == NULL)
+		fatal_error("substr");
+	*line_loc = line;
+	return (new_token(word, TK_WORD));
 }
 
 static int	_delete_space(char **line_loc, char *line)
@@ -125,7 +123,7 @@ t_token	*tokenize(char *line)
 	while (*line)
 	{
 		if (_delete_space(&line, line) == true)
-			continue;
+			continue ;
 		if (is_metacharacter(*line))
 		{
 			tok->next = operator(&line, line);

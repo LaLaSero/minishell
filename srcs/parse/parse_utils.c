@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:11:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:49:11 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:19:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ bool	is_op(t_token *tok, char *op)
 
 bool	is_control_operator(t_token *tok)
 {
-	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
 	size_t				i;
 
+	static char *const
+		operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
 	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
 		if (ft_strncmp(tok->word, operators[i],
-			ft_strlen(operators[i]) + 1) == 0)
+				ft_strlen(operators[i]) + 1) == 0)
 			return (true);
 		i++;
 	}

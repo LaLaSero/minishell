@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 10:41:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:05:30 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@
 # define MINISHELL "MINISHELL$ "
 # define SUCCESS 0
 # define FAILURE 1
+# define ERROR_PREFIX "minishell: "
+# define SINGLE_QUOTE_CHAR '\''
+# define DOUBLE_QUOTE_CHAR '\"'
+# define TOKENIZE_ERROR_NUMBER 258
+# define PARSE_ERROR_NUMBER 258
 
 typedef struct s_token		t_token;
-enum e_token_kind {
+enum e_token_kind
+{
 	TK_WORD,
 	TK_RESERVED,
 	TK_OP,
@@ -58,7 +64,7 @@ enum e_node_kind
 typedef enum e_node_kind	t_node_kind;
 
 typedef struct s_node	t_node;
-struct s_node
+struct					s_node
 {
 	t_token		*args;
 	t_node_kind	kind;
@@ -82,7 +88,6 @@ struct s_token
 };
 
 typedef struct s_var	t_var;
-
 struct s_var
 {
 	char	*key;
@@ -90,7 +95,8 @@ struct s_var
 	t_var	*next;
 };
 
-typedef struct g_status {
+typedef struct g_status
+{
 	bool	had_error;
 	int		exit_status;
 	int		signal;
@@ -105,9 +111,8 @@ struct s_map
 
 t_token	*tokenize(char *line);
 void	fatal_error(const char *msg);
-#define ERROR_PREFIX "minishell: "
 void	perror_prefix(void);
-t_token *expand_token(t_token *tok);
+// t_token	*expand_token(t_token *tok);
 bool	is_metacharacter(char c);
 t_node	*parse(t_token *tok);
 t_token	*new_token(char *word, t_token_kind kind);
@@ -146,7 +151,6 @@ void	reset_signals(void);
 
 void	write_user_input_to_pipe(char *delimiter, int pipefd[2]);
 int		open_heredoc(char *delimiter);
-
 
 size_t	get_sizeof_token(t_token *args);
 char	**convert_to_argv(t_token *args);
@@ -207,10 +211,6 @@ void	append_double_quote(char **dst, char **rest, char *p);
 void	expand_variable_str(char **dst, char **rest, char *p);
 void	append_char(char **s, char c);
 
-int token_test(t_token *tok);
+int		token_test(t_token *tok);
 
-#define SINGLE_QUOTE_CHAR '\''
-#define DOUBLE_QUOTE_CHAR '\"'
-#define TOKENIZE_ERROR_NUMBER 258
-#define PARSE_ERROR_NUMBER 258
 #endif

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_append_new.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:11:20 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:14:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:17:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/libft.h"
-# include "../includes/minishell.h"
+#include "../libft/libft.h"
+#include "../includes/minishell.h"
 
 void	append_token(t_token **tok_loc, t_token *tok)
 {

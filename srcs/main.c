@@ -6,15 +6,15 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:52:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:24:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/minishell.h" 
 
-t_status g_status = {};
-t_map *envmap;
+t_status	g_status;
+t_map		*envmap;
 
 static void	_init_status(void)
 {

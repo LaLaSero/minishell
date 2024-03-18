@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:27:22 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:20:47 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ bool	is_space(char c)
 
 bool	is_operator(const char *s)
 {
-	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
 	size_t				i;
 
+	static char *const
+		operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
 	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
