@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:49:19 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:09:57 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,42 @@ t_token	*operator(char **line_loc, char *line)
 	return (NULL);
 }
 
+static void	handle_single_quote(char *line, char **line_loc)
+{
+	extern t_status	g_status;
+
+	line++;
+	while (*line && *line != '\'')
+		line++;
+	if (*line == '\0')
+	{
+		g_status.had_error = true;
+		tokenize_error(line, line_loc);
+		write(1, "Unclosed single quote\n", 23);
+	}
+	else
+		line++;
+	*line_loc = line;
+}
+
+static void	handle_double_quote(char *line, char **line_loc)
+{
+	extern t_status	g_status;
+
+	line++;
+	while (*line && *line != '\"')
+		line++;
+	if (*line == '\0')
+	{
+		g_status.had_error = true;
+		tokenize_error(line, line_loc);
+		write(1, "Unclosed single quote\n", 23);
+	}
+	else
+		line++;
+	*line_loc = line;
+}
+
 t_token	*word(char **line_loc, char *line)
 {
 	extern t_status	g_status;
@@ -63,31 +99,11 @@ t_token	*word(char **line_loc, char *line)
 	{
 		if (*line == '\'')
 		{
-			line++;
-			while (*line && *line != '\'')
-				line++;
-			if (*line == '\0')
-			{
-				g_status.had_error = true;
-				tokenize_error(line, line_loc);
-				write(1, "Unclosed single quote\n", 23);
-			}
-			else
-				line++;
+			handle_single_quote(line, &line);
 		}
 		else if (*line == '\"')
 		{
-			line++;
-			while (*line && *line != '\"')
-				line++;
-			if (*line == '\0')
-			{
-				g_status.had_error = true;
-				tokenize_error(line, line_loc);
-				write(1, "Unclosed double quote\n", 23);
-			}
-			else
-				line++;
+			handle_double_quote(line, &line);
 		}
 		else
 			line++;
