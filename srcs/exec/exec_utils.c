@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 01:42:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:57:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ void	free_argv(char **argv)
 	free(argv);
 }
 
+bool is_only_space(char *s)
+{
+	while (*s)
+	{
+		if (*s != ' ')
+			return (false);
+		s++;
+	}
+	return (true);
+}
+
 char	**convert_to_argv(t_token *args)
 {
 	int		i;
@@ -50,7 +61,7 @@ char	**convert_to_argv(t_token *args)
 
 	t_token *temp = args;
 	splitted = NULL;
-	if (args->word && ft_strchr(args->word, ' '))
+	if (args->word && !is_only_space(args->word) && ft_strchr(args->word, ' '))
 	{
 		splitted = ft_split(args->word, ' ');
 		if (splitted == NULL)

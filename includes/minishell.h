@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 23:24:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:41:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ void	append_single_quote(char **dst, char **rest, char *p);
 void	append_double_quote(char **dst, char **rest, char *p);
 void	expand_variable_str(char **dst, char **rest, char *p);
 void	append_char(char **s, char c);
+
+int token_test(t_token *tok);
 
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '\"'

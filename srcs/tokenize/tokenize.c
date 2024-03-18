@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:42:43 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:49:50 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 
 t_token	*operator(char **line_loc, char *line)
 {
-	static char *const	operator_list[] = {">>", "<<", "<", ">", "||", "&&", ";;",
-		"&", ";", "(", ")", "|", "\n"};
+	static char *const	operator_list[] = {">>", "<<", "<", ">", "|", "\n"};
 	size_t				i;
 	char				*op;
 
