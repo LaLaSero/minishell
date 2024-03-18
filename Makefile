@@ -3,7 +3,6 @@ SRCS = srcs/main.c
 SRCS += srcs/expand/expand.c srcs/expand/expand_utils_is.c srcs/expand/expand_utils_quote.c srcs/expand/expand_remove.c
 SRCS += srcs/tokenize/tokenize.c srcs/tokenize/tokenize_utils.c srcs/tokenize/tokenize_quote.c
 SRCS += srcs/parse/parse.c srcs/parse/parse_utils.c srcs/parse/parse_append_new.c
-SRCS += srcs/test.c
 SRCS += srcs/exec/exec.c srcs/exec/execute_command.c srcs/exec/exec_utils.c srcs/exec/exec_redirect.c
 SRCS += srcs/exec/exec_pipe.c srcs/exec/exec_heredoc.c srcs/exec/make_argv.c srcs/exec/exec_filefd.c
 SRCS += srcs/redirect/redirection.c
