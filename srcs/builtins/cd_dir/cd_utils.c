@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:17:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:54:21 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
-extern t_map *envmap;
+extern t_map	*envmap;
 
 void	update_oldpwd(char *pwd_value)
 {
@@ -57,7 +57,7 @@ void	remove_last_dir(char *pwd_value)
 		{
 			if (len > 0)
 				pwd_value[len] = '\0';
-			break;
+			break ;
 		}
 	}
 }

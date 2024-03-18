@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:20:03 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:51:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	monitor_readline(void)
 		return (0);
 	else if (g_status.signal == SIGINT)
 	{
-		g_status.signal =  0;
+		g_status.signal = 0;
 		g_status.is_interrupted = true;
 		rl_replace_line("", 0);
 		rl_done = true;
@@ -36,7 +36,7 @@ static int	monitor_readline(void)
 	return (0);
 }
 
-void modify_signal(int signum)
+void	modify_signal(int signum)
 {
 	struct sigaction	sa;
 
@@ -49,7 +49,7 @@ void modify_signal(int signum)
 
 void	setup_signal(void)
 {
-	extern int _rl_echo_control_chars;
+	extern int	_rl_echo_control_chars;
 
 	_rl_echo_control_chars = false;
 	rl_outstream = stderr;

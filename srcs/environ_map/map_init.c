@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:18:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:42:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_map	*init_map(void)
 void	make_map(void)
 {
 	char		cwd[PATH_MAX];
-	char 		*temp;
+	char		*temp;
 	extern char	**environ;
 
 	envmap = init_map();

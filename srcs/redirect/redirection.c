@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:26:53 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:52:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:51:03 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_node	*redirect_append(t_token **tok_loc, t_token *tok)
 	return (node);
 }
 
-t_node *redirect_heredoc(t_token **tok_loc, t_token *tok)
+t_node	*redirect_heredoc(t_token **tok_loc, t_token *tok)
 {
 	t_node	*node;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 01:25:46 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:47:32 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

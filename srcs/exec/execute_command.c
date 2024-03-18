@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 19:10:10 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:46:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ static void	_show_error(char *command, char *message)
 	write(2, command, ft_strlen(command));
 	write(2, ": ", 2);
 	write(2, message, ft_strlen(message));
-}
-
-static void	_free_str(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i] != NULL)
-		free(path[i++]);
-	free(path);
 }
 
 static int	_is_fullpath(char *command)
@@ -91,11 +81,11 @@ static char	*find_accessible_path(char *path_list, char *command)
 	}
 	if (path[i] == NULL)
 	{
-		_free_str(path);
+		free_argv(path);
 		_show_error(command, "command not found\n");
 		exit(127);
 	}
-	_free_str(path);
+	free_argv(path);
 	return (accessible_path);
 }
 
@@ -115,7 +105,7 @@ void	execute_command(char **command_splitted, char **envp)
 	else if (_is_fullpath(command_splitted[0]) == 2 || path_list == NULL)
 	{
 		_show_error(command_splitted[0], "No such file or directory\n");
-		_free_str(command_splitted);
+		free_argv(command_splitted);
 		free(path_list);
 		exit(127);
 	}
@@ -124,7 +114,7 @@ void	execute_command(char **command_splitted, char **envp)
 	free(path_list);
 	if (execve(accessible_path, command_splitted, envp) == -1)
 	{
-		_free_str(command_splitted);
+		free_argv(command_splitted);
 		free(accessible_path);
 		perror("minishell: execve");
 		exit(-1);

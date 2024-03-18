@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:17:59 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:40:32 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 int	builtin_exit(char **argv)
 {

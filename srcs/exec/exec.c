@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/18 17:59:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:44:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ int	get_filefd(t_node *node)
 // 	}
 // }
 
-int exec_nonbuiltin(t_node *node)
+int	exec_nonbuiltin(t_node *node)
 {
 	char		**argv;
 	extern char	**environ;
@@ -321,7 +321,7 @@ pid_t exec_pipeline(t_node *node)
 	return (pid);
 }
 
-int wait_process(pid_t pid)
+int	wait_process(pid_t pid)
 {
 	int		status;
 	int		temp_status;

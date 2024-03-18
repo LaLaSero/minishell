@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:11:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:14:02 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:49:11 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/libft.h"
-# include "../includes/minishell.h" 
+#include "../libft/libft.h"
+#include "../includes/minishell.h" 
 
 bool	is_op(t_token *tok, char *op)
 {
@@ -23,11 +23,13 @@ bool	is_op(t_token *tok, char *op)
 bool	is_control_operator(t_token *tok)
 {
 	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;
+	size_t				i;
 
+	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (ft_strncmp(tok->word, operators[i], ft_strlen(operators[i]) + 1) == 0)
+		if (ft_strncmp(tok->word, operators[i],
+			ft_strlen(operators[i]) + 1) == 0)
 			return (true);
 		i++;
 	}

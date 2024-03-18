@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:17:13 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:43:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 extern t_status g_status;
 
@@ -37,7 +37,6 @@ void	tokenize_error(char *line, char **line_loc)
 	while (*line)
 		line++;
 	*line_loc = line;
-	
 }
 
 void	perror_prefix(void)

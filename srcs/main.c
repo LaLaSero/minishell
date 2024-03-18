@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 10:58:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:52:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/libft.h"
-# include "../includes/minishell.h" 
+#include "../libft/libft.h"
+#include "../includes/minishell.h" 
 
 t_status g_status = {};
 t_map *envmap;
@@ -33,12 +33,12 @@ static void	_analyze(char *line)
 	tok = tokenize(line);
 	if (tok->kind == TK_EOF)
 		;
-	else if(g_status.had_error)
+	else if (g_status.had_error)
 		g_status.exit_status = TOKENIZE_ERROR_NUMBER;
 	else
 	{
 		node = parse(tok);
-		if(g_status.had_error == true)
+		if (g_status.had_error == true)
 			g_status.exit_status = PARSE_ERROR_NUMBER;
 		else
 		{
@@ -58,7 +58,7 @@ static void	_minishell_loop(void)
 	rl_outstream = stderr;
 	make_map();
 	setup_signal();
-	while(1)
+	while (1)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 17:37:52 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:43:07 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	add_var(t_map *map, char *line, bool null_value)
 	p = ft_strchr(line, '=');
 	if (p == NULL && null_value == false)
 		fatal_error("Invalid environment variable");
-	else if(p == NULL)
+	else if (p == NULL)
 	{
 		key = ft_strdup(line);
 		if (key == NULL)

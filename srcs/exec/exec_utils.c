@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 10:57:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:44:16 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_argv(char **argv)
 	free(argv);
 }
 
-bool is_only_space(char *s)
+bool	is_only_space(char *s)
 {
 	while (*s)
 	{
@@ -57,7 +57,7 @@ char	**convert_to_argv(t_token *args)
 	int		i;
 	char	**argv;
 	t_token	*tmp;
-	char **splitted;
+	char	**splitted;
 
 	t_token *temp = args;
 	splitted = NULL;

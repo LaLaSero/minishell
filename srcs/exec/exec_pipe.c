@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:02 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:04:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:44:02 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_pipe(t_node *node)
 	cpy_pipe(node->next->inpipe, node->outpipe);
 }
 
-void set_parent_pipe(t_node *node)
+void	set_parent_pipe(t_node *node)
 {
 	if (node->inpipe[0] != STDIN_FILENO)
 		if (close(node->inpipe[0]) < 0)

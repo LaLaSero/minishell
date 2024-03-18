@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:10:56 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 17:55:01 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:43:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
+		if (line == NULL
+			|| ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
 			|| g_status.is_interrupted == true)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		write(pipefd[1], line, ft_strlen(line));
 		write(pipefd[1], "\n", 1);

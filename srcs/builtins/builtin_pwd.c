@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:38:01 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:41:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 bool	is_correct_cwd(char *pwd)
 {
@@ -20,14 +20,14 @@ bool	is_correct_cwd(char *pwd)
 
 	if (stat(pwd, &stat_pwd) != 0)
 	{
-		return false;
+		return (false);
 	}
 	if (stat(".", &stat_cwd) != 0)
 	{
-		return false;
+		return (false);
 	}
 	return (stat_pwd.st_ino == stat_cwd.st_ino
-			&& stat_pwd.st_dev == stat_cwd.st_dev);
+		&& stat_pwd.st_dev == stat_cwd.st_dev);
 }
 
 int	builtin_pwd(void)

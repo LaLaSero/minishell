@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:54:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:53:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 extern t_map *envmap;
 
@@ -43,7 +43,6 @@ static char	*_update_pwd_value(char *pwd_value, char *path)
 			remove_last_dir(newpwd_value);
 		else
 			add_dir(newpwd_value, path, &path);
-		
 	}
 	res = ft_strdup(newpwd_value);
 	return (res);

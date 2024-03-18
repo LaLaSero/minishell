@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:14:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:14:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:40:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 bool	does_overflow(long result, int flag, char *string, bool *is_valid)
 {
 	if (result * flag > LONG_MAX / 10
 		|| (result * flag == LONG_MAX / 10 && *string - '0' > 7))
-		{
-			*is_valid = false;
-			return (true);
-		}
+	{
+		*is_valid = false;
+		return (true);
+	}
 	if (result * flag < LONG_MIN / 10
 		|| (result * flag == LONG_MIN / 10 && *string - '0' > 8))
-		{
-			*is_valid = false;
-			return (true);
-		}
+	{
+		*is_valid = false;
+		return (true);
+	}
 	return (false);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/18 01:26:17 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:48:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
-void expand_macro(char **dst, char **rest, char *p)
+void	expand_macro(char **dst, char **rest, char *p)
 {
 	extern t_status	g_status;
 	char			*temp;

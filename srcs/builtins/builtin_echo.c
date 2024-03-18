@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/16 02:08:23 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:41:00 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h" 
-# include "../libft/libft.h"
+#include "../includes/minishell.h" 
+#include "../libft/libft.h"
 
 int	builtin_echo(char **argv)
 {
