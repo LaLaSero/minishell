@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:46:44 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:29:39 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 void	update_oldpwd(char *pwd_value)
 {
-	extern t_map	*envmap;
+	extern t_status g_status	;
 	char			*oldpwd_value;
 
 	if (pwd_value == NULL)
-		add_var(envmap, "OLDPWD", true);
+		add_var(g_status.envmap, "OLDPWD", true);
 	else
 	{
 		oldpwd_value = ft_strjoin("OLDPWD=", pwd_value);
-		add_var(envmap, oldpwd_value, false);
+		add_var(g_status.envmap, oldpwd_value, false);
 		free(oldpwd_value);
 	}
 }

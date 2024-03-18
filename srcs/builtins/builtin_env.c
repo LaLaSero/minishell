@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:47:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:29:34 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	builtin_env(void)
 {
-	extern t_map	*envmap;
+	extern t_status g_status	;
 	t_var			*cur;
 
-	cur = envmap->item_head.next;
+	cur = g_status.envmap->item_head.next;
 	while (cur)
 	{
 		if (cur->value && cur->value[0] != '\0')

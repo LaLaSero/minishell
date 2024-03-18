@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 20:09:19 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:26:07 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ struct s_var
 	char	*value;
 	t_var	*next;
 };
+struct s_map
+{
+	t_var	item_head;
+};
+
+typedef struct s_map	t_map;
 
 typedef struct g_status
 {
@@ -103,12 +109,6 @@ typedef struct g_status
 	int		is_interrupted;
 	t_map	*envmap;
 }	t_status;
-
-typedef struct s_map	t_map;
-struct s_map
-{
-	t_var	item_head;
-};
 
 t_token	*tokenize(char *line);
 void	fatal_error(const char *msg);

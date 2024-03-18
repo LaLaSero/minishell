@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/18 19:43:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:29:44 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ int	get_filefd(t_node *node)
 int	exec_nonbuiltin(t_node *node)
 {
 	extern char		**environ;
-	extern t_map	*envmap;
+	extern t_status g_status;
 	char			**argv;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
-	execute_command(argv, get_environ(envmap));
+	execute_command(argv, get_environ(g_status.envmap));
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
 	fatal_error("execve error");

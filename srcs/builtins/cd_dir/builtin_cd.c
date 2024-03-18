@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:46:13 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:29:37 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	_argv_to_path(char **argv, char *path)
 
 int	builtin_cd(char **argv)
 {
-	extern t_map	*envmap;
+	extern t_status g_status	;
 	char			*pwd_value;
 	char			*newpwd_value;
 	char			path[PATH_MAX];
@@ -83,7 +83,7 @@ int	builtin_cd(char **argv)
 	}
 	newpwd_value = _update_pwd_value(pwd_value, path);
 	joined_newpwd = ft_strjoin("PWD=", newpwd_value);
-	add_var(envmap, joined_newpwd, true);
+	add_var(g_status.envmap, joined_newpwd, true);
 	free(joined_newpwd);
 	return (SUCCESS);
 }
