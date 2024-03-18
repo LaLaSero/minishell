@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:47:32 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:38:21 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,32 @@ void	remove_quote(t_node *node)
 	remove_quote(node->next);
 }
 
+void	remove_single_quote(char *p, char **p_loc, char **new_word)
+{
+	p++;
+	while (*p != SINGLE_QUOTE_CHAR)
+	{
+		if (*p == '\0')
+			assert_error("Unclosed single quote");
+		append_char(new_word, *p++);
+	}
+	p++;
+	*p_loc = p;
+}
+
+void	remove_doule_quote(char *p, char **p_loc, char **new_word)
+{
+	p++;
+	while (*p != DOUBLE_QUOTE_CHAR)
+	{
+		if (*p == '\0')
+			assert_error("Unclosed double quote");
+		append_char(new_word, *p++);
+	}
+	p++;
+	*p_loc = p;
+}
+
 void	quote_removal(t_token *tok)
 {
 	char	*new_word;
@@ -38,25 +64,11 @@ void	quote_removal(t_token *tok)
 	{
 		if (*p == SINGLE_QUOTE_CHAR)
 		{
-			p++;
-			while (*p != SINGLE_QUOTE_CHAR)
-			{
-				if (*p == '\0')
-					assert_error("Unclosed single quote");
-				append_char(&new_word, *p++);
-			}
-			p++;
+			remove_single_quote(p, &p, &new_word);
 		}
 		else if (*p == DOUBLE_QUOTE_CHAR)
 		{
-			p++;
-			while (*p != DOUBLE_QUOTE_CHAR)
-			{
-				if (*p == '\0')
-					assert_error("Unclosed double quote");
-				append_char(&new_word, *p++);
-			}
-			p++;
+			remove_doule_quote(p, &p, &new_word);
 		}
 		else
 			append_char(&new_word, *p++);
