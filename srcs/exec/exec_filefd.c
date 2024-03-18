@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_filefd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 20:55:36 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:23:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:45:08 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ static void	_open_proper_filefd(t_node *node)
 		fatal_error("get filefd");
 }
 
+static int	_show_open_error(char *word)
+{
+	write(STDOUT, "minishell: ", 11);
+	write(STDOUT, word, ft_strlen(word));
+	write(STDOUT, ": No such file or directory\n", 28);
+	return (FAILURE);
+}
+
 int	get_filefd(t_node *node)
 {
 	if (node == NULL)
@@ -46,7 +54,7 @@ int	get_filefd(t_node *node)
 	else
 		_open_proper_filefd(node);
 	if (node->filefd < 0)
-		fatal_error("open error");
+		return (_show_open_error(node->filename->word));
 	else if (node->filefd == FAILURE)
 		return (FAILURE);
 	node->filefd = stash_fd(node->filefd);
