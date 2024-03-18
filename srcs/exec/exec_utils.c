@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:06:52 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:41:25 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,73 +27,6 @@ size_t	get_sizeof_token(t_token *args)
 	}
 	return (i);
 }
-
-// void	free_argv(char **argv)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (argv[i])
-// 	{
-// 		free(argv[i]);
-// 		i++;
-// 	}
-// 	free(argv);
-// }
-
-// bool	is_only_space(char *s)
-// {
-// 	while (*s)
-// 	{
-// 		if (*s != ' ')
-// 			return (false);
-// 		s++;
-// 	}
-// 	return (true);
-// }
-
-// char	**convert_to_argv(t_token *args)
-// {
-// 	int		i;
-// 	char	**argv;
-// 	t_token	*tmp;
-// 	char	**splitted;
-
-// 	t_token *temp = args;
-// 	splitted = NULL;
-// 	if (args->word && !is_only_space(args->word) && ft_strchr(args->word, ' '))
-// 	{
-// 		splitted = ft_split(args->word, ' ');
-// 		if (splitted == NULL)
-// 			fatal_error("split");
-// 		args->word = ft_strdup(splitted[0]);
-// 		i = 1;
-// 		t_token *next_temp = args->next;
-// 		while (splitted[i])
-// 		{
-// 			args->next = new_token(strdup(splitted[i]), TK_WORD);
-// 			args = args->next;
-// 			i++;
-// 		}
-// 		args->next = next_temp;
-// 		free_argv(splitted);
-// 	}
-// 	i = get_sizeof_token(temp);
-// 	argv = ft_calloc(i + 1, sizeof(*argv));
-// 	if (argv == NULL)
-// 		fatal_error("calloc");
-// 	i = 0;
-// 	tmp = temp;
-// 	while (tmp)
-// 	{
-// 		if (tmp->word != NULL)
-// 			argv[i] = ft_strdup(tmp->word);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	argv[i] = NULL;
-// 	return (argv);
-// }
 
 int	isbuiltin(t_node *command)
 {

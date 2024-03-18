@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:54:56 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:47:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern t_map	*envmap;
-
 int	builtin_env(void)
 {
-	t_var	*cur;
+	extern t_map	*envmap;
+	t_var			*cur;
 
 	cur = envmap->item_head.next;
 	while (cur)

@@ -6,15 +6,13 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:23:19 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:49:19 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 #include <assert.h>
-
-extern t_status	g_status;
 
 t_token	*new_token(char *word, t_token_kind kind)
 {
@@ -33,6 +31,7 @@ t_token	*operator(char **line_loc, char *line)
 	static char *const	operator_list[] = {">>", "<<", "<", ">", "|", "\n"};
 	size_t				i;
 	char				*op;
+	extern t_status		g_status;
 
 	i = 0;
 	while (i < sizeof(operator_list) / sizeof(*operator_list))
@@ -53,11 +52,11 @@ t_token	*operator(char **line_loc, char *line)
 	return (NULL);
 }
 
-
 t_token	*word(char **line_loc, char *line)
 {
-	const char	*start;
-	char		*word;
+	extern t_status	g_status;
+	const char		*start;
+	char			*word;
 
 	start = line;
 	while (*line && !is_metacharacter(*line))
@@ -115,8 +114,9 @@ static int	_delete_space(char **line_loc, char *line)
 
 t_token	*tokenize(char *line)
 {
-	t_token	head;
-	t_token	*tok;
+	extern t_status	g_status;
+	t_token			head;
+	t_token			*tok;
 
 	head.next = NULL;
 	tok = &head;

@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 04:27:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:30:46 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-extern t_map	*envmap;
-
 char	*get_value(char *key)
 {
-	t_var	*cur;
+	extern t_map	*envmap;
+	t_var			*cur;
 
 	if (key == NULL)
 		return (NULL);

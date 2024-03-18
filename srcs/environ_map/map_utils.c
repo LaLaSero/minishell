@@ -6,14 +6,13 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:32:21 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:43:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:31:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-extern t_map	*envmap;
 int				remake_map(t_map *map, char *key, char *value);
 
 char	*ft_strndup(char *s, size_t n)

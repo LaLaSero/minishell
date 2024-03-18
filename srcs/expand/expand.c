@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/18 18:48:20 by yutakagi         ###   ########.fr       */
+/*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
+/*   Updated: 2024/03/18 19:50:21 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	expand_variable(t_node *node)
 t_node	*expand(t_node *node)
 {
 	expand_variable(node);
-	// show_node(node);
 	remove_quote(node);
 	return (NULL);
 }

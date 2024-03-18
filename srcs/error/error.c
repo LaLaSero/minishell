@@ -6,17 +6,17 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:27:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:43:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:32:17 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-extern t_status g_status;
-
 void	parse_error(t_token *tok, t_token **tol_list)
 {
+	extern t_status	g_status;
+
 	g_status.had_error = true;
 	write(STDERR_FILENO, "minishell: syntax error near unexpected token `", 47);
 	write(STDERR_FILENO, tok->word, ft_strlen(tok->word));

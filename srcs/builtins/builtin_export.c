@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/17 18:55:22 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:47:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-extern t_map	*envmap;
-
 static void	_show_declare(void)
 {
-	t_var	*cur;
+	extern t_map	*envmap;
+	t_var			*cur;
 
 	cur = envmap->item_head.next;
 	while (cur)
@@ -33,8 +32,9 @@ static void	_show_declare(void)
 // export KEY1=VALUE1 KEY2=VALUE2 ...
 int	builtin_export(char **argv)
 {
-	int	i;
-	int	status;
+	extern t_map	*envmap;
+	int				status;
+	int				i;
 
 	status = SUCCESS;
 	if (!argv[1])

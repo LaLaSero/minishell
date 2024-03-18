@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   remake_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:48:06 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:02:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:40:22 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-void	realloc_var(t_var *var, char *value)
+static void	_realloc_var(t_var *var, char *value)
 {
 	free(var->value);
 	if (!value)
@@ -24,6 +24,14 @@ void	realloc_var(t_var *var, char *value)
 		if (var->value == NULL)
 			fatal_error("strdup");
 	}
+}
+
+static t_var	*_make_new_var(char *key, char *value)
+{
+	if (!value)
+		return (new_var(ft_strdup(key), NULL));
+	else
+		return (new_var(ft_strdup(key), ft_strdup(value)));
 }
 
 int	remake_map(t_map *map, char *key, char *value)
@@ -40,13 +48,10 @@ int	remake_map(t_map *map, char *key, char *value)
 		cur = cur->next;
 	}
 	if (cur)
-		realloc_var(cur, value);
+		_realloc_var(cur, value);
 	else
 	{
-		if (value == NULL)
-			cur = new_var(ft_strdup(key), NULL);
-		else
-			cur = new_var(ft_strdup(key), ft_strdup(value));
+		cur = _make_new_var(key, value);
 		if ((value == NULL && cur->value == NULL)
 			|| (value != NULL && (cur->key == NULL || cur->value == NULL)))
 			fatal_error("new_var");

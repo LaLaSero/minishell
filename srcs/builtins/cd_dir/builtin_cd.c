@@ -6,14 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:53:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:46:13 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
-
-extern t_map *envmap;
 
 static void	_show_cd_error(char *message)
 {
@@ -21,7 +19,6 @@ static void	_show_cd_error(char *message)
 	write(STDERR_FILENO, "cd: ", 4);
 	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
-
 }
 
 static char	*_update_pwd_value(char *pwd_value, char *path)
@@ -69,10 +66,11 @@ static int	_argv_to_path(char **argv, char *path)
 
 int	builtin_cd(char **argv)
 {
-	char	*pwd_value;
-	char	*newpwd_value;
-	char	path[PATH_MAX];
-	char	*joined_newpwd;
+	extern t_map	*envmap;
+	char			*pwd_value;
+	char			*newpwd_value;
+	char			path[PATH_MAX];
+	char			*joined_newpwd;
 
 	pwd_value = get_value("PWD");
 	update_oldpwd(pwd_value);

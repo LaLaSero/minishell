@@ -6,18 +6,17 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:54:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:46:44 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-extern t_map	*envmap;
-
 void	update_oldpwd(char *pwd_value)
 {
-	char	*oldpwd_value;
+	extern t_map	*envmap;
+	char			*oldpwd_value;
 
 	if (pwd_value == NULL)
 		add_var(envmap, "OLDPWD", true);

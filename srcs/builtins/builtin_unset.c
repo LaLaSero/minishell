@@ -6,14 +6,12 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:41:16 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:48:06 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
-
-extern t_map	*envmap;
 
 static void	_show_unset_error(char *key)
 {
@@ -25,8 +23,9 @@ static void	_show_unset_error(char *key)
 
 int	builtin_unset(char **argv)
 {
-	int	i;
-	int	status;
+	extern t_map	*envmap;
+	int				status;
+	int				i;
 
 	status = SUCCESS;
 	i = 0;
