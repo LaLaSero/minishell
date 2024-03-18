@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_argv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:06:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:17:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:52:31 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	implement_argv(t_token *args)
 		i = 1;
 		while (splitted[i])
 		{
-			args->next = new_token(strdup(splitted[i]), TK_WORD);
+			args->next = new_token(ft_strdup(splitted[i]), TK_WORD);
 			args = args->next;
 			i++;
 		}

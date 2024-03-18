@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_is.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:56:10 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:47:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:53:37 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 bool	is_alpha_under(char c)
 {
-	return (isalpha(c) || c == '_');
+	return (ft_isalpha(c) || c == '_');
 }
 
 bool	is_alpha_num_under(char c)
 {
-	return (is_alpha_under(c) || isdigit(c));
+	return (is_alpha_under(c) || ft_isdigit(c));
 }
 
 bool	is_identifier(const char *s)
