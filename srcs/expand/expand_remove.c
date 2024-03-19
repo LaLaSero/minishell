@@ -59,19 +59,20 @@ void	quote_removal(t_token *tok, int *error)
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
-	new_word = NULL;
-	while (*p)
+	if (ft_strncmp(p, "\"\"", 3) == 0 || ft_strncmp(p, "\'\'", 3) == 0)
+		new_word = ft_strdup("");
+	else
 	{
-		if (*p == SINGLE_QUOTE_CHAR)
+		new_word = NULL;
+		while (*p)
 		{
-			remove_single_quote(p, &p, &new_word, error);
+			if (*p == SINGLE_QUOTE_CHAR)
+				remove_single_quote(p, &p, &new_word, error);
+			else if (*p == DOUBLE_QUOTE_CHAR)
+				remove_doule_quote(p, &p, &new_word, error);
+			else
+				append_char(&new_word, *p++);
 		}
-		else if (*p == DOUBLE_QUOTE_CHAR)
-		{
-			remove_doule_quote(p, &p, &new_word, error);
-		}
-		else
-			append_char(&new_word, *p++);
 	}
 	free(tok->word);
 	tok->word = new_word;
