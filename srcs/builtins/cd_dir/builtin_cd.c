@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:13:15 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:43:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	builtin_cd(char **argv, t_map *envmap)
 	char	*joined_newpwd;
 
 	pwd_value = get_value("PWD", envmap);
-	update_oldpwd(pwd_value, envmap);
+	// update_oldpwd(pwd_value, envmap);
 	if (_argv_to_path(argv, path, envmap) == FAILURE)
 		return (1);
 	if (chdir(path) < 0)
@@ -80,9 +80,12 @@ int	builtin_cd(char **argv, t_map *envmap)
 		_show_cd_error("No such file or directory");
 		return (1);
 	}
-	newpwd_value = _update_pwd_value(pwd_value, path);
-	joined_newpwd = ft_strjoin("PWD=", newpwd_value);
-	add_var(envmap, joined_newpwd, true);
-	free(joined_newpwd);
+	if (pwd_value)
+	{
+		newpwd_value = _update_pwd_value(pwd_value, path);
+		joined_newpwd = ft_strjoin("PWD=", newpwd_value);
+		add_var(envmap, joined_newpwd, true);
+		free(joined_newpwd);	
+	}
 	return (SUCCESS);
 }

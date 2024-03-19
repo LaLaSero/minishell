@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:13:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:40:45 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-void	update_oldpwd(char *pwd_value, t_map *envmap)
-{
-	char	*oldpwd_value;
+// void	update_oldpwd(char *pwd_value, t_map *envmap)
+// {
+// 	char	*oldpwd_value;
 
-	if (pwd_value == NULL)
-		add_var(envmap, "OLDPWD", true);
-	else
-	{
-		oldpwd_value = ft_strjoin("OLDPWD=", pwd_value);
-		add_var(envmap, oldpwd_value, false);
-		free(oldpwd_value);
-	}
-}
+// 	if (pwd_value == NULL)
+// 		add_var(envmap, "OLDPWD", true);
+// 	else
+// 	{
+// 		oldpwd_value = ft_strjoin("OLDPWD=", pwd_value);
+// 		add_var(envmap, oldpwd_value, false);
+// 		free(oldpwd_value);
+// 	}
+// }
 
 bool	detect_target(char **path_loc, char *path, char *target)
 {
