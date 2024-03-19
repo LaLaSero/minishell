@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:51:56 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:32:41 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ static int	monitor_readline(void)
 {
 	extern t_status	g_status;
 
-	if (g_status.signal == 0)
+	if (g_status.signal % 256 == 0)
 		return (0);
-	else if (g_status.signal == SIGINT)
+	else if (g_status.signal % 256 == SIGINT)
 	{
-		g_status.signal = 0;
-		g_status.is_interrupted = true;
+		g_status.signal = 256;
 		rl_replace_line("", 0);
 		rl_done = true;
 	}
-	else if (g_status.signal == SIGQUIT)
+	else if (g_status.signal % 256 == SIGQUIT)
 	{
 		write(STDERR_FILENO, "exit\n", 5);
 	}

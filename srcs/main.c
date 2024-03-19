@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 15:03:04 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:33:10 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_status	g_status;
 static void	_init_status(void)
 {
 	g_status.signal = 0;
-	g_status.is_interrupted = false;
 }
 
 static void	_analyze(char *line, int *status, int *error, t_map *envmap)

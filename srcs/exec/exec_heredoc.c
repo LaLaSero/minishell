@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:10:56 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 22:41:41 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:35:09 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 
 	while (1)
 	{
+		if (g_status.signal == 256)
+			g_status.signal = 0;
 		line = readline("> ");
 		if (line == NULL
-			|| *line == '\0'
 			|| !delimiter
 			|| *delimiter == '\0'
 			|| ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
-			|| g_status.is_interrupted == true)
+			|| g_status.signal == 256)
 		{
 			free(line);
 			break ;
@@ -53,8 +54,9 @@ int	open_heredoc(char *delimiter)
 		fatal_error("close error");
 		return (FAILURE);
 	}
-	if (g_status.is_interrupted == true)
+	if (g_status.signal == 256)
 	{
+		g_status.signal = 0;
 		if (close(pipefd[0]) < 0)
 		{
 			fatal_error("close error");
