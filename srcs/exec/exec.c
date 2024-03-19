@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/19 14:16:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:11:15 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	exec(t_node *node, int status_exit, t_map *envmap)
 	}
 	if (node->next == NULL && isbuiltin(node->command))
 	{
-		status = exec_builtin(node ,status_exit, envmap);
+		status = exec_builtin(node, status_exit, envmap);
 	}
 	else
 	{

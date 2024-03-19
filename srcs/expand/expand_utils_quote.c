@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:30:56 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:08:14 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,18 @@ void	append_single_quote(char **dst, char **rest, char *p, int *error)
 	*rest = p;
 }
 
-void	append_double_quote(char **dst, char **rest, char *p, int *error, t_map *envmap)
+void	append_double_quote(char **dst, char **rest, int *error, t_map *envmap)
 {
+	char	*p;
+
+	p = *rest;
 	append_char(dst, *p++);
 	while (*p != DOUBLE_QUOTE_CHAR)
 	{
 		if (*p == '\0')
 			assert_error("Unclosed double quote", error);
 		else if (is_variable(p))
-			expand_variable_str(dst, &p, p, error, envmap);
+			expand_variable_str(dst, &p, error, envmap);
 		else
 			append_char(dst, *p++);
 	}

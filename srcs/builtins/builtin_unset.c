@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:18:18 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:10:57 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ static void	_show_unset_error(char *key)
 
 int	builtin_unset(char **argv, t_map *envmap)
 {
-	// extern t_status	g_status;
-	int				status;
-	int				i;
+	int	status;
+	int	i;
 
 	status = SUCCESS;
 	i = 0;

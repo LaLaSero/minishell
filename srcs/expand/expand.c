@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:30:36 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:06:00 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,32 @@ void	expand_macro(char **dst, char **rest, char *p, int status)
 	*rest = p;
 }
 
-void	expand_variable_str(char **dst, char **rest, char *p, int *error, t_map *envmap)
+void	expand_variable_str(char **dst, char **rest, int *error, t_map *envmap)
 {
 	char	*var_name;
 	char	*value;
+	char	*q;
 
+	q = *rest;
 	var_name = ft_calloc(1, sizeof(char));
 	if (var_name == NULL)
 		fatal_error("calloc");
-	if (*p != '$')
+	if (*q != '$')
 		assert_error("Expected dollar sign", error);
-	p++;
-	if (!is_alpha_under(*p))
-		assert_error
-			("Variable must starts with alphabetic character or underscore.", error);
-	append_char(&var_name, *p++);
-	while (is_alpha_num_under(*p))
-		append_char(&var_name, *p++);
-	value = get_value(var_name,envmap);
+	q++;
+	if (!is_alpha_under(*q))
+		assert_error("Variable must start with alphabet or underbar.", error);
+	append_char(&var_name, *q++);
+	while (is_alpha_num_under(*q))
+		append_char(&var_name, *q++);
+	value = get_value(var_name, envmap);
 	free(var_name);
 	if (value)
 		while (*value)
 			append_char(dst, *value++);
 	else
 		append_char(dst, '\0');
-	*rest = p;
+	*rest = q;
 }
 
 void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
@@ -67,9 +68,9 @@ void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 		if (*old_word == SINGLE_QUOTE_CHAR)
 			append_single_quote(&new_word, &old_word, old_word, error);
 		else if (*old_word == DOUBLE_QUOTE_CHAR)
-			append_double_quote(&new_word, &old_word, old_word, error, envmap);
+			append_double_quote(&new_word, &old_word, error, envmap);
 		else if (is_variable(old_word))
-			expand_variable_str(&new_word, &old_word, old_word, error, envmap);
+			expand_variable_str(&new_word, &old_word, error, envmap);
 		else if (is_macro(old_word))
 			expand_macro(&new_word, &old_word, old_word, status);
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:37:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:12:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ t_map	*init_map(void)
 
 void	make_map(t_map **envmap)
 {
-	extern char		**environ;
-	// extern t_status	g_status;
-	char			cwd[PATH_MAX];
-	char			*temp;
-	t_map			*map;
+	extern char	**environ;
+	char		cwd[PATH_MAX];
+	char		*temp;
+	t_map		*map;
 
-	// g_status.
 	*envmap = init_map();
 	map = *envmap;
 	while (*environ)

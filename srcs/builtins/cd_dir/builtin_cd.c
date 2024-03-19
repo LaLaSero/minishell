@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:22:52 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:13:15 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ static int	_argv_to_path(char **argv, char *path, t_map *envmap)
 
 int	builtin_cd(char **argv, t_map *envmap)
 {
-	// extern t_status	g_status;
-	char			*pwd_value;
-	char			*newpwd_value;
-	char			path[PATH_MAX];
-	char			*joined_newpwd;
+	char	*pwd_value;
+	char	*newpwd_value;
+	char	path[PATH_MAX];
+	char	*joined_newpwd;
 
 	pwd_value = get_value("PWD", envmap);
 	update_oldpwd(pwd_value, envmap);

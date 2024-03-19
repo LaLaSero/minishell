@@ -7,7 +7,6 @@ SRCS += srcs/exec/exec.c srcs/exec/execute_command.c srcs/exec/exec_utils.c srcs
 SRCS += srcs/exec/exec_pipe.c srcs/exec/exec_heredoc.c srcs/exec/make_argv.c srcs/exec/exec_filefd.c
 SRCS += srcs/redirect/redirection.c
 SRCS += srcs/error/error.c
-SRCS += srcs/test.c
 SRCS += srcs/frees/frees.c
 SRCS += srcs/signal/signal.c srcs/signal/signal_utils.c
 SRCS += srcs/environ_map/environ_utils.c srcs/environ_map/map_utils.c srcs/environ_map/map_init.c
@@ -19,10 +18,8 @@ SRCS += srcs/builtins/builtin_pwd.c srcs/builtins/builtin_echo.c
 INCLUDE = includes
 CC = cc
 READLINE_DIR = $(shell brew --prefix readline)
-CFLAGS = -I$(INCLUDE) -I$(READLINE_DIR)/include
-#  -Wall -Wextra -Werror
-LDFLAGS = -L$(READLINE_DIR)/lib -lreadline
-#  -Wall -Wextra -Werror
+CFLAGS = -I$(INCLUDE) -I$(READLINE_DIR)/include -Wall -Wextra -Werror
+LDFLAGS = -L$(READLINE_DIR)/lib -lreadline -Wall -Wextra -Werror
 OBJS = $(SRCS:.c=.o)
 LIBFT = libft/libft.a
 

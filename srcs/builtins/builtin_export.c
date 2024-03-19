@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 15:19:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:10:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,23 @@ static void	_show_declare(t_map *envmap)
 	}
 }
 
-
-bool is_valid_export_variable(const char *variable_name)
+bool	is_valid_export_variable(const char *variable_name)
 {
 	int	i;
-	
+
 	i = 0;
-	if (variable_name == NULL || *variable_name == '\0' || *variable_name == '=')
+	if (variable_name == NULL || *variable_name == '\0'
+		|| *variable_name == '=')
 		return (false);
 	if (ft_isdigit((unsigned char)*variable_name))
 		return (false);
-	while(variable_name[i])
+	while (variable_name[i])
 	{
 		if (*variable_name == '=')
 			return (true);
 		if (!ft_isalpha((unsigned char)*variable_name)
-			&& !ft_isdigit((unsigned char)*variable_name) && *variable_name != '_')
+			&& !ft_isdigit((unsigned char)*variable_name)
+			&& *variable_name != '_')
 			return (false);
 		i++;
 	}
@@ -53,8 +54,8 @@ bool is_valid_export_variable(const char *variable_name)
 // export KEY1=VALUE1 KEY2=VALUE2 ...
 int	builtin_export(char **argv, t_map *envmap)
 {
-	int				status;
-	int				i;
+	int	status;
+	int	i;
 
 	status = SUCCESS;
 	if (!argv[1])
@@ -65,8 +66,8 @@ int	builtin_export(char **argv, t_map *envmap)
 	i = 0;
 	while (argv[i])
 	{
-		if (!is_valid_export_variable(argv[i])
-			|| add_var(envmap, argv[1], false) == FAILURE)
+		if (!is_valid_export_variable(argv[i]) || add_var(envmap, argv[1],
+				false) == FAILURE)
 		{
 			write(STDERR_FILENO, "minishell: ", 11);
 			write(STDERR_FILENO, "export: '", 9);

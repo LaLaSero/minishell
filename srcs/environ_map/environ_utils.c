@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:18:54 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:12:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 char	*get_value(char *key, t_map *envmap)
 {
-	// extern t_status	g_status;
-	t_var			*cur;
+	t_var	*cur;
 
 	if (key == NULL)
 		return (NULL);

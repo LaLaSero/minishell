@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:15:47 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:13:33 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 int	builtin_exit(char **argv, int status)
 {
-	// extern t_status	g_status;
-	bool			is_valud;
-	long			res;
+	bool	is_valud;
+	long	res;
 
 	ft_putstr_fd("exit\n", STDOUT);
 	is_valud = true;

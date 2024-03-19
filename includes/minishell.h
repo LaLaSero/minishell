@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:46:52 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:17:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void						perror_prefix(void);
 bool						is_metacharacter(char c);
 t_node						*parse(t_token *tok, int *error);
 t_token						*new_token(char *word, t_token_kind kind);
-void						show_node(t_node *node);
 void						free_node(t_node *node);
 void						free_token(t_token *tok);
 void						parse_error(t_token *tok, t_token **tol_list);
@@ -130,7 +129,7 @@ void						make_map(t_map **envmap);
 char						*get_full_sentence(t_var *var);
 int							builtin_export(char **argv, t_map *envmap);
 int							add_var(t_map *map, char *line, bool null_value);
-int							builtin_env( t_map *envmap);
+int							builtin_env(t_map *envmap);
 int							builtin_unset(char **argv, t_map *envmap);
 int							remove_var(t_map *map, char *key);
 int							builtin_pwd(t_map *envmap);
@@ -139,7 +138,8 @@ int							builtin_cd(char **argv, t_map *envmap);
 void						setup_signal(void);
 int							builtin_exit(char **argv, int status);
 t_node						*redirect_heredoc(t_token **tok_loc, t_token *tok);
-t_node						*expand(t_node *node, int *status, int *error, t_map *envmap);
+t_node						*expand(t_node *node, int *status, int *error,
+								t_map *envmap);
 void						reset_signals(void);
 int							get_filefd(t_node *node);
 
@@ -173,7 +173,6 @@ t_node						*new_node(t_node_kind kind);
 t_node						*_the_first_node(t_node_kind kind);
 
 bool						is_space(char c);
-// bool						is_operator(const char *s);
 bool						is_metacharacter(char c);
 bool						is_word(const char *s);
 
@@ -207,11 +206,9 @@ void						quote_removal(t_token *tok, int *error);
 void						append_single_quote(char **dst, char **rest,
 								char *p, int *error);
 void						append_double_quote(char **dst, char **rest,
-								char *p, int *error, t_map *envmap);
+								int *error, t_map *envmap);
 void						expand_variable_str(char **dst, char **rest,
-								char *p, int *error, t_map *envmap);
+								int *error, t_map *envmap);
 void						append_char(char **s, char c);
-
-int							token_test(t_token *tok);
 
 #endif
