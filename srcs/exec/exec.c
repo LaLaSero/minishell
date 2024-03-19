@@ -47,7 +47,6 @@ int	exec_builtin(t_node *node)
 
 int	exec_nonbuiltin(t_node *node)
 {
-	extern char		**environ;
 	extern t_status	g_status;
 	char			**argv;
 

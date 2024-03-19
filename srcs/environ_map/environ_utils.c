@@ -62,11 +62,11 @@ char	*get_full_sentence(t_var *var)
 	if (var->value)
 		strsize += ft_strlen(var->value);
 	string = malloc(strsize);
-	strlcpy(string, var->key, strsize);
+	ft_strlcpy(string, var->key, strsize);
 	if (var->value)
 	{
-		strlcat(string, "=", strsize);
-		strlcat(string, var->value, strsize);
+		ft_strlcat(string, "=", strsize);
+		ft_strlcat(string, var->value, strsize);
 	}
 	return (string);
 }
