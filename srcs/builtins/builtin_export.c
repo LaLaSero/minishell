@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:10:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:32:14 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,29 @@ static void	_show_declare(t_map *envmap)
 bool	is_valid_export_variable(const char *variable_name)
 {
 	int	i;
+	int	flag;
 
-	i = 0;
+	flag = false;
 	if (variable_name == NULL || *variable_name == '\0'
 		|| *variable_name == '=')
 		return (false);
-	if (ft_isdigit((unsigned char)*variable_name))
+	if (ft_isdigit((int)*variable_name))
 		return (false);
+		i = 1;
 	while (variable_name[i])
 	{
-		if (*variable_name == '=')
+		if (variable_name[i] == '=')
 			return (true);
-		if (!ft_isalpha((unsigned char)*variable_name)
-			&& !ft_isdigit((unsigned char)*variable_name)
-			&& *variable_name != '_')
+		else if (!ft_isalpha((int)variable_name[i])
+			&& !ft_isdigit((int)variable_name[i])
+			&& variable_name[i] != '_')
 			return (false);
 		i++;
 	}
-	return (true);
+	if (flag == true)
+		return (true);
+	else
+		return (false);
 }
 
 // export KEY1=VALUE1 KEY2=VALUE2 ...
@@ -63,7 +68,7 @@ int	builtin_export(char **argv, t_map *envmap)
 		_show_declare(envmap);
 		return (SUCCESS);
 	}
-	i = 0;
+	i = 1;
 	while (argv[i])
 	{
 		if (!is_valid_export_variable(argv[i]) || add_var(envmap, argv[1],
