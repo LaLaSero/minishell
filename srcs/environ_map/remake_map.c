@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:48:06 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:40:22 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:41:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	remake_map(t_map *map, char *key, char *value)
 	cur = map->item_head.next;
 	while (cur)
 	{
-		if (ft_strncmp(key, cur->key, ft_strlen(key)) == 0)
+		if (ft_strncmp(key, cur->key, ft_strlen(key) + 1) == 0)
 			break ;
 		cur = cur->next;
 	}

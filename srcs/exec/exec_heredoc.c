@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:10:56 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 18:29:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:41:41 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	write_user_input_to_pipe(char *delimiter, int pipefd[2])
 			|| *line == '\0'
 			|| !delimiter
 			|| *delimiter == '\0'
-			|| ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
+			|| ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0
 			|| g_status.is_interrupted == true)
 		{
 			free(line);
