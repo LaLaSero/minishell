@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:17:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:46:31 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 	return (tok);
 }
 
-t_token	*operator(char **line_loc, char *line)
+t_token	*operator(char **line_loc, char *line, int *error)
 {
 	static char *const	operator_list[] = {">>", "<<", "<", ">", "|", "\n"};
 	size_t				i;
@@ -47,8 +47,9 @@ t_token	*operator(char **line_loc, char *line)
 		}
 		i++;
 	}
-	assert_error("Unexpected operator");
-	g_status.had_error = true;
+	assert_error("Unexpected operator", error);
+	// g_status.had_error = true;
+	*error = true;
 	return (NULL);
 }
 
@@ -128,9 +129,8 @@ static int	_delete_space(char **line_loc, char *line)
 	return (false);
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, int *error)
 {
-	extern t_status	g_status;
 	t_token			head;
 	t_token			*tok;
 
@@ -142,16 +142,16 @@ t_token	*tokenize(char *line)
 			continue ;
 		if (is_metacharacter(*line))
 		{
-			tok->next = operator(&line, line);
+			tok->next = operator(&line, line, error);
 			tok = tok->next;
 		}
 		else if (is_word(line))
 		{
-			tok->next = word(&line, line);
+			tok->next = word(&line, line, error);
 			tok = tok->next;
 		}
 		else
-			assert_error("Unexpected Token");
+			assert_error("Unexpected Token", error);
 	}
 	tok->next = new_token(NULL, TK_EOF);
 	return (head.next);

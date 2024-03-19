@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:40:32 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:15:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-int	builtin_exit(char **argv)
+int	builtin_exit(char **argv, int status)
 {
-	extern t_status	g_status;
+	// extern t_status	g_status;
 	bool			is_valud;
 	long			res;
 
 	ft_putstr_fd("exit\n", STDOUT);
 	is_valud = true;
 	if (!argv[1])
-		exit(g_status.exit_status);
+		exit(status);
 	else if (argv[2])
 	{
 		print_exit_error(NULL, "too many arguments\n");

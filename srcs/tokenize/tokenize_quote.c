@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:16:33 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:21:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:51:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-static void	handle_single_quote(char *line, char **line_loc)
+static void	handle_single_quote(char *line, char **line_loc, int *error)
 {
 	extern t_status	g_status;
 
@@ -22,7 +22,7 @@ static void	handle_single_quote(char *line, char **line_loc)
 		line++;
 	if (*line == '\0')
 	{
-		g_status.had_error = true;
+		*error = true;
 		tokenize_error(line, line_loc);
 		write(1, "Unclosed single quote\n", 23);
 	}
@@ -31,7 +31,7 @@ static void	handle_single_quote(char *line, char **line_loc)
 	*line_loc = line;
 }
 
-static void	handle_double_quote(char *line, char **line_loc)
+static void	handle_double_quote(char *line, char **line_loc, int *error)
 {
 	extern t_status	g_status;
 
@@ -40,7 +40,7 @@ static void	handle_double_quote(char *line, char **line_loc)
 		line++;
 	if (*line == '\0')
 	{
-		g_status.had_error = true;
+		*error = true;
 		tokenize_error(line, line_loc);
 		write(1, "Unclosed single quote\n", 23);
 	}
@@ -49,7 +49,7 @@ static void	handle_double_quote(char *line, char **line_loc)
 	*line_loc = line;
 }
 
-t_token	*word(char **line_loc, char *line)
+t_token	*word(char **line_loc, char *line, int *error)
 {
 	extern t_status	g_status;
 	const char		*start;
@@ -60,11 +60,11 @@ t_token	*word(char **line_loc, char *line)
 	{
 		if (*line == '\'')
 		{
-			handle_single_quote(line, &line);
+			handle_single_quote(line, &line, error);
 		}
 		else if (*line == '\"')
 		{
-			handle_double_quote(line, &line);
+			handle_double_quote(line, &line, error);
 		}
 		else
 			line++;

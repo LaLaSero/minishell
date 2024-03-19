@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 22:23:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:50:05 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,33 +99,34 @@ typedef struct s_map
 
 typedef struct g_status
 {
-	bool					had_error;
-	int						exit_status;
+	// bool					had_error;
+	// int						exit_status;
 	int						signal;
 	int						is_interrupted;
 	t_map					*envmap;
 }							t_status;
 
-t_token						*tokenize(char *line);
+// t_token						*tokenize(char *line);
+t_token						*tokenize(char *line, int *error);
 void						fatal_error(const char *msg);
 void						perror_prefix(void);
 // t_token	*expand_token(t_token *tok);
 bool						is_metacharacter(char c);
-t_node						*parse(t_token *tok);
+t_node						*parse(t_token *tok, int *error);
 t_token						*new_token(char *word, t_token_kind kind);
 void						show_node(t_node *node);
 void						free_node(t_node *node);
 void						free_token(t_token *tok);
 void						parse_error(t_token *tok, t_token **tol_list);
 void						tokenize_error(char *line, char **line_loc);
-void						assert_error(const char *msg);
+void						assert_error(const char *msg, int *error);
 t_node						*redirect_out(t_token **tok_loc, t_token *tok);
 t_node						*redirect_in(t_token **tok_loc, t_token *tok);
 t_node						*redirect_append(t_token **tok_loc, t_token *tok);
 t_node						*new_node(t_node_kind kind);
 void						append_node(t_node **node_loc, t_node *node);
 t_token						*tokdup(t_token *tok);
-int							exec(t_node *node);
+int							exec(t_node *node, int status);
 char						**get_environ(t_map *map);
 size_t						get_sizeof_map(t_map *map);
 char						*get_value(char *key);
@@ -142,13 +143,13 @@ int							builtin_pwd(void);
 int							builtin_echo(char **argv);
 int							builtin_cd(char **argv);
 void						setup_signal(void);
-int							builtin_exit(char **argv);
+int							builtin_exit(char **argv, int status);
 t_node						*redirect_heredoc(t_token **tok_loc, t_token *tok);
-t_node						*expand(t_node *node);
+t_node						*expand(t_node *node, int *status, int *error);
 void						reset_signals(void);
 int							get_filefd(t_node *node);
 
-t_token						*word(char **line_loc, char *line);
+t_token						*word(char **line_loc, char *line, int *error);
 void						write_user_input_to_pipe(char *delimiter,
 								int pipefd[2]);
 int							open_heredoc(char *delimiter);
@@ -207,14 +208,14 @@ bool						is_alpha_num_under(char c);
 bool						is_identifier(const char *s);
 bool						is_variable(char *s);
 bool						is_macro(char *s);
-void						remove_quote(t_node *node);
-void						quote_removal(t_token *tok);
+void						remove_quote(t_node *node, int *error);
+void						quote_removal(t_token *tok, int *error);
 void						append_single_quote(char **dst, char **rest,
-								char *p);
+								char *p, int *error);
 void						append_double_quote(char **dst, char **rest,
-								char *p);
+								char *p, int *error);
 void						expand_variable_str(char **dst, char **rest,
-								char *p);
+								char *p, int *error);
 void						append_char(char **s, char c);
 
 int							token_test(t_token *tok);

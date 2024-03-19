@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/18 21:24:06 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:20:13 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	dup_redirect(t_node *node);
 void	free_argv(char **argv);
 void	reset_redirect(t_node *node);
 
-int	exec_builtin(t_node *node)
+int	exec_builtin(t_node *node, int status_exit)
 {
 	char	**argv;
 	int		status;
@@ -31,7 +31,7 @@ int	exec_builtin(t_node *node)
 	else if (ft_strncmp(node->command->args->word, "echo", 5) == 0)
 		status = builtin_echo(argv);
 	else if (ft_strncmp(node->command->args->word, "exit", 5) == 0)
-		status = builtin_exit(argv);
+		status = builtin_exit(argv, status_exit);
 	else if (ft_strncmp(node->command->args->word, "export", 7) == 0)
 		status = builtin_export(argv);
 	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
@@ -59,7 +59,7 @@ int	exec_nonbuiltin(t_node *node)
 	return (FAILURE);
 }
 
-pid_t	exec_pipeline(t_node *node)
+pid_t	exec_pipeline(t_node *node, int status)
 {
 	pid_t	pid;
 
@@ -75,14 +75,14 @@ pid_t	exec_pipeline(t_node *node)
 		set_child_pipe(node);
 		if (isbuiltin(node->command) == true)
 		{
-			exit(exec_builtin(node));
+			exit(exec_builtin(node, status));
 		}
 		else
 			exit(exec_nonbuiltin(node));
 	}
 	set_parent_pipe(node);
 	if (node->next)
-		return (exec_pipeline(node->next));
+		return (exec_pipeline(node->next, status));
 	return (pid);
 }
 
@@ -115,7 +115,7 @@ int	wait_process(pid_t pid)
 	return (status);
 }
 
-int	exec(t_node *node)
+int	exec(t_node *node, int status_exit)
 {
 	int		status;
 	pid_t	pid_to_wait;
@@ -126,11 +126,11 @@ int	exec(t_node *node)
 	}
 	if (node->next == NULL && isbuiltin(node->command))
 	{
-		status = exec_builtin(node);
+		status = exec_builtin(node ,status_exit);
 	}
 	else
 	{
-		pid_to_wait = exec_pipeline(node);
+		pid_to_wait = exec_pipeline(node, status_exit);
 		status = wait_process(pid_to_wait);
 	}
 	return (status);

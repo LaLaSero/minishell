@@ -3,31 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:48:54 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/19 13:51:58 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-void	expand_macro(char **dst, char **rest, char *p)
+void	expand_macro(char **dst, char **rest, char *p, int status)
 {
-	extern t_status	g_status;
 	char			*temp;
 
-	if (is_macro(p) == false)
-		assert_error("Expected $? macro");
 	p += ft_strlen("$?");
 	temp = *dst;
-	*dst = ft_itoa(g_status.exit_status);
+	*dst = ft_itoa(status);
 	free(temp);
 	*rest = p;
 }
 
-void	expand_variable_str(char **dst, char **rest, char *p)
+void	expand_variable_str(char **dst, char **rest, char *p, int *error)
 {
 	char	*var_name;
 	char	*value;
@@ -36,11 +33,11 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 	if (var_name == NULL)
 		fatal_error("calloc");
 	if (*p != '$')
-		assert_error("Expected dollar sign");
+		assert_error("Expected dollar sign", error);
 	p++;
 	if (!is_alpha_under(*p))
 		assert_error
-			("Variable must starts with alphabetic character or underscore.");
+			("Variable must starts with alphabetic character or underscore.", error);
 	append_char(&var_name, *p++);
 	while (is_alpha_num_under(*p))
 		append_char(&var_name, *p++);
@@ -54,7 +51,7 @@ void	expand_variable_str(char **dst, char **rest, char *p)
 	*rest = p;
 }
 
-void	expand_variable_tok(t_token *tok)
+void	expand_variable_tok(t_token *tok, int status, int *error)
 {
 	char	*new_word;
 	char	*old_word;
@@ -68,34 +65,34 @@ void	expand_variable_tok(t_token *tok)
 	while (*old_word && !is_metacharacter(*old_word))
 	{
 		if (*old_word == SINGLE_QUOTE_CHAR)
-			append_single_quote(&new_word, &old_word, old_word);
+			append_single_quote(&new_word, &old_word, old_word, error);
 		else if (*old_word == DOUBLE_QUOTE_CHAR)
-			append_double_quote(&new_word, &old_word, old_word);
+			append_double_quote(&new_word, &old_word, old_word, error);
 		else if (is_variable(old_word))
-			expand_variable_str(&new_word, &old_word, old_word);
+			expand_variable_str(&new_word, &old_word, old_word, error);
 		else if (is_macro(old_word))
-			expand_macro(&new_word, &old_word, old_word);
+			expand_macro(&new_word, &old_word, old_word, status);
 		else
 			append_char(&new_word, *old_word++);
 	}
 	free(tok->word);
 	tok->word = new_word;
-	expand_variable_tok(tok->next);
+	expand_variable_tok(tok->next, status, error);
 }
 
-void	expand_variable(t_node *node)
+void	expand_variable(t_node *node, int status, int *error)
 {
 	if (node == NULL)
 		return ;
-	expand_variable_tok(node->args);
-	expand_variable_tok(node->filename);
-	expand_variable(node->command);
-	expand_variable(node->next);
+	expand_variable_tok(node->args, status, error);
+	expand_variable_tok(node->filename, status, error);
+	expand_variable(node->command, status, error);
+	expand_variable(node->next, status, error);
 }
 
-t_node	*expand(t_node *node)
+t_node	*expand(t_node *node, int *status, int *error)
 {
-	expand_variable(node);
-	remove_quote(node);
+	expand_variable(node, *status, error);
+	remove_quote(node, error);
 	return (NULL);
 }
