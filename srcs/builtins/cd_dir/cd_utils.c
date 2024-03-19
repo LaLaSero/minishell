@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:09:00 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:42:59 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/19 14:14:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h" 
 #include "../libft/libft.h"
 
-void	update_oldpwd(char *pwd_value)
+void	update_oldpwd(char *pwd_value, t_map *envmap)
 {
-	extern t_status	g_status;
+	// extern t_status	g_status;
 	char			*oldpwd_value;
 
 	if (pwd_value == NULL)
-		add_var(g_status.envmap, "OLDPWD", true);
+		add_var(envmap, "OLDPWD", true);
 	else
 	{
 		oldpwd_value = ft_strjoin("OLDPWD=", pwd_value);
-		add_var(g_status.envmap, oldpwd_value, false);
+		add_var(envmap, oldpwd_value, false);
 		free(oldpwd_value);
 	}
 }

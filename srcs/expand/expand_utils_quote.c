@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:39:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:30:56 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	append_single_quote(char **dst, char **rest, char *p, int *error)
 	*rest = p;
 }
 
-void	append_double_quote(char **dst, char **rest, char *p, int *error)
+void	append_double_quote(char **dst, char **rest, char *p, int *error, t_map *envmap)
 {
 	append_char(dst, *p++);
 	while (*p != DOUBLE_QUOTE_CHAR)
@@ -34,7 +34,7 @@ void	append_double_quote(char **dst, char **rest, char *p, int *error)
 		if (*p == '\0')
 			assert_error("Unclosed double quote", error);
 		else if (is_variable(p))
-			expand_variable_str(dst, &p, p, error);
+			expand_variable_str(dst, &p, p, error, envmap);
 		else
 			append_char(dst, *p++);
 	}

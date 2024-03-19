@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:43:57 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/19 14:37:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,27 @@ t_map	*init_map(void)
 	return (map);
 }
 
-void	make_map(void)
+void	make_map(t_map **envmap)
 {
 	extern char		**environ;
-	extern t_status	g_status;
+	// extern t_status	g_status;
 	char			cwd[PATH_MAX];
 	char			*temp;
+	t_map			*map;
 
-	g_status.envmap = init_map();
+	// g_status.
+	*envmap = init_map();
+	map = *envmap;
 	while (*environ)
 	{
-		add_var(g_status.envmap, *environ, false);
+		add_var(map, *environ, false);
 		environ++;
 	}
-	if (get_value("PWD") == NULL)
+	if (get_value("PWD", map) == NULL)
 	{
 		getcwd(cwd, PATH_MAX);
 		temp = ft_strjoin("PWD=", cwd);
-		add_var(g_status.envmap, temp, false);
+		add_var(map, temp, false);
 		free(temp);
 	}
 }

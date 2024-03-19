@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/19 13:20:13 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:16:25 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	dup_redirect(t_node *node);
 void	free_argv(char **argv);
 void	reset_redirect(t_node *node);
 
-int	exec_builtin(t_node *node, int status_exit)
+int	exec_builtin(t_node *node, int status_exit, t_map *envmap)
 {
 	char	**argv;
 	int		status;
@@ -27,39 +27,39 @@ int	exec_builtin(t_node *node, int status_exit)
 	argv = convert_to_argv(node->command->args);
 	status = 0;
 	if (ft_strncmp(node->command->args->word, "cd", 3) == 0)
-		status = builtin_cd(argv);
+		status = builtin_cd(argv, envmap);
 	else if (ft_strncmp(node->command->args->word, "echo", 5) == 0)
 		status = builtin_echo(argv);
 	else if (ft_strncmp(node->command->args->word, "exit", 5) == 0)
 		status = builtin_exit(argv, status_exit);
 	else if (ft_strncmp(node->command->args->word, "export", 7) == 0)
-		status = builtin_export(argv);
+		status = builtin_export(argv, envmap);
 	else if (ft_strncmp(node->command->args->word, "pwd", 4) == 0)
-		status = builtin_pwd();
+		status = builtin_pwd(envmap);
 	else if (ft_strncmp(node->command->args->word, "unset", 6) == 0)
-		status = builtin_unset(&argv[1]);
+		status = builtin_unset(&argv[1], envmap);
 	else if (ft_strncmp(node->command->args->word, "env", 4) == 0)
-		status = builtin_env();
+		status = builtin_env(envmap);
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
 	return (status);
 }
 
-int	exec_nonbuiltin(t_node *node)
+int	exec_nonbuiltin(t_node *node, t_map *envmap)
 {
 	extern t_status	g_status;
 	char			**argv;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
-	execute_command(argv, get_environ(g_status.envmap));
+	execute_command(argv, get_environ(envmap));
 	free_argv(argv);
 	reset_redirect(node->command->redirect);
 	fatal_error("execve error");
 	return (FAILURE);
 }
 
-pid_t	exec_pipeline(t_node *node, int status)
+pid_t	exec_pipeline(t_node *node, int status, t_map *envmap)
 {
 	pid_t	pid;
 
@@ -75,14 +75,14 @@ pid_t	exec_pipeline(t_node *node, int status)
 		set_child_pipe(node);
 		if (isbuiltin(node->command) == true)
 		{
-			exit(exec_builtin(node, status));
+			exit(exec_builtin(node, status, envmap));
 		}
 		else
-			exit(exec_nonbuiltin(node));
+			exit(exec_nonbuiltin(node, envmap));
 	}
 	set_parent_pipe(node);
 	if (node->next)
-		return (exec_pipeline(node->next, status));
+		return (exec_pipeline(node->next, status, envmap));
 	return (pid);
 }
 
@@ -115,7 +115,7 @@ int	wait_process(pid_t pid)
 	return (status);
 }
 
-int	exec(t_node *node, int status_exit)
+int	exec(t_node *node, int status_exit, t_map *envmap)
 {
 	int		status;
 	pid_t	pid_to_wait;
@@ -126,11 +126,11 @@ int	exec(t_node *node, int status_exit)
 	}
 	if (node->next == NULL && isbuiltin(node->command))
 	{
-		status = exec_builtin(node ,status_exit);
+		status = exec_builtin(node ,status_exit, envmap);
 	}
 	else
 	{
-		pid_to_wait = exec_pipeline(node, status_exit);
+		pid_to_wait = exec_pipeline(node, status_exit, envmap);
 		status = wait_process(pid_to_wait);
 	}
 	return (status);

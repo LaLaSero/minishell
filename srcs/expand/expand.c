@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:51:58 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:30:36 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	expand_macro(char **dst, char **rest, char *p, int status)
 	*rest = p;
 }
 
-void	expand_variable_str(char **dst, char **rest, char *p, int *error)
+void	expand_variable_str(char **dst, char **rest, char *p, int *error, t_map *envmap)
 {
 	char	*var_name;
 	char	*value;
@@ -41,7 +41,7 @@ void	expand_variable_str(char **dst, char **rest, char *p, int *error)
 	append_char(&var_name, *p++);
 	while (is_alpha_num_under(*p))
 		append_char(&var_name, *p++);
-	value = get_value(var_name);
+	value = get_value(var_name,envmap);
 	free(var_name);
 	if (value)
 		while (*value)
@@ -51,7 +51,7 @@ void	expand_variable_str(char **dst, char **rest, char *p, int *error)
 	*rest = p;
 }
 
-void	expand_variable_tok(t_token *tok, int status, int *error)
+void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 {
 	char	*new_word;
 	char	*old_word;
@@ -67,9 +67,9 @@ void	expand_variable_tok(t_token *tok, int status, int *error)
 		if (*old_word == SINGLE_QUOTE_CHAR)
 			append_single_quote(&new_word, &old_word, old_word, error);
 		else if (*old_word == DOUBLE_QUOTE_CHAR)
-			append_double_quote(&new_word, &old_word, old_word, error);
+			append_double_quote(&new_word, &old_word, old_word, error, envmap);
 		else if (is_variable(old_word))
-			expand_variable_str(&new_word, &old_word, old_word, error);
+			expand_variable_str(&new_word, &old_word, old_word, error, envmap);
 		else if (is_macro(old_word))
 			expand_macro(&new_word, &old_word, old_word, status);
 		else
@@ -77,22 +77,22 @@ void	expand_variable_tok(t_token *tok, int status, int *error)
 	}
 	free(tok->word);
 	tok->word = new_word;
-	expand_variable_tok(tok->next, status, error);
+	expand_variable_tok(tok->next, status, error, envmap);
 }
 
-void	expand_variable(t_node *node, int status, int *error)
+void	expand_variable(t_node *node, int status, int *error, t_map *envmap)
 {
 	if (node == NULL)
 		return ;
-	expand_variable_tok(node->args, status, error);
-	expand_variable_tok(node->filename, status, error);
-	expand_variable(node->command, status, error);
-	expand_variable(node->next, status, error);
+	expand_variable_tok(node->args, status, error, envmap);
+	expand_variable_tok(node->filename, status, error, envmap);
+	expand_variable(node->command, status, error, envmap);
+	expand_variable(node->next, status, error, envmap);
 }
 
-t_node	*expand(t_node *node, int *status, int *error)
+t_node	*expand(t_node *node, int *status, int *error, t_map *envmap)
 {
-	expand_variable(node, *status, error);
+	expand_variable(node, *status, error, envmap);
 	remove_quote(node, error);
 	return (NULL);
 }

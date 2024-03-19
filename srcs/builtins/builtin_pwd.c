@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:41:40 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:19:07 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ bool	is_correct_cwd(char *pwd)
 		&& stat_pwd.st_dev == stat_cwd.st_dev);
 }
 
-int	builtin_pwd(void)
+int	builtin_pwd(t_map *envmap)
 {
 	char	*pwd;
 	char	cwd[PATH_MAX];
 
-	pwd = get_value("PWD");
+	pwd = get_value("PWD", envmap);
 	if (pwd == NULL || is_correct_cwd(pwd) == false)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)

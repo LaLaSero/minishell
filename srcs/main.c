@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:55:24 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:03:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ static void	_init_status(void)
 {
 	g_status.signal = 0;
 	g_status.is_interrupted = false;
-	g_status.envmap = NULL;
 }
 
-static void	_analyze(char *line, int *status, int *error)
+static void	_analyze(char *line, int *status, int *error, t_map *envmap)
 {
 	t_token	*tok;
 	t_node	*node;
@@ -40,8 +39,8 @@ static void	_analyze(char *line, int *status, int *error)
 			*status = PARSE_ERROR_NUMBER;
 		else
 		{
-			expand(node, status, error);
-			*status = exec(node, *status);
+			expand(node, status, error, envmap);
+			*status = exec(node, *status, envmap);
 		}
 		free_node(node);
 	}
@@ -58,7 +57,7 @@ static void	_minishell_loop(void)
 	status = 0;
 	error = false;
 	rl_outstream = stderr;
-	make_map();
+	make_map(&envmap);
 	setup_signal();
 	while (1)
 	{
@@ -67,7 +66,7 @@ static void	_minishell_loop(void)
 			break ;
 		if (*line)
 			add_history(line);
-		_analyze(line, &status, &error);
+		_analyze(line, &status, &error, envmap);
 		free(line);
 	}
 	write(1, "exit\n", 5);

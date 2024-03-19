@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:48:07 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:46:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:03:13 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_token	*operator(char **line_loc, char *line, int *error)
 	static char *const	operator_list[] = {">>", "<<", "<", ">", "|", "\n"};
 	size_t				i;
 	char				*op;
-	extern t_status		g_status;
 
 	i = 0;
 	while (i < sizeof(operator_list) / sizeof(*operator_list))
@@ -48,7 +47,6 @@ t_token	*operator(char **line_loc, char *line, int *error)
 		i++;
 	}
 	assert_error("Unexpected operator", error);
-	// g_status.had_error = true;
 	*error = true;
 	return (NULL);
 }
@@ -151,7 +149,10 @@ t_token	*tokenize(char *line, int *error)
 			tok = tok->next;
 		}
 		else
-			assert_error("Unexpected Token", error);
+		{
+			*error = true;
+			return (NULL);
+		}
 	}
 	tok->next = new_token(NULL, TK_EOF);
 	return (head.next);

@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 21:43:40 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/19 14:18:54 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-char	*get_value(char *key)
+char	*get_value(char *key, t_map *envmap)
 {
-	extern t_status	g_status;
+	// extern t_status	g_status;
 	t_var			*cur;
 
 	if (key == NULL)
 		return (NULL);
-	cur = g_status.envmap->item_head.next;
+	cur = envmap->item_head.next;
 	while (cur)
 	{
 		if (ft_strncmp(key, cur->key, ft_strlen(key) + 1) == 0)

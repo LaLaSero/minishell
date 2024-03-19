@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:20:47 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:01:19 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,28 @@ bool	is_space(char c)
 	return (false);
 }
 
-bool	is_operator(const char *s)
-{
-	size_t				i;
+// bool	is_operator(const char *s)
+// {
+// 	size_t				i;
 
-	static char *const
-		operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	i = 0;
-	while (i < sizeof(operators) / sizeof(*operators))
-	{
-		if (ft_strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
-}
+// 	static char *const
+// 		operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
+// 	i = 0;
+// 	while (i < sizeof(operators) / sizeof(*operators))
+// 	{
+// 		if (ft_strncmp(s, operators[i], ft_strlen(operators[i])) == 0)
+// 			return (true);
+// 		i++;
+// 	}
+// 	return (false);
+// }
 
 bool	is_metacharacter(char c)
 {
 	static const char	*metacharacters;
 	size_t				i;
 
-	metacharacters = "|&;()<> \t\n";
+	metacharacters = "|<> \n";
 	i = 0;
 	while (metacharacters[i])
 	{

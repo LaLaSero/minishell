@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:50:05 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:46:52 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,13 @@ typedef struct s_map
 
 typedef struct g_status
 {
-	// bool					had_error;
-	// int						exit_status;
 	int						signal;
 	int						is_interrupted;
-	t_map					*envmap;
 }							t_status;
 
-// t_token						*tokenize(char *line);
 t_token						*tokenize(char *line, int *error);
 void						fatal_error(const char *msg);
 void						perror_prefix(void);
-// t_token	*expand_token(t_token *tok);
 bool						is_metacharacter(char c);
 t_node						*parse(t_token *tok, int *error);
 t_token						*new_token(char *word, t_token_kind kind);
@@ -126,26 +121,25 @@ t_node						*redirect_append(t_token **tok_loc, t_token *tok);
 t_node						*new_node(t_node_kind kind);
 void						append_node(t_node **node_loc, t_node *node);
 t_token						*tokdup(t_token *tok);
-int							exec(t_node *node, int status);
+int							exec(t_node *node, int status, t_map *envmap);
 char						**get_environ(t_map *map);
 size_t						get_sizeof_map(t_map *map);
-char						*get_value(char *key);
 void						execute_command(char **command_splitted,
 								char **envp);
-void						make_map(void);
+void						make_map(t_map **envmap);
 char						*get_full_sentence(t_var *var);
-int							builtin_export(char **argv);
+int							builtin_export(char **argv, t_map *envmap);
 int							add_var(t_map *map, char *line, bool null_value);
-int							builtin_env(void);
-int							builtin_unset(char **argv);
+int							builtin_env( t_map *envmap);
+int							builtin_unset(char **argv, t_map *envmap);
 int							remove_var(t_map *map, char *key);
-int							builtin_pwd(void);
+int							builtin_pwd(t_map *envmap);
 int							builtin_echo(char **argv);
-int							builtin_cd(char **argv);
+int							builtin_cd(char **argv, t_map *envmap);
 void						setup_signal(void);
 int							builtin_exit(char **argv, int status);
 t_node						*redirect_heredoc(t_token **tok_loc, t_token *tok);
-t_node						*expand(t_node *node, int *status, int *error);
+t_node						*expand(t_node *node, int *status, int *error, t_map *envmap);
 void						reset_signals(void);
 int							get_filefd(t_node *node);
 
@@ -179,11 +173,11 @@ t_node						*new_node(t_node_kind kind);
 t_node						*_the_first_node(t_node_kind kind);
 
 bool						is_space(char c);
-bool						is_operator(const char *s);
+// bool						is_operator(const char *s);
 bool						is_metacharacter(char c);
 bool						is_word(const char *s);
 
-void						update_oldpwd(char *pwd_value);
+void						update_oldpwd(char *pwd_value, t_map *envmap);
 bool						detect_target(char **path_loc, char *path,
 								char *target);
 void						remove_last_dir(char *pwd_value);
@@ -198,7 +192,7 @@ void						print_exit_error(char *arg, char *message);
 
 int							add_var(t_map *map, char *line, bool null_value);
 int							remove_var(t_map *map, char *key);
-char						*get_value(char *key);
+char						*get_value(char *key, t_map *envmap);
 size_t						get_sizeof_map(t_map *map);
 int							remake_map(t_map *map, char *key, char *value);
 t_var						*new_var(char *key, char *value);
@@ -213,9 +207,9 @@ void						quote_removal(t_token *tok, int *error);
 void						append_single_quote(char **dst, char **rest,
 								char *p, int *error);
 void						append_double_quote(char **dst, char **rest,
-								char *p, int *error);
+								char *p, int *error, t_map *envmap);
 void						expand_variable_str(char **dst, char **rest,
-								char *p, int *error);
+								char *p, int *error, t_map *envmap);
 void						append_char(char **s, char c);
 
 int							token_test(t_token *tok);

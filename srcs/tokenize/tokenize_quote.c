@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:16:33 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:51:39 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:03:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 static void	handle_single_quote(char *line, char **line_loc, int *error)
 {
-	extern t_status	g_status;
-
 	line++;
 	while (*line && *line != '\'')
 		line++;
@@ -33,8 +31,6 @@ static void	handle_single_quote(char *line, char **line_loc, int *error)
 
 static void	handle_double_quote(char *line, char **line_loc, int *error)
 {
-	extern t_status	g_status;
-
 	line++;
 	while (*line && *line != '\"')
 		line++;
@@ -51,7 +47,6 @@ static void	handle_double_quote(char *line, char **line_loc, int *error)
 
 t_token	*word(char **line_loc, char *line, int *error)
 {
-	extern t_status	g_status;
 	const char		*start;
 	char			*word;
 
