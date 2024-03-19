@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:46:05 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/19 13:44:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:17:45 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,15 @@ void	quote_removal(t_token *tok, int *error)
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
-	if (ft_strncmp(p, "\"\"", 3) == 0 || ft_strncmp(p, "\'\'", 3) == 0)
-		new_word = ft_strdup("");
-	else
+	new_word = ft_strdup("");
+	while (*p)
 	{
-		new_word = NULL;
-		while (*p)
-		{
-			if (*p == SINGLE_QUOTE_CHAR)
-				remove_single_quote(p, &p, &new_word, error);
-			else if (*p == DOUBLE_QUOTE_CHAR)
-				remove_doule_quote(p, &p, &new_word, error);
-			else
-				append_char(&new_word, *p++);
-		}
+		if (*p == SINGLE_QUOTE_CHAR)
+			remove_single_quote(p, &p, &new_word, error);
+		else if (*p == DOUBLE_QUOTE_CHAR)
+			remove_doule_quote(p, &p, &new_word, error);
+		else
+			append_char(&new_word, *p++);
 	}
 	free(tok->word);
 	tok->word = new_word;
