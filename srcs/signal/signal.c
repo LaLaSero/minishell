@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:38:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 02:32:41 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:45:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void			report_signal(int signum);
 
 static int	monitor_readline(void)
 {
-	extern t_status	g_status;
+	extern int	g_signal;
 
-	if (g_status.signal % 256 == 0)
+	if (g_signal % 256 == 0)
 		return (0);
-	else if (g_status.signal % 256 == SIGINT)
+	else if (g_signal % 256 == SIGINT)
 	{
-		g_status.signal = 256;
+		g_signal = 256;
 		rl_replace_line("", 0);
 		rl_done = true;
 	}
-	else if (g_status.signal % 256 == SIGQUIT)
+	else if (g_signal % 256 == SIGQUIT)
 	{
 		write(STDERR_FILENO, "exit\n", 5);
 	}

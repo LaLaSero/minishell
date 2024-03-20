@@ -6,18 +6,18 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 02:33:10 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:46:31 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/minishell.h" 
 
-t_status	g_status;
+int		g_signal;
 
-static void	_init_status(void)
+static void	_init_signal(void)
 {
-	g_status.signal = 0;
+	g_signal = 0;
 }
 
 static void	_analyze(char *line, int *status, int *error, t_map *envmap)
@@ -74,7 +74,7 @@ static void	_minishell_loop(void)
 
 int	main(int argc, char **argv)
 {
-	_init_status();
+	_init_signal();
 	(void)argv;
 	if (argc == 1)
 		_minishell_loop();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/19 17:11:15 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:45:49 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	exec_builtin(t_node *node, int status_exit, t_map *envmap)
 
 int	exec_nonbuiltin(t_node *node, t_map *envmap)
 {
-	extern t_status	g_status;
 	char			**argv;
 
 	dup_redirect(node->command->redirect);

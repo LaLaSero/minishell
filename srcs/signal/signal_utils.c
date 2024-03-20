@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:44:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:26:03 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:45:09 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	disable_signal(int signum)
 
 void	report_signal(int signum)
 {
-	extern t_status	g_status;
+	extern int	g_signal;
 
-	g_status.signal = signum;
+	g_signal = signum;
 }

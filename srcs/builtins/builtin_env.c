@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:03:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:24:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:43:30 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	builtin_env(t_map *envmap)
 {
-	extern t_status	g_status;
 	t_var			*cur;
 
 	cur = envmap->item_head.next;
