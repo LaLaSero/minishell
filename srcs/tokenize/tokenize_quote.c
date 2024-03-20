@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:16:33 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:03:42 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:12:50 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handle_double_quote(char *line, char **line_loc, int *error)
 	{
 		*error = true;
 		tokenize_error(line, line_loc);
-		write(1, "Unclosed single quote\n", 23);
+		write(1, "Unclosed double quote\n", 23);
 	}
 	else
 		line++;
