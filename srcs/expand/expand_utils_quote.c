@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:00:19 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:27:54 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:31:47 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	append_single_quote(char **dst, char **rest, char *p, int *error)
 	*rest = p;
 }
 
-void	append_double_quote(char **dst, char **rest, int *error, t_map *envmap, int status)
+void	append_double_quote(char **dst, char **rest, int *error, t_map *envmap)
 {
 	char	*p;
 
@@ -37,7 +37,7 @@ void	append_double_quote(char **dst, char **rest, int *error, t_map *envmap, int
 		if (*p == '\0')
 			assert_error("Unclosed double quote", error);
 		else if (is_macro(p))
-			expand_macro(dst, &p, p, status);
+			expand_macro(dst, &p, p, envmap->exit_status);
 		else if (is_variable(p))
 			expand_variable_str(dst, &p, error, envmap);
 		else

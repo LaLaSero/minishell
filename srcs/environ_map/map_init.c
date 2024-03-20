@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:43:31 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:12:20 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:35:04 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	make_map(t_map **envmap)
 	t_map		*map;
 
 	*envmap = init_map();
+	(*envmap)->exit_status = 0;
 	map = *envmap;
 	while (*environ)
 	{

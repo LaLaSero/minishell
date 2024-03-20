@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:19:46 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:38:53 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_var
 typedef struct s_map
 {
 	t_var					item_head;
+	int						exit_status;
 }							t_map;
 
 typedef struct g_status
@@ -205,10 +206,11 @@ void						quote_removal(t_token *tok, int *error);
 void						append_single_quote(char **dst, char **rest,
 								char *p, int *error);
 void						append_double_quote(char **dst, char **rest,
-								int *error, t_map *envmap, int status);
+								int *error, t_map *envmap);
 void						expand_variable_str(char **dst, char **rest,
 								int *error, t_map *envmap);
 void						append_char(char **s, char c);
-void						expand_macro(char **dst, char **rest, char *p, int status);
+void						expand_macro(char **dst, char **rest,
+								char *p, int status);
 
 #endif

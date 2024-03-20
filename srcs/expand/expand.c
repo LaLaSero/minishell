@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:27:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:33:32 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 		if (*old_word == SINGLE_QUOTE_CHAR)
 			append_single_quote(&new_word, &old_word, old_word, error);
 		else if (*old_word == DOUBLE_QUOTE_CHAR)
-			append_double_quote(&new_word, &old_word, error, envmap, status);
+			append_double_quote(&new_word, &old_word, error, envmap);
 		else if (is_variable(old_word))
 			expand_variable_str(&new_word, &old_word, error, envmap);
 		else if (is_macro(old_word))
@@ -96,6 +96,7 @@ void	expand_variable(t_node *node, int status, int *error, t_map *envmap)
 
 t_node	*expand(t_node *node, int *status, int *error, t_map *envmap)
 {
+	envmap->exit_status = *status;
 	expand_variable(node, *status, error, envmap);
 	remove_quote(node, error);
 	return (NULL);
