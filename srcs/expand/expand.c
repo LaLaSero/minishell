@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:06:00 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:27:08 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 void	expand_macro(char **dst, char **rest, char *p, int status)
 {
 	char			*temp;
+	char			*tmp;
 
 	p += ft_strlen("$?");
-	temp = *dst;
-	*dst = ft_itoa(status);
-	free(temp);
+	temp = ft_itoa(status);
+	tmp = temp;
+	while (*temp)
+		append_char(dst, *temp++);
+	free(tmp);
 	*rest = p;
 }
 
@@ -68,7 +71,7 @@ void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 		if (*old_word == SINGLE_QUOTE_CHAR)
 			append_single_quote(&new_word, &old_word, old_word, error);
 		else if (*old_word == DOUBLE_QUOTE_CHAR)
-			append_double_quote(&new_word, &old_word, error, envmap);
+			append_double_quote(&new_word, &old_word, error, envmap, status);
 		else if (is_variable(old_word))
 			expand_variable_str(&new_word, &old_word, error, envmap);
 		else if (is_macro(old_word))
