@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 02:43:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:25:12 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	builtin_cd(char **argv, t_map *envmap)
 		newpwd_value = _update_pwd_value(pwd_value, path);
 		joined_newpwd = ft_strjoin("PWD=", newpwd_value);
 		add_var(envmap, joined_newpwd, true);
-		free(joined_newpwd);	
+		free (joined_newpwd);
 	}
 	return (SUCCESS);
 }

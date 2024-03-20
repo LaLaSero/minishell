@@ -6,7 +6,7 @@
 /*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:56:10 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 22:53:37 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/20 16:16:50 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	is_identifier(const char *s)
 
 bool	is_variable(char *s)
 {
-	return (s[0] == '$' && is_alpha_under(s[1]));
+	return (s[0] == '$' && (is_alpha_under(s[1]) || s[1] == '?'));
 }
 
 bool	is_macro(char *s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 23:59:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:12:42 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:15:47 by kishizu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*get_value(char *key, t_map *envmap)
 
 	if (key == NULL)
 		return (NULL);
+	if (ft_strncmp(key, "?", 2) == 0)
+		return (ft_itoa(envmap->exit_status));
 	cur = envmap->item_head.next;
 	while (cur)
 	{
