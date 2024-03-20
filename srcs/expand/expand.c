@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 16:27:06 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:06:00 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	expand_variable_str(char **dst, char **rest, int *error, t_map *envmap)
 	if (*q != '$')
 		assert_error("Expected dollar sign", error);
 	q++;
-	if (!is_alpha_under(*q) && *q != '?')
+	if (!is_alpha_under(*q))
 		assert_error("Variable must start with alphabet or underbar.", error);
 	append_char(&var_name, *q++);
 	while (is_alpha_num_under(*q))
@@ -71,8 +71,8 @@ void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 			append_double_quote(&new_word, &old_word, error, envmap);
 		else if (is_variable(old_word))
 			expand_variable_str(&new_word, &old_word, error, envmap);
-		// else if (is_macro(old_word))
-		// 	expand_macro(&new_word, &old_word, old_word, status);
+		else if (is_macro(old_word))
+			expand_macro(&new_word, &old_word, old_word, status);
 		else
 			append_char(&new_word, *old_word++);
 	}
@@ -83,7 +83,6 @@ void	expand_variable_tok(t_token *tok, int status, int *error, t_map *envmap)
 
 void	expand_variable(t_node *node, int status, int *error, t_map *envmap)
 {
-	envmap->exit_status = status;
 	if (node == NULL)
 		return ;
 	expand_variable_tok(node->args, status, error, envmap);
