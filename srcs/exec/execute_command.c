@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 03:35:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:48:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ static char	*find_accessible_path(char *path_list, char *command)
 	return (accessible_path);
 }
 
-static void	_null_str_error(void)
-{
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, ": command not found\n", 20);
-	exit(127);
-}
+// static void	_null_str_error(void)
+// {
+// 	write(STDERR_FILENO, "minishell: ", 11);
+// 	write(STDERR_FILENO, ": command not found\n", 20);
+// 	exit(127);
+// }
 
 // envpは、環境変数の配列、ターミナルでenvを打つ
 // commandの最初の部分だけaccess()に渡す
@@ -107,7 +107,7 @@ void	execute_command(char **command_splitted, char **envp)
 	char	*accessible_path;
 
 	if (*command_splitted[0] == '\0')
-		_null_str_error();
+		null_str_error();
 	path_list = _find_path_list(envp);
 	if (_is_fullpath(command_splitted[0]) == 1)
 		accessible_path = ft_strdup(command_splitted[0]);

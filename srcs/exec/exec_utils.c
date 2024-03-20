@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:41:25 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:48:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ int	stash_fd(int fd)
 		return (FAILURE);
 	}
 	return (stash);
+}
+
+void	null_str_error(void)
+{
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, ": command not found\n", 20);
+	exit(127);
 }

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 02:43:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:49:32 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	builtin_cd(char **argv, t_map *envmap)
 	char	*joined_newpwd;
 
 	pwd_value = get_value("PWD", envmap);
-	// update_oldpwd(pwd_value, envmap);
 	if (_argv_to_path(argv, path, envmap) == FAILURE)
 		return (1);
 	if (chdir(path) < 0)
