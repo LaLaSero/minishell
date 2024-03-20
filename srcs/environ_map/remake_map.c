@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remake_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:48:06 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 22:41:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:01:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 static void	_realloc_var(t_var *var, char *value)
 {
-	free(var->value);
 	if (!value)
-		var->value = NULL;
+		;
 	else
 	{
+		free(var->value);
 		var->value = ft_strdup(value);
 		if (var->value == NULL)
 			fatal_error("strdup");
@@ -52,7 +52,7 @@ int	remake_map(t_map *map, char *key, char *value)
 	else
 	{
 		cur = _make_new_var(key, value);
-		if ((value == NULL && cur->value == NULL)
+		if ((value == NULL && cur->key == NULL)
 			|| (value != NULL && (cur->key == NULL || cur->value == NULL)))
 			fatal_error("new_var");
 		cur->next = map->item_head.next;

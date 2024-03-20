@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 19:32:14 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:53:35 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ static void	_show_declare(t_map *envmap)
 bool	is_valid_export_variable(const char *variable_name)
 {
 	int	i;
-	int	flag;
 
-	flag = false;
 	if (variable_name == NULL || *variable_name == '\0'
 		|| *variable_name == '=')
 		return (false);
 	if (ft_isdigit((int)*variable_name))
 		return (false);
-		i = 1;
+	i = 1;
 	while (variable_name[i])
 	{
 		if (variable_name[i] == '=')
@@ -50,10 +48,7 @@ bool	is_valid_export_variable(const char *variable_name)
 			return (false);
 		i++;
 	}
-	if (flag == true)
-		return (true);
-	else
-		return (false);
+	return (true);
 }
 
 // export KEY1=VALUE1 KEY2=VALUE2 ...
@@ -72,7 +67,7 @@ int	builtin_export(char **argv, t_map *envmap)
 	while (argv[i])
 	{
 		if (!is_valid_export_variable(argv[i]) || add_var(envmap, argv[1],
-				false) == FAILURE)
+				true) == FAILURE)
 		{
 			write(STDERR_FILENO, "minishell: ", 11);
 			write(STDERR_FILENO, "export: '", 9);
