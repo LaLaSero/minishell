@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 16:40:12 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:00:45 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static char	*_update_pwd_value(char *pwd_value, char *path)
 			add_dir(newpwd_value, path, &path);
 	}
 	res = ft_strdup(newpwd_value);
+	if (res == NULL)
+		fatal_error("malloc error");
 	return (res);
 }
 
@@ -83,6 +85,8 @@ int	builtin_cd(char **argv, t_map *envmap)
 	{
 		newpwd_value = _update_pwd_value(pwd_value, path);
 		joined_newpwd = ft_strjoin("PWD=", newpwd_value);
+		if (joined_newpwd == NULL)
+			fatal_error("malloc error");
 		add_var(envmap, joined_newpwd, true);
 		free(joined_newpwd);
 		free(newpwd_value);
