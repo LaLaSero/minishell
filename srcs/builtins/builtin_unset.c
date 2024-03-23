@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:10:57 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:34:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,20 @@ int	builtin_unset(char **argv, t_map *envmap)
 	i = 0;
 	while (argv[i])
 	{
-		if (remove_var(envmap, argv[i]) == FAILURE)
+		if (is_valid_export_variable(argv[i]) == false)
+		{
+			status = 1;
+			_show_unset_error(argv[i]);
+			i++;
+			continue ;
+		}
+		else if (remove_var(envmap, argv[i]) == FAILURE)
 		{
 			_show_unset_error(argv[i]);
-			status = 255;
+			status = 0;
 		}
 		else
-			status = 255;
+			status = 0;
 		i++;
 	}
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:49:21 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:23:26 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,5 +208,7 @@ void						expand_variable_str(char **dst, char **rest,
 void						append_char(char **s, char c);
 void						expand_macro(char **dst, char **rest,
 								char *p, int status);
+bool						is_valid_export_variable(const char *variable_name);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:49:39 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 13:25:33 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:16:40 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_node	*pipeline(t_token **tok, t_token *cur, int *error)
 
 	node = _the_first_node(ND_PIPELINE);
 	node->command = simple_command(&cur, cur, error);
-	if (is_op(cur, "|"))
+	if (is_op(cur, "|") && cur->next->kind != TK_EOF)
 	{
 		node->next = pipeline(&cur, cur->next, error);
 	}
