@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:06:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 18:11:38 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:14:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char *_wrapped_strdup(char *s)
 {
 	char	*ret;
 
-	ret = ft_(s);
+	ret = ft_strdup(s);
 	if (ret == NULL)
 		fatal_error("strdup");
 	return (ret);
