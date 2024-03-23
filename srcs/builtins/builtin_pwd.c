@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:24:01 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 14:19:07 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:03:24 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	is_correct_cwd(char *pwd)
 int	builtin_pwd(t_map *envmap)
 {
 	char	*pwd;
-	char	cwd[PATH_MAX];
+	char	cwd[ARG_MAX];
 
 	pwd = get_value("PWD", envmap);
 	if (pwd == NULL || is_correct_cwd(pwd) == false)
