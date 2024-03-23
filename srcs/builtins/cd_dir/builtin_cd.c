@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 18:00:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:28:02 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static void	_show_cd_error(char *message)
 
 static char	*_update_pwd_value(char *pwd_value, char *path)
 {
-	char	newpwd_value[PATH_MAX];
+	char	newpwd_value[ARG_MAX];
 	char	*res;
 
 	if (*path == '/' || pwd_value == NULL)
-		ft_strlcpy(newpwd_value, path, PATH_MAX);
+		ft_strlcpy(newpwd_value, path, ARG_MAX);
 	else
-		ft_strlcpy(newpwd_value, pwd_value, PATH_MAX);
+		ft_strlcpy(newpwd_value, pwd_value, ARG_MAX);
 	while (*path)
 	{
 		if (*path == '/')
@@ -41,6 +41,8 @@ static char	*_update_pwd_value(char *pwd_value, char *path)
 		else
 			add_dir(newpwd_value, path, &path);
 	}
+	if (ft_strlen(newpwd_value) >= PATH_MAX)
+		return (NULL);
 	res = ft_strdup(newpwd_value);
 	if (res == NULL)
 		fatal_error("malloc error");
@@ -84,6 +86,11 @@ int	builtin_cd(char **argv, t_map *envmap)
 	if (pwd_value)
 	{
 		newpwd_value = _update_pwd_value(pwd_value, path);
+		if (newpwd_value == NULL)
+		{
+			_show_cd_error("Path too long");
+			return (1);
+		}
 		joined_newpwd = ft_strjoin("PWD=", newpwd_value);
 		if (joined_newpwd == NULL)
 			fatal_error("malloc error");

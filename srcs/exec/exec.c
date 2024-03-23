@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:30:09 by kishizu           #+#    #+#             */
-/*   Updated: 2024/03/20 17:45:49 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:17:31 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_builtin(t_node *node, int status_exit, t_map *envmap)
 
 int	exec_nonbuiltin(t_node *node, t_map *envmap)
 {
-	char			**argv;
+	char	**argv;
 
 	dup_redirect(node->command->redirect);
 	argv = convert_to_argv(node->command->args);
