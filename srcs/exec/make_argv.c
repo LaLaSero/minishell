@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_argv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:06:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 22:52:31 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:11:38 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ bool	is_only_space(char *s)
 	return (true);
 }
 
+static char *_wrapped_strdup(char *s)
+{
+	char	*ret;
+
+	ret = ft_(s);
+	if (ret == NULL)
+		fatal_error("strdup");
+	return (ret);
+}
+
 // "ls -a"を"ls", "-a"に分けてくっつける
 void	implement_argv(t_token *args)
 {
@@ -50,12 +60,12 @@ void	implement_argv(t_token *args)
 		splitted = ft_split(args->word, ' ');
 		if (splitted == NULL)
 			fatal_error("split");
-		args->word = ft_strdup(splitted[0]);
+		args->word = _wrapped_strdup(splitted[0]);
 		next_temp = args->next;
 		i = 1;
 		while (splitted[i])
 		{
-			args->next = new_token(ft_strdup(splitted[i]), TK_WORD);
+			args->next = new_token(_wrapped_strdup(splitted[i]), TK_WORD);
 			args = args->next;
 			i++;
 		}
@@ -82,7 +92,7 @@ char	**convert_to_argv(t_token *args)
 	while (tmp)
 	{
 		if (tmp->word != NULL)
-			argv[i] = ft_strdup(tmp->word);
+			argv[i] = _wrapped_strdup(tmp->word);
 		tmp = tmp->next;
 		i++;
 	}
