@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:48:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:13:42 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,46 @@ int	isbuiltin(t_node *command)
 	return (false);
 }
 
+static bool	is_valid_fd(int fd)
+{
+	struct stat	st;
+
+	if (fd < 0)
+		return (false);
+	errno = 0;
+	if (fstat(fd, &st) < 0 && errno == EBADF)
+		return (false);
+	return (true);
+}
+
 int	stash_fd(int fd)
 {
 	int	stash;
 
-	stash = fcntl(fd, F_DUPFD, 10);
-	if (stash < 0)
+	if (is_valid_fd(fd) == false)
 	{
 		fatal_error("stash error");
-		return (FAILURE);
 	}
+	stash = 11;
+	while (is_valid_fd(stash))
+		stash++;
+	stash = dup2(fd, stash);
+	if (stash < 0)
+		fatal_error("dup2 error");
 	if (close(fd) < 0)
-	{
 		fatal_error("close error");
-		return (FAILURE);
-	}
 	return (stash);
 }
 
-void	null_str_error(void)
+void	identify_dir_or_file(char **path)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, ": command not found\n", 20);
-	exit(127);
+		struct stat	path_stat;
+
+		stat(path[0], &path_stat);
+		if (S_ISDIR(path_stat.st_mode))
+		{
+			show_exec_error(path[0], "is a directory\n");
+			free_argv(path);
+			exit(126);
+		}
 }

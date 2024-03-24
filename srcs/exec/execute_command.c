@@ -6,19 +6,28 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:48:55 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:33:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-static void	_show_error(char *command, char *message)
+void	show_exec_error(char *command, char *message)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(2, command, ft_strlen(command));
-	write(2, ": ", 2);
-	write(2, message, ft_strlen(message));
+	if (!command)
+	{
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, ": command not found\n", 20);
+		exit(127);
+	}
+	else
+	{
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(2, command, ft_strlen(command));
+		write(2, ": ", 2);
+		write(2, message, ft_strlen(message));
+	}
 }
 
 static int	_is_fullpath(char *command)
@@ -82,19 +91,12 @@ static char	*find_accessible_path(char *path_list, char *command)
 	if (path[i] == NULL)
 	{
 		free_argv(path);
-		_show_error(command, "command not found\n");
+		show_exec_error(command, "command not found\n");
 		exit(127);
 	}
 	free_argv(path);
 	return (accessible_path);
 }
-
-// static void	_null_str_error(void)
-// {
-// 	write(STDERR_FILENO, "minishell: ", 11);
-// 	write(STDERR_FILENO, ": command not found\n", 20);
-// 	exit(127);
-// }
 
 // envpは、環境変数の配列、ターミナルでenvを打つ
 // commandの最初の部分だけaccess()に渡す
@@ -107,15 +109,17 @@ void	execute_command(char **command_splitted, char **envp)
 	char	*accessible_path;
 
 	if (*command_splitted[0] == '\0')
-		null_str_error();
+		show_exec_error(NULL, "command not found\n");
 	path_list = _find_path_list(envp);
 	if (_is_fullpath(command_splitted[0]) == 1)
+	{
+		identify_dir_or_file(command_splitted);
 		accessible_path = ft_strdup(command_splitted[0]);
+	}
 	else if (_is_fullpath(command_splitted[0]) == 2 || path_list == NULL)
 	{
-		_show_error(command_splitted[0], "No such file or directory\n");
-		free_argv(command_splitted);
-		free(path_list);
+		show_exec_error(command_splitted[0], "No such file or directory\n");
+		free_argv_str(command_splitted, path_list);
 		exit(127);
 	}
 	else
@@ -123,8 +127,7 @@ void	execute_command(char **command_splitted, char **envp)
 	free(path_list);
 	if (execve(accessible_path, command_splitted, envp) == -1)
 	{
-		free_argv(command_splitted);
-		free(accessible_path);
+		free_argv_str(command_splitted, accessible_path);
 		perror("minishell: execve");
 		exit(-1);
 	}

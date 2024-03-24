@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:24:17 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:44:28 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:23:18 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,10 @@ void	free_node(t_node *node)
 	free_node(node->next);
 	free_node(node->command);
 	free(node);
+}
+
+void	free_argv_str(char **argv, char *str)
+{
+	free_argv(argv);
+	free(str);
 }

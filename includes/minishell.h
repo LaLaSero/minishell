@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 16:23:26 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:22:31 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ t_node						*new_node(t_node_kind kind);
 void						append_node(t_node **node_loc, t_node *node);
 t_token						*tokdup(t_token *tok);
 int							exec(t_node *node, int status, t_map *envmap);
-void						null_str_error(void);
 char						**get_environ(t_map *map);
 size_t						get_sizeof_map(t_map *map);
 void						execute_command(char **command_splitted,
@@ -209,6 +208,8 @@ void						append_char(char **s, char c);
 void						expand_macro(char **dst, char **rest,
 								char *p, int status);
 bool						is_valid_export_variable(const char *variable_name);
-
+void						identify_dir_or_file(char **path);
+void						show_exec_error(char *command, char *message);
+void						free_argv_str(char **argv, char *str);
 
 #endif
