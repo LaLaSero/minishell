@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 16:57:22 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:03:20 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_metacharacter(char c)
 	static const char	*metacharacters;
 	size_t				i;
 
-	metacharacters = "|<> \n";
+	metacharacters = "|<> \t\n";
 	i = 0;
 	while (metacharacters[i])
 	{
