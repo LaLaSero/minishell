@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:59:58 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 19:09:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:34:55 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ static int	_argv_to_path(char **argv, char *path, t_map *envmap)
 			_show_cd_error("HOME not set");
 			return (FAILURE);
 		}
+		if (ft_strlen(home_value) >= PATH_MAX - 7)
+		{
+			_show_cd_error("File name too long");
+			return (FAILURE);
+		}
 		ft_strlcpy(path, home_value, PATH_MAX);
 	}
-	else if (ft_strlen(argv[1]) >= PATH_MAX)
+	else if (ft_strlen(argv[1]) >= PATH_MAX - 7)
 	{
 		_show_cd_error("Path too long");
 		return (FAILURE);
