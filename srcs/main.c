@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:46:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:45:37 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ int		g_signal;
 static void	_init_signal(void)
 {
 	g_signal = 0;
+}
+
+static void	_detect_interrupt(int *status)
+{
+	if (g_signal == 256)
+	{
+		*status = 1;
+		g_signal = 0;
+	}
 }
 
 static void	_analyze(char *line, int *status, int *error, t_map *envmap)
@@ -67,6 +76,8 @@ static void	_minishell_loop(void)
 			add_history(line);
 		_analyze(line, &status, &error, envmap);
 		free(line);
+		if (g_signal == 256)
+			_detect_interrupt(&status);
 	}
 	write(1, "exit\n", 5);
 	exit(status);
