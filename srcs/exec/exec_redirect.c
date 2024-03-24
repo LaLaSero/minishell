@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:56:24 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:44:08 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:30:45 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	dup_redirect(t_node *node)
 		return ;
 	if (is_redir_kind(node->kind))
 	{
+		node->stashed_targetfd = stash_fd(node->targetfd);
 		if (dup2(node->filefd, node->targetfd) < 0)
-			fatal_error("dup2 error");
+			fatal_error("dup2 error redirect");
 	}
 	else
 	{
@@ -49,6 +50,6 @@ void	reset_redirect(t_node *node)
 		if (close(node->targetfd) < 0)
 			fatal_error("close error");
 		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
-			fatal_error("dup2 error");
+			fatal_error("dup2 error reset");
 	}
 }
