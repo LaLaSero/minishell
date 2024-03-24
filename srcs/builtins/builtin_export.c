@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:13:46 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/20 18:53:35 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:02:19 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	builtin_export(char **argv, t_map *envmap)
 			write(STDERR_FILENO, "export: '", 9);
 			write(STDERR_FILENO, argv[i], ft_strlen(argv[i]));
 			write(STDERR_FILENO, "': not a valid identifier\n", 26);
-			status = 255;
+			status = 1;
 		}
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_filefd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kishizu <kishizu@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 20:55:36 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 22:45:08 by kishizu          ###   ########.fr       */
+/*   Updated: 2024/03/24 23:09:39 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static void	_open_proper_filefd(t_node *node)
 
 static int	_show_open_error(char *word)
 {
-	write(STDOUT, "minishell: ", 11);
-	write(STDOUT, word, ft_strlen(word));
-	write(STDOUT, ": No such file or directory\n", 28);
+	write(STDERR, "minishell: ", 11);
+	write(STDERR, word, ft_strlen(word));
+	write(STDERR, ": No such file or directory\n", 28);
 	return (FAILURE);
 }
 
