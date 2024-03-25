@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:11:40 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:21:12 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:52:58 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_control_operator(t_token *tok)
 	size_t	i;
 
 	static char *const
-		operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
+		operators[] = {"|", "\n"};
 	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
