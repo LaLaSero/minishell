@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:24:17 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/25 00:23:18 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:14:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_node(t_node *node)
 		return ;
 	free_token(node->args);
 	free_token(node->filename);
+	free_token(node->delimiter);
 	free_node(node->redirect);
 	free_node(node->next);
 	free_node(node->command);
