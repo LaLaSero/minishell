@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:56:24 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/24 18:30:45 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:11:52 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	reset_redirect(t_node *node)
 			fatal_error("close error");
 		if (dup2(node->stashed_targetfd, node->targetfd) < 0)
 			fatal_error("dup2 error reset");
+		if (close(node->stashed_targetfd) < 0)
+			fatal_error("close error");
 	}
 }
