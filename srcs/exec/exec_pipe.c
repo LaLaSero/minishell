@@ -6,7 +6,7 @@
 /*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:02 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/18 19:51:17 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 02:13:48 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void	set_child_pipe(t_node *node)
 	dup2(node->outpipe[1], STDOUT_FILENO);
 	if (node->outpipe[1] != STDOUT_FILENO)
 		close(node->outpipe[1]);
+}
+
+void	free_exec_util(char **command, char *path)
+{
+	free_argv_str(command, path);
+	perror("minishell: execve");
+	exit(-1);
 }

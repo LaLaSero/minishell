@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 19:53:30 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/25 00:13:42 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:22:54 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int	stash_fd(int fd)
 
 void	identify_dir_or_file(char **path)
 {
-		struct stat	path_stat;
+	struct stat	path_stat;
 
-		stat(path[0], &path_stat);
-		if (S_ISDIR(path_stat.st_mode))
-		{
-			show_exec_error(path[0], "is a directory\n");
-			free_argv(path);
-			exit(126);
-		}
+	stat(path[0], &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		show_exec_error(path[0], "is a directory\n");
+		free_argv(path);
+		exit(126);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:52:55 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/25 00:22:31 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 02:13:57 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,5 +211,6 @@ bool						is_valid_export_variable(const char *variable_name);
 void						identify_dir_or_file(char **path);
 void						show_exec_error(char *command, char *message);
 void						free_argv_str(char **argv, char *str);
+void						free_exec_util(char **command, char *path);
 
 #endif

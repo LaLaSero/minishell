@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:03:52 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/24 14:45:37 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:31:53 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/minishell.h" 
 
-int		g_signal;
+int	g_signal;
 
-static void	_init_signal(void)
+static void	_init_params(int *status, int *error)
 {
-	g_signal = 0;
+	*status = 0;
+	*error = false;
 }
 
 static void	_detect_interrupt(int *status)
@@ -62,13 +63,14 @@ static void	_minishell_loop(void)
 	int		error;
 	t_map	*envmap;
 
-	status = 0;
-	error = false;
+	_init_params(&status, &error);
 	rl_outstream = stderr;
 	make_map(&envmap);
 	setup_signal();
 	while (1)
 	{
+		if (g_signal == SIGINT)
+			g_signal = 0;
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
@@ -85,7 +87,7 @@ static void	_minishell_loop(void)
 
 int	main(int argc, char **argv)
 {
-	_init_signal();
+	g_signal = 0;
 	(void)argv;
 	if (argc == 1)
 		_minishell_loop();

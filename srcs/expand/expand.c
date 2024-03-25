@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:50:04 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/24 15:08:47 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:34:04 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expand_macro(char **dst, char **rest, char *p, int status)
 
 	p += ft_strlen("$?");
 	temp = ft_itoa(status);
-	if  (temp == NULL)
+	if (temp == NULL)
 		fatal_error("ft_itoa");
 	tmp = temp;
 	while (*temp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_argv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:06:22 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/23 18:14:55 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:33:52 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	is_only_space(char *s)
 	return (true);
 }
 
-static char *_wrapped_strdup(char *s)
+static char	*_wrapped_strdup(char *s)
 {
 	char	*ret;
 

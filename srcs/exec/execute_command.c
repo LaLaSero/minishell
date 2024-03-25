@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yutakagi <yutakagi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yutakagi <yutakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:57:34 by yutakagi          #+#    #+#             */
-/*   Updated: 2024/03/25 00:33:48 by yutakagi         ###   ########.fr       */
+/*   Updated: 2024/03/26 02:15:06 by yutakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,10 @@ void	execute_command(char **command_splitted, char **envp)
 	free(path_list);
 	if (execve(accessible_path, command_splitted, envp) == -1)
 	{
-		free_argv_str(command_splitted, accessible_path);
-		perror("minishell: execve");
-		exit(-1);
+		free_exec_util(command_splitted, accessible_path);
 	}
 }
+
+		// free_argv_str(command_splitted, accessible_path);
+		// perror("minishell: execve");
+		// exit(-1);

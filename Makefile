@@ -19,7 +19,7 @@ INCLUDE = includes
 CC = cc
 READLINE_DIR = $(shell brew --prefix readline)
 CFLAGS = -I$(INCLUDE) -I$(READLINE_DIR)/include -Wall -Wextra -Werror
-LDFLAGS = -L$(READLINE_DIR)/lib -lreadline -Wall -Wextra -Werror -g -fsanitize=address
+LDFLAGS = -L$(READLINE_DIR)/lib -lreadline -Wall -Wextra -Werror
 OBJS = $(SRCS:.c=.o)
 LIBFT = libft/libft.a
 
@@ -32,7 +32,7 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -g -fsanitize=address
+	$(CC) $(CFLAGS) -c $< -o $@ -g
 
 clean:
 	rm -f $(OBJS)
